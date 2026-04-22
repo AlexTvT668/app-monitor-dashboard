@@ -6,148 +6,295 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
   :root {
-    --bg:#0f1524; --panel:#171f33; --panel-2:#1e2740; --border:#2a3454;
-    --text:#e7ecf5; --text-dim:#9aa4bf;
-    --up:#25c26b; --down:#ff5a78;
+    /* ====== nara.build 基础色盘 ====== */
+    --bg:#070709; --panel:#0d0d11; --panel-2:#12121a; --border:#1e1e24;
+    --border-strong:#2a2a32;
+    --text:#f5f5f0; --text-dim:#888892;
+    /* 语义色（保留 Tab 区分） */
+    --up:#25c26b; --down:#ff5568;
     --emui:#66d9e8; --harmony:#c4a1ff;
     --s:#ff6b6b; --ap:#ff9f4a; --a:#ffc857; --bp:#66d9e8; --c:#9aa4bf;
+    /* 每个 Tab 的 accent（保留颜色区分） */
+    --accent-tab1:#ff9f4a;      /* 橙 · 资源位监控 */
+    --accent-tab2:#7aa8ff;      /* 蓝 · 安装链路监控 */
+    --accent-tab3:#c8ff4d;      /* 柠檬绿 · 首发资源分析 */
+    /* 字体 */
+    --font-mono:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
+    --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+    font-family:var(--font-sans);
+    font-feature-settings:"ss01","cv11";}
   .wrap{max-width:1480px;margin:0 auto;padding:22px;}
-  header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
-  h1{font-size:22px;margin:0;letter-spacing:.5px;}
-  .meta{color:var(--text-dim);font-size:13px;margin-top:4px;}
-  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-  .tabs{display:inline-flex;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:4px;}
-  .tab{padding:6px 14px;font-size:13px;color:var(--text-dim);cursor:pointer;border-radius:7px;user-select:none;}
-  .tab.active{background:var(--panel-2);color:var(--text);box-shadow:inset 0 0 0 1px var(--border);}
-  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px;}
-  .kpi{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
-  .kpi .label{color:var(--text-dim);font-size:12px;margin-bottom:6px;}
-  .kpi .value{font-size:26px;font-weight:600;}
-  .kpi .sub{font-size:12px;color:var(--text-dim);margin-top:4px;}
+
+  /* === 全局工具：mono 字体、章节徽章 === */
+  .mono{font-family:var(--font-mono);letter-spacing:-.01em;}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;
+    color:var(--text-dim);text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--tab-accent,#c8ff4d);
+    box-shadow:0 0 10px var(--tab-accent,#c8ff4d);}
+
+  /* === nara 风 header === */
+  header{padding:26px 0 22px;margin:0 0 22px;border-bottom:1px solid var(--border);
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  header > div:first-child{flex:1;min-width:320px;}
+  h1{font-size:34px;line-height:1.1;margin:10px 0 10px;letter-spacing:-.02em;font-weight:700;}
+  h1 .accent{color:var(--tab-accent,#c8ff4d);}
+  .meta{color:var(--text-dim);font-size:13px;line-height:1.7;max-width:820px;}
+  .meta b{color:var(--text);font-weight:600;}
+
+  /* === 切换 tabs（筛选器） === */
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .tabs{display:inline-flex;background:var(--panel);border:1px solid var(--border-strong);
+    border-radius:0;padding:0;overflow:hidden;font-family:var(--font-mono);}
+  .tab{padding:8px 14px;font-size:12px;color:var(--text-dim);cursor:pointer;user-select:none;
+    border-right:1px solid var(--border);letter-spacing:.04em;transition:color .15s,background .15s;}
+  .tab:last-child{border-right:none;}
+  .tab:hover{color:var(--text);background:#15151b;}
+  .tab.active{background:var(--tab-accent,#c8ff4d);color:var(--bg);font-weight:600;}
+
+  /* === KPI === */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:22px;
+    border:1px solid var(--border-strong);background:var(--panel);}
+  .kpi{padding:18px 20px;border-right:1px solid var(--border);}
+  .kpi:last-child{border-right:none;}
+  .kpi .label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;}
+  .kpi .value{font-size:30px;font-weight:700;font-family:var(--font-mono);
+    letter-spacing:-.02em;line-height:1;color:var(--text);}
+  .kpi .sub{font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.5;}
+
+  /* === 栅格 === */
   .row{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-bottom:14px;}
   .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
   .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;}
-  .panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;}
-  .panel h3{margin:0 0 8px 0;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between;}
-  .panel h3 .sub{color:var(--text-dim);font-weight:400;margin-left:6px;font-size:12px;}
-  .store-title{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-  .store-title .name{font-size:13px;font-weight:600;}
+
+  /* === panel 卡 === */
+  .panel{background:var(--panel);border:1px solid var(--border-strong);border-radius:0;
+    padding:18px 18px 16px;}
+  .panel h3{margin:0 0 12px 0;font-size:12px;font-weight:600;
+    font-family:var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding-bottom:10px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .panel h3::before{content:'';width:4px;height:4px;background:var(--tab-accent,#c8ff4d);
+    display:inline-block;margin-right:6px;vertical-align:middle;border-radius:50%;}
+  .panel h3 .sub{color:var(--text-dim);font-weight:400;margin-left:6px;font-size:11px;
+    text-transform:none;letter-spacing:.02em;font-family:var(--font-sans);}
+  .store-title{display:flex;align-items:center;gap:8px;margin-bottom:8px;
+    padding-bottom:6px;border-bottom:1px dashed var(--border);}
+  .store-title .name{font-size:12px;font-weight:600;font-family:var(--font-mono);
+    letter-spacing:.08em;text-transform:uppercase;}
   .chart-sm{height:160px;}
   .chart-md{height:240px;}
   .chart-lg{height:320px;}
-  .grade-legend{display:flex;gap:10px;font-size:12px;color:var(--text-dim);flex-wrap:wrap}
+  .grade-legend{display:flex;gap:10px;font-size:11px;color:var(--text-dim);flex-wrap:wrap;
+    font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;}
   .grade-legend .g{display:inline-flex;align-items:center;gap:4px}
-  .grade-legend .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
-  .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:var(--panel-2);border:1px solid var(--border);color:var(--text-dim);margin-left:6px}
-  table.mini{width:100%;border-collapse:collapse;font-size:12px;}
-  table.mini th,table.mini td{border-bottom:1px solid var(--border);padding:6px 8px;text-align:left;}
-  table.mini th{color:var(--text-dim);font-weight:500;background:var(--panel-2);}
+  .grade-legend .dot{width:8px;height:8px;border-radius:0;display:inline-block}
+
+  /* === 标签 === */
+  .tag{display:inline-block;padding:3px 9px;border-radius:100px;font-size:10px;
+    background:transparent;border:1px solid var(--border-strong);color:var(--text-dim);
+    margin-left:8px;font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase;
+    vertical-align:middle;}
+
+  /* === 表格 === */
+  table.mini{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.mini th,table.mini td{border-bottom:1px solid var(--border);padding:10px 12px;text-align:left;}
+  table.mini th{color:var(--text-dim);font-weight:500;background:transparent;
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    border-bottom:1px solid var(--border-strong);}
+  table.mini tr:hover td{background:#111118;}
   .grade-s{color:var(--s);font-weight:700}
   .grade-ap{color:var(--ap);font-weight:600}
   .grade-a{color:var(--a)}
   .grade-bp{color:var(--bp)}
   .grade-c{color:var(--c)}
-  .alert{background:linear-gradient(135deg,#231a33,#1a2340);border:1px solid #3a2d5a;border-radius:12px;padding:14px;font-size:13px;line-height:1.8;}
-  .alert b{color:#ffc857}
-  footer{color:var(--text-dim);font-size:12px;margin-top:14px;text-align:center;padding:12px;}
-  .pill{padding:2px 8px;border-radius:10px;font-size:11px;background:var(--panel-2);border:1px solid var(--border);}
-  .note{font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.6}
-  .demo-banner{background:linear-gradient(90deg,#ff9f4a22,#ff6b6b22);border:1px solid #ff9f4a66;
-    border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#ffc857;
-    display:flex;align-items:center;gap:10px;}
-  .demo-banner .badge{background:#ff9f4a;color:#1a1200;font-weight:700;padding:2px 8px;
-    border-radius:6px;font-size:11px;letter-spacing:.5px;}
 
-  /* ========== 顶级 Tab（Tab1 资源位 / Tab2 安装链路） ========== */
-  .top-tabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--border);
-    border-radius:12px;padding:5px;margin-bottom:14px;width:fit-content;}
-  .top-tab{padding:8px 18px;font-size:13px;color:var(--text-dim);cursor:pointer;border-radius:8px;
-    user-select:none;font-weight:500;display:flex;align-items:center;gap:6px;}
+  /* === Alert / Insight === */
+  .alert{background:var(--panel);border:1px solid var(--border-strong);border-left:2px solid var(--tab-accent,#c8ff4d);
+    border-radius:0;padding:18px 20px;font-size:13px;line-height:1.9;color:var(--text-dim);}
+  .alert b{color:var(--text);font-weight:600;}
+
+  /* === Footer === */
+  footer{color:var(--text-dim);font-size:11px;margin-top:22px;text-align:left;padding:18px 0 4px;
+    border-top:1px solid var(--border);font-family:var(--font-mono);letter-spacing:.06em;
+    text-transform:uppercase;}
+
+  /* === Pill / Note === */
+  .pill{padding:3px 9px;border-radius:100px;font-size:10px;background:transparent;
+    border:1px solid var(--border-strong);font-family:var(--font-mono);letter-spacing:.1em;
+    text-transform:uppercase;color:var(--text-dim);}
+  .note{font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.7;}
+  .note b{color:var(--text);font-weight:600;}
+
+  /* === Demo Banner（改成 nara 风细条） === */
+  .demo-banner{background:var(--panel);border:1px solid var(--border-strong);
+    border-left:2px solid var(--ap);border-radius:0;padding:12px 16px;margin-bottom:22px;
+    font-size:12.5px;color:var(--text-dim);display:flex;align-items:center;gap:12px;line-height:1.6;}
+  .demo-banner .badge{background:transparent;color:var(--ap);font-weight:700;padding:3px 9px;
+    border:1px solid var(--ap);border-radius:100px;font-size:10px;letter-spacing:.16em;
+    font-family:var(--font-mono);text-transform:uppercase;}
+  .demo-banner b{color:var(--text);font-weight:600;}
+
+  /* ========== 顶级 Tab（Tab1 / Tab2 / Tab3） ========== */
+  .top-tabs{display:inline-flex;gap:0;background:var(--panel);
+    border:1px solid var(--border-strong);border-radius:0;padding:0;margin-bottom:22px;
+    overflow:hidden;}
+  .top-tab{padding:11px 20px;font-size:12px;color:var(--text-dim);cursor:pointer;
+    user-select:none;font-weight:500;display:flex;align-items:center;gap:8px;
+    border-right:1px solid var(--border);font-family:var(--font-mono);
+    letter-spacing:.08em;text-transform:uppercase;transition:color .15s,background .15s;}
+  .top-tab:last-child{border-right:none;}
+  .top-tab:hover{color:var(--text);background:#15151b;}
   .top-tab .dot{width:6px;height:6px;border-radius:50%;background:var(--text-dim);}
-  .top-tab.active{background:linear-gradient(135deg,#1e2740,#2a3454);color:var(--text);
-    box-shadow:inset 0 0 0 1px #3a4a75;}
-  .top-tab.active .dot{background:#25c26b;box-shadow:0 0 8px #25c26b;}
+  .top-tab.active{background:#13131a;color:var(--text);}
+  .top-tab[data-pane="pane-slots"].active{color:var(--accent-tab1);box-shadow:inset 0 -2px 0 var(--accent-tab1);}
+  .top-tab[data-pane="pane-slots"].active .dot{background:var(--accent-tab1);box-shadow:0 0 10px var(--accent-tab1);}
+  .top-tab[data-pane="pane-install"].active{color:var(--accent-tab2);box-shadow:inset 0 -2px 0 var(--accent-tab2);}
+  .top-tab[data-pane="pane-install"].active .dot{background:var(--accent-tab2);box-shadow:0 0 10px var(--accent-tab2);}
+  .top-tab[data-pane="pane-launch"].active{color:var(--accent-tab3);box-shadow:inset 0 -2px 0 var(--accent-tab3);}
+  .top-tab[data-pane="pane-launch"].active .dot{background:var(--accent-tab3);box-shadow:0 0 10px var(--accent-tab3);}
   .tab-pane{display:none;}
   .tab-pane.active{display:block;}
 
-  /* ========== Tab2：安装链路拦截监控 ========== */
-  .intercept-matrix{display:grid;grid-template-columns:110px repeat(3, 1fr);gap:8px;}
-  .intercept-matrix .im-h{background:var(--panel-2);border:1px solid var(--border);
-    border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text-dim);text-align:center;
-    font-weight:600;letter-spacing:.3px;}
-  .intercept-matrix .im-row-label{background:var(--panel-2);border:1px solid var(--border);
-    border-radius:8px;padding:10px;display:flex;flex-direction:column;justify-content:center;
-    align-items:center;gap:4px;}
-  .intercept-matrix .im-row-label .store-name{font-size:13px;font-weight:700;color:var(--text);}
-  .intercept-matrix .im-row-label .auth{font-size:11px;color:var(--text-dim);}
-  .im-cell{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;
-    padding:8px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;
-    transition:transform .15s, box-shadow .15s;}
-  .im-cell:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.35);}
-  .im-cell.lv-strong{border-color:#ff5a78aa;background:linear-gradient(180deg,#2a1a24,#1e2740);}
-  .im-cell.lv-weak{border-color:#ffc85788;background:linear-gradient(180deg,#2a2418,#1e2740);}
-  .im-cell.lv-none{border-color:#25c26b66;background:linear-gradient(180deg,#18281f,#1e2740);}
-  .im-cell .lv-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;
-    border-radius:20px;font-size:11px;font-weight:700;align-self:flex-start;}
-  .im-cell.lv-strong .lv-badge{background:#ff5a7822;color:#ff5a78;border:1px solid #ff5a7866;}
-  .im-cell.lv-weak .lv-badge{background:#ffc85722;color:#ffc857;border:1px solid #ffc85766;}
-  .im-cell.lv-none .lv-badge{background:#25c26b22;color:#25c26b;border:1px solid #25c26b66;}
-  .im-cell .metrics{display:flex;gap:10px;font-size:11px;color:var(--text-dim);}
-  .im-cell .metrics .k{color:var(--text);font-weight:600;margin-left:2px;}
-  .im-cell .video-thumb{height:78px;background:#0a0f1c;border-radius:6px;
-    display:flex;align-items:center;justify-content:center;color:var(--text-dim);
-    font-size:11px;cursor:pointer;position:relative;overflow:hidden;
-    border:1px dashed #2a3454;}
-  .im-cell .video-thumb::before{content:'▶';font-size:28px;color:#25c26bcc;
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.9;}
-  .im-cell .video-thumb:hover{border-color:#25c26b;color:#25c26b;}
-  .im-cell .note{font-size:11px;color:var(--text-dim);line-height:1.5;margin:0;}
-  .im-cell.empty{opacity:.4;align-items:center;justify-content:center;min-height:120px;
-    color:var(--text-dim);font-size:12px;}
+  /* 为每个 Tab 区域注入 --tab-accent（供 panel h3 圆点、alert 左边、tab.active 背景等复用） */
+  #pane-slots{--tab-accent:var(--accent-tab1);}
+  #pane-install{--tab-accent:var(--accent-tab2);}
+  #pane-launch{--tab-accent:var(--accent-tab3);}
 
-  /* 拦截等级图例 */
-  .lv-legend{display:inline-flex;gap:12px;font-size:12px;color:var(--text-dim);}
-  .lv-legend .item{display:inline-flex;align-items:center;gap:5px;}
-  .lv-legend .sw{width:10px;height:10px;border-radius:3px;display:inline-block;}
+  /* === nara 风通用徽章（供 Hero / Tab1 / Tab2 使用） === */
+  .nr-badge{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;padding:4px 10px;border:1px solid var(--border-strong);
+    border-radius:100px;color:var(--text-dim);display:inline-flex;align-items:center;gap:6px;
+    background:transparent;}
+  .nr-badge::before{content:'';width:4px;height:4px;border-radius:50%;background:currentColor;}
+  .nr-badge.active{color:var(--tab-accent,#c8ff4d);border-color:var(--tab-accent,#c8ff4d);}
+  .nr-badge.danger{color:var(--down);border-color:#8a2a35;}
+  .nr-badge.warn{color:var(--a);border-color:#8a6d2a;}
+  .nr-badge.accent2{color:#7aa8ff;border-color:#2b3b6b;}
 
-  /* 录屏模态 */
-  .modal-mask{position:fixed;inset:0;background:rgba(5,8,16,.78);display:none;
-    align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(4px);}
-  .modal-mask.show{display:flex;}
-  .modal-body{background:var(--panel);border:1px solid var(--border);border-radius:14px;
-    padding:18px;max-width:560px;width:90%;}
-  .modal-body h4{margin:0 0 10px 0;font-size:14px;display:flex;justify-content:space-between;align-items:center;}
-  .modal-body .close{cursor:pointer;color:var(--text-dim);font-size:18px;line-height:1;}
-  .modal-body .close:hover{color:var(--text);}
-  .modal-body .video-area{background:#000;border-radius:8px;aspect-ratio:9/16;max-height:520px;
-    margin:0 auto;display:flex;align-items:center;justify-content:center;color:#555;font-size:12px;
-    background-image:linear-gradient(135deg,#1a1f2e 25%,transparent 25%,transparent 50%,#1a1f2e 50%,#1a1f2e 75%,transparent 75%);
-    background-size:20px 20px;}
-  .modal-body .step-timeline{margin-top:12px;display:flex;flex-direction:column;gap:6px;font-size:12px;}
-  .modal-body .step-timeline .step{display:flex;align-items:center;gap:8px;padding:4px 0;}
-  .modal-body .step-timeline .t{color:var(--text-dim);font-family:monospace;min-width:46px;}
-  .modal-body .step-timeline .evt{flex:1;}
-  .modal-body .step-timeline .tag{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;}
-  .modal-body .step-timeline .tag.block{background:#ff5a7833;color:#ff5a78;}
-  .modal-body .step-timeline .tag.warn{background:#ffc85733;color:#ffc857;}
-  .modal-body .step-timeline .tag.ok{background:#25c26b33;color:#25c26b;}
-
-  /* 方法论面板 */
-  .method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:12px;}
-  .method-step{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;
-    padding:12px;position:relative;}
-  .method-step .num{position:absolute;top:10px;right:12px;font-size:22px;font-weight:800;
-    color:#ffffff10;font-family:monospace;}
-  .method-step .title{font-weight:600;font-size:13px;margin-bottom:4px;color:var(--text);}
-  .method-step .desc{color:var(--text-dim);line-height:1.6;}
+  /* === 通用 Hero（Tab1 / Tab2 用）=== */
+  .nr-hero{padding:30px 0 24px;border-bottom:1px solid var(--border);margin-bottom:22px;}
+  .nr-hero .eyebrow{margin-bottom:14px;}
+  .nr-hero h1{margin:0 0 14px;max-width:960px;}
+  .nr-hero .lead{font-size:14px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;max-width:820px;}
+  .nr-hero .lead b{color:var(--text);font-weight:600;}
+  .nr-hero .badges{display:flex;gap:8px;flex-wrap:wrap;}
 
   @media (max-width: 1100px){
-    .intercept-matrix{grid-template-columns:90px repeat(3,1fr);}
+    .kpi-row{grid-template-columns:repeat(2,1fr);}
+    .kpi{border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+    h1{font-size:26px;}
+  }
+
+  /* ========== Tab2：安装链路拦截监控（nara 风 · 蓝色 accent） ========== */
+  .intercept-matrix{display:grid;grid-template-columns:130px repeat(3, 1fr);gap:0;
+    border:1px solid var(--border-strong);background:var(--panel);}
+  .intercept-matrix .im-h{background:var(--panel-2);border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border-strong);padding:10px 12px;font-size:10.5px;
+    color:var(--text-dim);text-align:center;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;font-family:var(--font-mono);}
+  .intercept-matrix .im-h:last-child{border-right:none;}
+  .intercept-matrix .im-row-label{background:var(--panel-2);border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);padding:12px;display:flex;flex-direction:column;
+    justify-content:center;align-items:flex-start;gap:4px;}
+  .intercept-matrix .im-row-label .store-name{font-size:13px;font-weight:700;color:var(--text);
+    letter-spacing:.02em;}
+  .intercept-matrix .im-row-label .auth{font-size:10px;color:var(--text-dim);
+    font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase;}
+  .im-cell{background:var(--panel);border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);padding:12px;display:flex;flex-direction:column;gap:8px;
+    position:relative;transition:background .15s;}
+  .im-cell:last-child{border-right:none;}
+  .im-cell:hover{background:#13131a;}
+  .im-cell.lv-strong{background:linear-gradient(180deg,#1f0f14 0%,var(--panel) 100%);border-left:2px solid var(--down);}
+  .im-cell.lv-weak{background:linear-gradient(180deg,#1f1a0f 0%,var(--panel) 100%);border-left:2px solid var(--a);}
+  .im-cell.lv-none{background:linear-gradient(180deg,#0f1f14 0%,var(--panel) 100%);border-left:2px solid var(--up);}
+  .im-cell .lv-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;
+    border-radius:100px;font-size:10px;font-weight:700;align-self:flex-start;
+    font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+    border:1px solid currentColor;}
+  .im-cell.lv-strong .lv-badge{color:var(--down);}
+  .im-cell.lv-weak .lv-badge{color:var(--a);}
+  .im-cell.lv-none .lv-badge{color:var(--up);}
+  .im-cell .lv-badge::before{content:'';width:4px;height:4px;border-radius:50%;background:currentColor;}
+  .im-cell .metrics{display:flex;gap:14px;font-size:10.5px;color:var(--text-dim);
+    font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;}
+  .im-cell .metrics .k{color:var(--text);font-weight:700;margin-left:2px;text-transform:none;letter-spacing:0;}
+  .im-cell .video-thumb{height:78px;background:#07070a;border-radius:0;
+    display:flex;align-items:center;justify-content:center;color:var(--text-dim);
+    font-size:10px;cursor:pointer;position:relative;overflow:hidden;
+    border:1px dashed var(--border-strong);font-family:var(--font-mono);
+    letter-spacing:.14em;text-transform:uppercase;transition:border-color .15s,color .15s;}
+  .im-cell .video-thumb::before{content:'▶';font-size:26px;color:var(--accent-tab2);
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.6;}
+  .im-cell .video-thumb:hover{border-color:var(--accent-tab2);color:var(--accent-tab2);}
+  .im-cell .video-thumb:hover::before{opacity:1;}
+  .im-cell .note{font-size:11px;color:var(--text-dim);line-height:1.6;margin:0;}
+  .im-cell.empty{opacity:.35;align-items:center;justify-content:center;min-height:120px;
+    color:var(--text-dim);font-size:10px;font-family:var(--font-mono);letter-spacing:.14em;
+    text-transform:uppercase;background:var(--panel);}
+
+  /* 拦截等级图例 */
+  .lv-legend{display:inline-flex;gap:14px;font-size:10.5px;color:var(--text-dim);
+    font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase;}
+  .lv-legend .item{display:inline-flex;align-items:center;gap:6px;}
+  .lv-legend .sw{width:8px;height:8px;border-radius:0;display:inline-block;}
+
+  /* 录屏模态 */
+  .modal-mask{position:fixed;inset:0;background:rgba(5,5,10,.85);display:none;
+    align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(6px);}
+  .modal-mask.show{display:flex;}
+  .modal-body{background:var(--panel);border:1px solid var(--border-strong);border-radius:0;
+    padding:20px;max-width:560px;width:90%;}
+  .modal-body h4{margin:0 0 14px 0;font-size:12px;display:flex;justify-content:space-between;
+    align-items:center;font-family:var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text);padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .modal-body .close{cursor:pointer;color:var(--text-dim);font-size:18px;line-height:1;}
+  .modal-body .close:hover{color:var(--text);}
+  .modal-body .video-area{background:#000;border-radius:0;aspect-ratio:9/16;max-height:520px;
+    margin:0 auto;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px;
+    font-family:var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+    background-image:linear-gradient(135deg,#0d0d11 25%,transparent 25%,transparent 50%,#0d0d11 50%,#0d0d11 75%,transparent 75%);
+    background-size:20px 20px;border:1px solid var(--border);}
+  .modal-body .step-timeline{margin-top:14px;display:flex;flex-direction:column;gap:6px;font-size:12px;}
+  .modal-body .step-timeline .step{display:flex;align-items:center;gap:10px;padding:6px 0;
+    border-bottom:1px solid var(--border);}
+  .modal-body .step-timeline .step:last-child{border-bottom:none;}
+  .modal-body .step-timeline .t{color:var(--text-dim);font-family:var(--font-mono);min-width:50px;
+    font-size:11px;letter-spacing:.05em;}
+  .modal-body .step-timeline .evt{flex:1;color:var(--text);}
+  .modal-body .step-timeline .tag{padding:2px 8px;border-radius:100px;font-size:9.5px;
+    font-weight:600;font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid currentColor;background:transparent;}
+  .modal-body .step-timeline .tag.block{color:var(--down);}
+  .modal-body .step-timeline .tag.warn{color:var(--a);}
+  .modal-body .step-timeline .tag.ok{color:var(--up);}
+
+  /* 方法论面板 */
+  .method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border:1px solid var(--border-strong);background:var(--panel);}
+  .method-step{padding:16px 16px 18px;position:relative;border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);}
+  .method-step:nth-child(4n){border-right:none;}
+  .method-step:nth-last-child(-n+4){border-bottom:none;}
+  .method-step .num{position:absolute;top:12px;right:14px;font-size:26px;font-weight:700;
+    color:var(--border-strong);font-family:var(--font-mono);letter-spacing:-.04em;}
+  .method-step .title{font-weight:600;font-size:12px;margin-bottom:8px;color:var(--accent-tab2);
+    font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase;}
+  .method-step .desc{color:var(--text-dim);line-height:1.7;font-size:12px;}
+  .method-step code{font-family:var(--font-mono);background:#13131a;padding:1px 6px;
+    font-size:11px;color:var(--accent-tab2);border:1px solid var(--border);}
+
+  @media (max-width: 1100px){
+    .intercept-matrix{grid-template-columns:100px repeat(3,1fr);}
     .method-grid{grid-template-columns:repeat(2,1fr);}
+    .method-step:nth-child(4n){border-right:1px solid var(--border);}
+    .method-step:nth-child(2n){border-right:none;}
+    .method-step:nth-last-child(-n+4){border-bottom:1px solid var(--border);}
+    .method-step:nth-last-child(-n+2){border-bottom:none;}
   }
 
   /* ===========================================================
@@ -160,8 +307,7 @@
     --nr-accent:#c8ff4d; --nr-accent-2:#7aa8ff; --nr-red:#ff5568;
     font-feature-settings:"ss01","cv11";
   }
-  #pane-launch{background:var(--nr-bg);margin:-22px -22px 0;padding:28px 22px 40px;
-    border-top:1px solid var(--nr-border);}
+  #pane-launch{background:transparent;margin:0;padding:0;}
   #pane-launch .mono{font-family:"JetBrains Mono","SF Mono","Menlo",monospace;
     letter-spacing:-.01em;}
   /* Hero */
@@ -350,12 +496,19 @@
 <!-- ============ Tab 1 内容（原 1.0 资源监控，整体包裹） ============ -->
 <div class="tab-pane active" id="pane-slots">
 
-<header>
+<header class="nr-hero">
   <div>
-    <h1>小A助手 厂商资源位监控日报 <span class="tag">v5 · 资源位 + Top公司</span></h1>
+    <div class="eyebrow"><span class="dot"></span>Vendor Resource Intelligence &nbsp;·&nbsp; v5 · tab_01</div>
+    <h1>厂商资源位监控日报。<br/><span class="accent">5 家厂商 × 72 资源位</span>，还原每一个曝光位的价值。</h1>
     <div class="meta">
       监控范围：<b>5 家厂商 × 72 个资源位 × 2 入口</b>（应用商店 / 游戏中心），华为额外区分 EMUI & 纯血鸿蒙 ·
       数据来源：《OVHMR监控资源范围.xlsx》 · 报表日期 <span id="today"></span>
+    </div>
+    <div class="badges" style="margin-top:14px;">
+      <span class="nr-badge active">ON-AIR · DAILY</span>
+      <span class="nr-badge">72 SLOTS</span>
+      <span class="nr-badge accent2">5 VENDORS</span>
+      <span class="nr-badge">OCR + WEIGHTED</span>
     </div>
   </div>
   <div class="toolbar">
@@ -418,7 +571,7 @@
 
 <!-- 华为双平台对比 -->
 <div class="panel" style="margin-bottom:14px;">
-  <h3>🔶 华为专题：EMUI（双框架） vs HarmonyOS NEXT（纯血鸿蒙）
+  <h3>华为专题：EMUI（双框架） vs HarmonyOS NEXT（纯血鸿蒙）
     <span class="sub">（同一套资源位在两套生态下的覆盖差异）</span>
   </h3>
   <div class="row-2">
@@ -444,7 +597,7 @@
     </div>
   </div>
   <div class="panel">
-    <h3>📈 样本量 · 健康度 <span class="sub">（统计学可信度）</span></h3>
+    <h3>样本量 · 健康度 <span class="sub">（统计学可信度）</span></h3>
     <div id="ch-sample-health" class="chart-md"></div>
     <div style="margin-top:10px;font-size:12px;color:var(--text-dim);line-height:1.7">
       <div>· <b>单日计划样本</b>：<span id="txt-plan"></span></div>
@@ -458,7 +611,7 @@
 
 <!-- 厂商 × Top10 游戏公司 资源占比 -->
 <div class="panel" style="margin-bottom:14px;">
-  <h3>🏢 每家厂商 · Top 10 游戏公司 资源占比
+  <h3>每家厂商 · Top 10 游戏公司 资源占比
     <span class="sub">（基于 Excel 72 个监控位 · OCR 识别游戏 → 开发/发行公司 · 加权口径：资源位定级 × 位次倒数 · 不含买量广告位）</span>
   </h3>
   <div class="note" style="margin-bottom:10px;">
@@ -493,13 +646,13 @@
 <!-- 全站 Top10 总榜 + 热力矩阵 -->
 <div class="row-2">
   <div class="panel">
-    <h3>🏆 5 家厂商合并 · 游戏公司 Top 10
+    <h3>5 家厂商合并 · 游戏公司 Top 10
       <span class="sub">（全站资源位加权汇总）</span>
     </h3>
     <div id="ch-pub-overall" class="chart-lg" style="height:420px"></div>
   </div>
   <div class="panel">
-    <h3>🔥 游戏公司 × 厂商 资源占比热力图
+    <h3>游戏公司 × 厂商 资源占比热力图
       <span class="sub">（颜色越深 = 该公司在该厂商资源位上占比越高）</span>
     </h3>
     <div id="ch-pub-heatmap" class="chart-lg" style="height:420px"></div>
@@ -508,7 +661,7 @@
 
 <!-- 洞察 -->
 <div class="panel" style="margin-top:14px;">
-  <h3>🚨 资源位视角洞察 · 今日自动生成</h3>
+  <h3>资源位视角洞察 · 今日自动生成</h3>
   <div class="alert" id="alerts"></div>
 </div>
 
@@ -519,13 +672,20 @@
 <!-- ============ Tab 2 内容：厂商安装链路拦截监控 ============ -->
 <div class="tab-pane" id="pane-install">
 
-<header>
+<header class="nr-hero">
   <div>
-    <h1>厂商安装链路拦截监控 <span class="tag">v1 · QQ / 微信 / 应用宝 × 5 厂商</span></h1>
+    <div class="eyebrow"><span class="dot"></span>Install Funnel Intelligence &nbsp;·&nbsp; v1 · tab_02</div>
+    <h1>厂商安装链路拦截监控。<br/><span class="accent">95% → 完成</span>，量化每一次确认背后的折损。</h1>
     <div class="meta">
       监控目标：<b>腾讯游戏</b>在 <b>应用宝 / 微信游戏中心 / 手机QQ</b> 三大分发渠道，在<b>华为 / 小米 / OPPO / VIVO / 荣耀</b>五家厂商机型上的<b>安装链路体验</b>（下载进度 95% → 逐步确认 → 安装完成）·
       录制口径：从下载进度条 95% 开始录屏 → 持续点击"下一步/安装" → 安装完成结束 ·
       样本游戏：<b id="case-game">《王者荣耀：世界》4/15 预下载 · 4/17 首发</b>
+    </div>
+    <div class="badges" style="margin-top:14px;">
+      <span class="nr-badge active">SCREENREC · LIVE</span>
+      <span class="nr-badge warn">WEAK × 12</span>
+      <span class="nr-badge danger">STRONG × 4</span>
+      <span class="nr-badge">5 VENDORS × 3 CHANNELS</span>
     </div>
   </div>
   <div class="toolbar">
@@ -584,7 +744,7 @@
 
 <!-- 拦截矩阵（核心）：5 厂商 × 2 授权态 × 3 渠道 -->
 <div class="panel" style="margin-bottom:14px;">
-  <h3>🎯 安装链路拦截矩阵 · 《王者荣耀：世界》样例
+  <h3>安装链路拦截矩阵 · 《王者荣耀：世界》样例
     <span class="sub">（点击"▶ 录屏"可播放该场景的完整安装过程录屏）</span>
   </h3>
   <div class="note" style="margin-bottom:12px;">
@@ -596,14 +756,14 @@
 <!-- 拦截原因 Top 列表 + 方法论 -->
 <div class="row">
   <div class="panel">
-    <h3>🔍 拦截/劝退原因 Top 5 <span class="sub">（基于录屏 UI 文本自动提取）</span></h3>
+    <h3>拦截/劝退原因 Top 5 <span class="sub">（基于录屏 UI 文本自动提取）</span></h3>
     <table class="mini" id="tbl-reasons">
       <thead><tr><th>#</th><th>提示文案</th><th>出现次数</th><th>厂商</th><th>等级</th></tr></thead>
       <tbody></tbody>
     </table>
   </div>
   <div class="panel">
-    <h3>📋 自动化检测流程 <span class="sub">（真机接入后 · 脚本化 → 报告）</span></h3>
+    <h3>自动化检测流程 <span class="sub">（真机接入后 · 脚本化 → 报告）</span></h3>
     <div class="method-grid">
       <div class="method-step"><div class="num">01</div>
         <div class="title">触发下载</div>
@@ -643,7 +803,7 @@
 
 <!-- 案例洞察 -->
 <div class="panel" style="margin-top:14px;">
-  <h3>💡 《王者荣耀：世界》案例洞察 · 基于 4/15 预下载监测</h3>
+  <h3>《王者荣耀：世界》案例洞察 · 基于 4/15 预下载监测</h3>
   <div class="alert" id="install-insights">
     <b>🚫 强拦截集中在"未授权 + 手Q/应用宝"场景</b>：小米未开启三方授权时，yyb 和手Q <b>禁止安装且不能跳转设置</b>，仅微信支持"跳转到设置开启"——目前与渠道沟通中。<br>
     <b>⚠️ 弱拦截普遍存在于 OPPO/vivo 未授权态</b>：微信 / 手Q 会弹出「检测结果：涉及敏感权限」并要求多步确认，用户需点 3~5 次"下一步"才能完成，对转化折损明显。<br>
@@ -760,7 +920,7 @@
    字段：store, slot, reach, grade, channels, plat(仅华为)
    统计口径：只看"资源位本身"——不做任何发行商占比假设
 ============================================================ */
-const GRADE_COLOR = { 'S':'#ff6b6b', 'A+':'#ff9f4a', 'A':'#ffc857', 'B+':'#66d9e8', 'C':'#9aa4bf' };
+const GRADE_COLOR = { 'S':'#ff6b6b', 'A+':'#ff9f4a', 'A':'#ffc857', 'B+':'#66d9e8', 'C':'#888892' };
 const STORE_COLOR = { 'huawei':'#ff3b30', 'oppo':'#0f9960', 'vivo':'#4e8cff', 'xiaomi':'#ff8c32', 'honor':'#9d4edd' };
 const STORE_NAME  = { 'huawei':'华为','oppo':'OPPO','vivo':'VIVO','xiaomi':'小米','honor':'荣耀' };
 
@@ -913,10 +1073,10 @@ function renderGradeStore(){
   chGradeStore.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis'},
-    legend:{data:grades, textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{data:grades, textStyle:{color:'#888892'}, top:0},
     grid:{left:40,right:20,top:32,bottom:28},
-    xAxis:{type:'category', data:stores.map(s=>STORE_NAME[s]), axisLabel:{color:'#9aa4bf'}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'资源位数', nameTextStyle:{color:'#9aa4bf'}},
+    xAxis:{type:'category', data:stores.map(s=>STORE_NAME[s]), axisLabel:{color:'#888892'}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'资源位数', nameTextStyle:{color:'#888892'}},
     series: grades.map(g=>({
       name:g, type:'bar', stack:'a', data:data[g],
       itemStyle:{color:GRADE_COLOR[g]}, barWidth:'46%',
@@ -952,15 +1112,15 @@ function renderReach(){
     backgroundColor:'transparent',
     tooltip:{trigger:'axis', formatter:p=>`${p[0].name}：${p[0].value} 个资源位`},
     grid:{left:40,right:16,top:16,bottom:60},
-    xAxis:{type:'category', data:order, axisLabel:{color:'#9aa4bf', rotate:35, fontSize:11}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'资源位数', nameTextStyle:{color:'#9aa4bf'}},
+    xAxis:{type:'category', data:order, axisLabel:{color:'#888892', rotate:35, fontSize:11}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'资源位数', nameTextStyle:{color:'#888892'}},
     series:[{
       type:'bar', data:order.map(k=>bucket[k]), barWidth:'58%',
       itemStyle:{color:p=>{
         const colors=['#ff6b6b','#ff8555','#ff9f4a','#ffc857','#c4a1ff','#8a56ff','#66d9e8','#4e8cff','#3b5cc4','#525e7d'];
         return colors[p.dataIndex] || '#66d9e8';
       }},
-      label:{show:true, position:'top', color:'#e7ecf5', fontSize:11}
+      label:{show:true, position:'top', color:'#f5f5f0', fontSize:11}
     }]
   });
 }
@@ -976,15 +1136,15 @@ function renderChannel(){
   chChannel.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis'},
-    legend:{data:['应用商店','游戏中心'], textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{data:['应用商店','游戏中心'], textStyle:{color:'#888892'}, top:0},
     grid:{left:40,right:16,top:32,bottom:28},
-    xAxis:{type:'category', data:stores.map(s=>STORE_NAME[s]), axisLabel:{color:'#9aa4bf'}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'资源位数', nameTextStyle:{color:'#9aa4bf'}},
+    xAxis:{type:'category', data:stores.map(s=>STORE_NAME[s]), axisLabel:{color:'#888892'}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'资源位数', nameTextStyle:{color:'#888892'}},
     series:[
       {name:'应用商店', type:'bar', barGap:0, itemStyle:{color:'#4e8cff'}, data:appCnt,
-        label:{show:true, position:'top', color:'#9aa4bf', fontSize:11}},
+        label:{show:true, position:'top', color:'#888892', fontSize:11}},
       {name:'游戏中心', type:'bar', itemStyle:{color:'#9d4edd'}, data:gcCnt,
-        label:{show:true, position:'top', color:'#9aa4bf', fontSize:11}},
+        label:{show:true, position:'top', color:'#888892', fontSize:11}},
     ]
   });
 }
@@ -999,11 +1159,11 @@ function renderGradeTotal(){
   chGradeTotal.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'item', formatter:'{b}: {c} 个 ({d}%)'},
-    legend:{bottom:0, textStyle:{color:'#9aa4bf'}},
+    legend:{bottom:0, textStyle:{color:'#888892'}},
     series:[{
       type:'pie', radius:['48%','75%'], center:['50%','45%'],
       data: grades.map((g,i)=>({name:g, value:cnt[i], itemStyle:{color:GRADE_COLOR[g]}})),
-      label:{color:'#e7ecf5', formatter:'{b}\n{c} 个'}
+      label:{color:'#f5f5f0', formatter:'{b}\n{c} 个'}
     }]
   });
 }
@@ -1030,10 +1190,10 @@ function renderHWCoverage(){
   ch.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis', valueFormatter:v=>(+v).toFixed(1)},
-    legend:{textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{textStyle:{color:'#888892'}, top:0},
     grid:{left:40,right:16,top:32,bottom:28},
-    xAxis:{type:'category', data:['应用市场','游戏中心'], axisLabel:{color:'#9aa4bf'}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'资源位数'},
+    xAxis:{type:'category', data:['应用市场','游戏中心'], axisLabel:{color:'#888892'}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'资源位数'},
     series:[
       {name:'EMUI', type:'bar', barGap:0, itemStyle:{color:'#66d9e8'},
        data:[emui.app_store, emui.game_center],
@@ -1059,10 +1219,10 @@ function renderHWGrade(){
   ch.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis'},
-    legend:{textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{textStyle:{color:'#888892'}, top:0},
     grid:{left:40,right:16,top:32,bottom:28},
-    xAxis:{type:'category', data:grades, axisLabel:{color:'#9aa4bf'}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'资源位数'},
+    xAxis:{type:'category', data:grades, axisLabel:{color:'#888892'}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'资源位数'},
     series:[
       {name:'EMUI', type:'bar', barGap:0, itemStyle:{color:'#66d9e8'}, data:emui,
         label:{show:true, position:'top', color:'#66d9e8', fontSize:11}},
@@ -1118,16 +1278,16 @@ function renderSampleHealth(){
   ch.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis'},
-    legend:{textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{textStyle:{color:'#888892'}, top:0},
     grid:{left:48,right:16,top:32,bottom:28},
-    xAxis:{type:'category', data:grades, axisLabel:{color:'#9aa4bf'}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'张/日', nameTextStyle:{color:'#9aa4bf'}},
+    xAxis:{type:'category', data:grades, axisLabel:{color:'#888892'}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'张/日', nameTextStyle:{color:'#888892'}},
     series:[
-      {name:'计划样本', type:'bar', itemStyle:{color:'#2a3454'}, barGap:'-100%', barWidth:'50%',
+      {name:'计划样本', type:'bar', itemStyle:{color:'#1e1e24'}, barGap:'-100%', barWidth:'50%',
         data: grades.map(g=>byGrade[g].planned)},
       {name:'实际采到', type:'bar', itemStyle:{color:'#4e8cff'}, barWidth:'50%',
         data: grades.map(g=>byGrade[g].got),
-        label:{show:true, position:'top', color:'#9aa4bf', fontSize:11}},
+        label:{show:true, position:'top', color:'#888892', fontSize:11}},
     ]
   });
   const total_plan = Object.values(byGrade).reduce((a,b)=>a+b.planned,0);
@@ -1232,17 +1392,17 @@ function renderPubByStore(storeKey, domId){
       }
     },
     grid:{left:110,right:36,top:10,bottom:20},
-    xAxis:{type:'value', max:35, axisLabel:{color:'#9aa4bf', formatter:'{value}%'},
-      splitLine:{lineStyle:{color:'#2a3454'}}},
+    xAxis:{type:'value', max:35, axisLabel:{color:'#888892', formatter:'{value}%'},
+      splitLine:{lineStyle:{color:'#1e1e24'}}},
     yAxis:{type:'category', data:sorted.map(d=>d.name),
-      axisLabel:{color:'#e7ecf5', fontSize:12}, axisLine:{lineStyle:{color:'#2a3454'}}},
+      axisLabel:{color:'#f5f5f0', fontSize:12}, axisLine:{lineStyle:{color:'#1e1e24'}}},
     series:[{
       type:'bar', data:sorted.map(d=>({
         value:d.pct,
         itemStyle:{color: d.tag==='自然上架' ? '#c4a1ff' : (PUB_COLOR[d.name]||'#4e8cff'), borderRadius:[0,4,4,0]}
       })),
       barWidth:'62%',
-      label:{show:true, position:'right', color:'#e7ecf5', fontSize:11,
+      label:{show:true, position:'right', color:'#f5f5f0', fontSize:11,
         formatter:p=>`${p.value}%`}
     }]
   });
@@ -1265,15 +1425,15 @@ function renderPubOverall(){
     tooltip:{trigger:'axis', axisPointer:{type:'shadow'},
       formatter:p=>`${p[0].name}<br/>5 家合并加权占比：<b>${p[0].value}%</b>`},
     grid:{left:130,right:50,top:20,bottom:24},
-    xAxis:{type:'value', axisLabel:{color:'#9aa4bf', formatter:'{value}%'},
-      splitLine:{lineStyle:{color:'#2a3454'}}},
+    xAxis:{type:'value', axisLabel:{color:'#888892', formatter:'{value}%'},
+      splitLine:{lineStyle:{color:'#1e1e24'}}},
     yAxis:{type:'category', data:sorted.map(d=>d.name),
-      axisLabel:{color:'#e7ecf5', fontSize:13}, axisLine:{lineStyle:{color:'#2a3454'}}},
+      axisLabel:{color:'#f5f5f0', fontSize:13}, axisLine:{lineStyle:{color:'#1e1e24'}}},
     series:[{
       type:'bar', data:sorted.map(d=>({value:d.pct,
         itemStyle:{color:PUB_COLOR[d.name]||'#4e8cff', borderRadius:[0,4,4,0]}})),
       barWidth:'60%',
-      label:{show:true, position:'right', color:'#e7ecf5', fontSize:12,
+      label:{show:true, position:'right', color:'#f5f5f0', fontSize:12,
         formatter:p=>`${p.value}%`}
     }]
   });
@@ -1303,15 +1463,15 @@ function renderPubHeatmap(){
       formatter:p=>`${pubs[p.data[1]]} × ${STORE_NAME[stores[p.data[0]]]}<br/>加权占比：<b>${p.data[2]}%</b>`},
     grid:{left:130,right:40,top:20,bottom:40},
     xAxis:{type:'category', data:stores.map(s=>STORE_NAME[s]),
-      axisLabel:{color:'#e7ecf5', fontSize:12}, splitArea:{show:true}},
+      axisLabel:{color:'#f5f5f0', fontSize:12}, splitArea:{show:true}},
     yAxis:{type:'category', data:pubs,
-      axisLabel:{color:'#e7ecf5', fontSize:12}, splitArea:{show:true}},
+      axisLabel:{color:'#f5f5f0', fontSize:12}, splitArea:{show:true}},
     visualMap:{min:0, max:Math.ceil(maxV/5)*5, calculable:true, orient:'horizontal',
-      left:'center', bottom:0, textStyle:{color:'#9aa4bf'},
-      inRange:{color:['#1e2740','#2a3454','#4e8cff','#c4a1ff','#ff5a78']}},
+      left:'center', bottom:0, textStyle:{color:'#888892'},
+      inRange:{color:['#1e2740','#1e1e24','#4e8cff','#c4a1ff','#ff5a78']}},
     series:[{
       type:'heatmap', data:dataPoints,
-      label:{show:true, color:'#e7ecf5', fontSize:11, formatter:p=>p.data[2]?p.data[2]+'%':'—'},
+      label:{show:true, color:'#f5f5f0', fontSize:11, formatter:p=>p.data[2]?p.data[2]+'%':'—'},
       emphasis:{itemStyle:{shadowBlur:10, shadowColor:'rgba(0,0,0,0.5)'}}
     }]
   });
@@ -1629,12 +1789,12 @@ function renderInterceptStack(){
   chIntStack.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
-    legend:{data:['强拦截','弱拦截','一致'], textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{data:['强拦截','弱拦截','一致'], textStyle:{color:'#888892'}, top:0},
     grid:{left:36, right:20, top:32, bottom:70},
     xAxis:{type:'category', data:cats,
-      axisLabel:{color:'#9aa4bf', fontSize:10, rotate:35, interval:0}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'场景数', nameTextStyle:{color:'#9aa4bf'},
-      splitLine:{lineStyle:{color:'#2a3454'}}},
+      axisLabel:{color:'#888892', fontSize:10, rotate:35, interval:0}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, name:'场景数', nameTextStyle:{color:'#888892'},
+      splitLine:{lineStyle:{color:'#1e1e24'}}},
     series:[
       {name:'强拦截', type:'bar', stack:'lv', data:strong, itemStyle:{color:'#ff5a78'}, barMaxWidth:22},
       {name:'弱拦截', type:'bar', stack:'lv', data:weak,   itemStyle:{color:'#ffc857'}, barMaxWidth:22},
@@ -1664,12 +1824,12 @@ function renderStepsChart(){
     tooltip:{trigger:'axis', axisPointer:{type:'shadow'},
       formatter:p=>`${p[0].name===''?'0（完全阻塞）':p[0].name+' 步'}<br/>场景数：<b>${p[0].value}</b>`},
     grid:{left:36, right:20, top:20, bottom:36},
-    xAxis:{type:'category', data:keys.map(k=>k+' 步'), axisLabel:{color:'#9aa4bf'},
+    xAxis:{type:'category', data:keys.map(k=>k+' 步'), axisLabel:{color:'#888892'},
       name:'用户点击"确认/下一步"次数', nameLocation:'middle', nameGap:26,
-      nameTextStyle:{color:'#9aa4bf', fontSize:11}},
-    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, splitLine:{lineStyle:{color:'#2a3454'}}},
+      nameTextStyle:{color:'#888892', fontSize:11}},
+    yAxis:{type:'value', axisLabel:{color:'#888892'}, splitLine:{lineStyle:{color:'#1e1e24'}}},
     series:[{type:'bar', data, barWidth:'50%',
-      label:{show:true, position:'top', color:'#e7ecf5', fontSize:11}}]
+      label:{show:true, position:'top', color:'#f5f5f0', fontSize:11}}]
   });
 }
 
@@ -1683,13 +1843,13 @@ function renderAuthCompare(auth, elId, inst){
         const lines = params.map(p=>`${p.marker}${p.seriesName}：<b>${p.value}</b>`);
         return st+'<br/>'+lines.join('<br/>');
       }},
-    legend:{data:['强拦截','弱拦截','一致'], textStyle:{color:'#9aa4bf'}, top:0},
+    legend:{data:['强拦截','弱拦截','一致'], textStyle:{color:'#888892'}, top:0},
     grid:{left:36, right:20, top:32, bottom:36},
     xAxis:{type:'category', data:STORE_ORDER2.map(s=>STORE_NAME[s]),
-      axisLabel:{color:'#9aa4bf'}},
-    yAxis:{type:'value', max:3, axisLabel:{color:'#9aa4bf'},
-      splitLine:{lineStyle:{color:'#2a3454'}},
-      name:'渠道数（最多3）', nameTextStyle:{color:'#9aa4bf', fontSize:11}},
+      axisLabel:{color:'#888892'}},
+    yAxis:{type:'value', max:3, axisLabel:{color:'#888892'},
+      splitLine:{lineStyle:{color:'#1e1e24'}},
+      name:'渠道数（最多3）', nameTextStyle:{color:'#888892', fontSize:11}},
     series:[]
   };
   ['strong','weak','none'].forEach(lv=>{
