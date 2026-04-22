@@ -1,0 +1,169 @@
+{
+  "date": "2026-04-21",
+  "_note": "stores[store][channel][platform][slot] = {tencent,netease,other}. 华为双平台(emui/harmony_next)，其他厂商单平台(android)。",
+  "stores": {
+    "huawei": {
+      "app_store": {
+        "emui": {
+          "splash":  {"tencent":0.45,"netease":0.22,"other":0.33},
+          "banner":  {"tencent":0.50,"netease":0.20,"other":0.30},
+          "bigcard": {"tencent":0.44,"netease":0.24,"other":0.32},
+          "header":  {"tencent":0.40,"netease":0.22,"other":0.38}
+        },
+        "harmony_next": {
+          "splash":  {"tencent":0.22,"netease":0.10,"other":0.68},
+          "banner":  {"tencent":0.25,"netease":0.12,"other":0.63},
+          "bigcard": {"tencent":0.20,"netease":0.08,"other":0.72},
+          "header":  {"tencent":0.18,"netease":0.11,"other":0.71}
+        }
+      },
+      "game_center": {
+        "emui": {
+          "splash":  {"tencent":0.54,"netease":0.21,"other":0.25},
+          "banner":  {"tencent":0.55,"netease":0.20,"other":0.25},
+          "bigcard": {"tencent":0.50,"netease":0.22,"other":0.28},
+          "header":  {"tencent":0.48,"netease":0.18,"other":0.34}
+        },
+        "harmony_next": {
+          "splash":  {"tencent":0.30,"netease":0.12,"other":0.58},
+          "banner":  {"tencent":0.32,"netease":0.14,"other":0.54},
+          "bigcard": {"tencent":0.26,"netease":0.10,"other":0.64},
+          "header":  {"tencent":0.24,"netease":0.13,"other":0.63}
+        }
+      }
+    },
+    "xiaomi": {
+      "app_store":  { "android": {
+        "splash":  {"tencent":0.36,"netease":0.24,"other":0.40},
+        "banner":  {"tencent":0.40,"netease":0.22,"other":0.38},
+        "bigcard": {"tencent":0.38,"netease":0.26,"other":0.36},
+        "header":  {"tencent":0.34,"netease":0.24,"other":0.42}
+      }},
+      "game_center":{ "android": {
+        "splash":  {"tencent":0.48,"netease":0.28,"other":0.24},
+        "banner":  {"tencent":0.50,"netease":0.26,"other":0.24},
+        "bigcard": {"tencent":0.46,"netease":0.30,"other":0.24},
+        "header":  {"tencent":0.44,"netease":0.28,"other":0.28}
+      }}
+    },
+    "vivo": {
+      "app_store":  { "android": {
+        "splash":  {"tencent":0.38,"netease":0.20,"other":0.42},
+        "banner":  {"tencent":0.42,"netease":0.18,"other":0.40},
+        "bigcard": {"tencent":0.40,"netease":0.22,"other":0.38},
+        "header":  {"tencent":0.36,"netease":0.20,"other":0.44}
+      }},
+      "game_center":{ "android": {
+        "splash":  {"tencent":0.50,"netease":0.22,"other":0.28},
+        "banner":  {"tencent":0.52,"netease":0.20,"other":0.28},
+        "bigcard": {"tencent":0.48,"netease":0.24,"other":0.28},
+        "header":  {"tencent":0.46,"netease":0.22,"other":0.32}
+      }}
+    },
+    "oppo": {
+      "app_store":  { "android": {
+        "splash":  {"tencent":0.40,"netease":0.22,"other":0.38},
+        "banner":  {"tencent":0.44,"netease":0.20,"other":0.36},
+        "bigcard": {"tencent":0.42,"netease":0.24,"other":0.34},
+        "header":  {"tencent":0.38,"netease":0.22,"other":0.40}
+      }},
+      "game_center":{ "android": {
+        "splash":  {"tencent":0.46,"netease":0.24,"other":0.30},
+        "banner":  {"tencent":0.48,"netease":0.22,"other":0.30},
+        "bigcard": {"tencent":0.44,"netease":0.26,"other":0.30},
+        "header":  {"tencent":0.42,"netease":0.24,"other":0.34}
+      }}
+    },
+    "honor": {
+      "app_store":  { "android": {
+        "splash":  {"tencent":0.44,"netease":0.18,"other":0.38},
+        "banner":  {"tencent":0.48,"netease":0.16,"other":0.36},
+        "bigcard": {"tencent":0.46,"netease":0.20,"other":0.34},
+        "header":  {"tencent":0.42,"netease":0.18,"other":0.40}
+      }},
+      "game_center":{ "android": {
+        "splash":  {"tencent":0.52,"netease":0.20,"other":0.28},
+        "banner":  {"tencent":0.54,"netease":0.18,"other":0.28},
+        "bigcard": {"tencent":0.50,"netease":0.22,"other":0.28},
+        "header":  {"tencent":0.48,"netease":0.20,"other":0.32}
+      }}
+    }
+  },
+  "totals_by_channel": {
+    "all":        {"tencent":0.42,"netease":0.22,"other":0.36},
+    "app_store":  {"tencent":0.40,"netease":0.21,"other":0.39},
+    "game_center":{"tencent":0.47,"netease":0.23,"other":0.30}
+  },
+  "trend": {
+    "all": [
+      {"date":"2026-04-08","tencent":0.40,"netease":0.24,"other":0.36},
+      {"date":"2026-04-09","tencent":0.41,"netease":0.23,"other":0.36},
+      {"date":"2026-04-10","tencent":0.40,"netease":0.25,"other":0.35},
+      {"date":"2026-04-11","tencent":0.42,"netease":0.22,"other":0.36},
+      {"date":"2026-04-12","tencent":0.41,"netease":0.22,"other":0.37},
+      {"date":"2026-04-13","tencent":0.42,"netease":0.23,"other":0.35},
+      {"date":"2026-04-14","tencent":0.43,"netease":0.21,"other":0.36},
+      {"date":"2026-04-15","tencent":0.42,"netease":0.22,"other":0.36},
+      {"date":"2026-04-16","tencent":0.41,"netease":0.24,"other":0.35},
+      {"date":"2026-04-17","tencent":0.42,"netease":0.23,"other":0.35},
+      {"date":"2026-04-18","tencent":0.43,"netease":0.22,"other":0.35},
+      {"date":"2026-04-19","tencent":0.43,"netease":0.21,"other":0.36},
+      {"date":"2026-04-20","tencent":0.42,"netease":0.23,"other":0.35},
+      {"date":"2026-04-21","tencent":0.42,"netease":0.22,"other":0.36}
+    ],
+    "app_store": [
+      {"date":"2026-04-08","tencent":0.38,"netease":0.22,"other":0.40},
+      {"date":"2026-04-09","tencent":0.39,"netease":0.22,"other":0.39},
+      {"date":"2026-04-10","tencent":0.38,"netease":0.23,"other":0.39},
+      {"date":"2026-04-11","tencent":0.40,"netease":0.21,"other":0.39},
+      {"date":"2026-04-12","tencent":0.39,"netease":0.21,"other":0.40},
+      {"date":"2026-04-13","tencent":0.40,"netease":0.22,"other":0.38},
+      {"date":"2026-04-14","tencent":0.41,"netease":0.20,"other":0.39},
+      {"date":"2026-04-15","tencent":0.40,"netease":0.21,"other":0.39},
+      {"date":"2026-04-16","tencent":0.39,"netease":0.22,"other":0.39},
+      {"date":"2026-04-17","tencent":0.40,"netease":0.21,"other":0.39},
+      {"date":"2026-04-18","tencent":0.41,"netease":0.21,"other":0.38},
+      {"date":"2026-04-19","tencent":0.41,"netease":0.20,"other":0.39},
+      {"date":"2026-04-20","tencent":0.40,"netease":0.22,"other":0.38},
+      {"date":"2026-04-21","tencent":0.40,"netease":0.21,"other":0.39}
+    ],
+    "game_center": [
+      {"date":"2026-04-08","tencent":0.45,"netease":0.25,"other":0.30},
+      {"date":"2026-04-09","tencent":0.46,"netease":0.24,"other":0.30},
+      {"date":"2026-04-10","tencent":0.45,"netease":0.26,"other":0.29},
+      {"date":"2026-04-11","tencent":0.47,"netease":0.23,"other":0.30},
+      {"date":"2026-04-12","tencent":0.46,"netease":0.23,"other":0.31},
+      {"date":"2026-04-13","tencent":0.47,"netease":0.24,"other":0.29},
+      {"date":"2026-04-14","tencent":0.48,"netease":0.22,"other":0.30},
+      {"date":"2026-04-15","tencent":0.47,"netease":0.23,"other":0.30},
+      {"date":"2026-04-16","tencent":0.46,"netease":0.25,"other":0.29},
+      {"date":"2026-04-17","tencent":0.47,"netease":0.24,"other":0.29},
+      {"date":"2026-04-18","tencent":0.48,"netease":0.23,"other":0.29},
+      {"date":"2026-04-19","tencent":0.48,"netease":0.22,"other":0.30},
+      {"date":"2026-04-20","tencent":0.47,"netease":0.24,"other":0.29},
+      {"date":"2026-04-21","tencent":0.47,"netease":0.23,"other":0.30}
+    ]
+  },
+  "hw_coverage": {
+    "emui":         {"tencent_games":42,"netease_games":18,"other_games":95,"total_slots":52},
+    "harmony_next": {"tencent_games":12,"netease_games":5,"other_games":48,"total_slots":38}
+  },
+  "top_apps": [
+    {"app":"王者荣耀","publisher":"tencent","channel":"game_center","exposures":58,"change":3},
+    {"app":"和平精英","publisher":"tencent","channel":"game_center","exposures":49,"change":1},
+    {"app":"蛋仔派对","publisher":"netease","channel":"app_store","exposures":41,"change":4},
+    {"app":"元梦之星","publisher":"tencent","channel":"game_center","exposures":38,"change":-1},
+    {"app":"阴阳师","publisher":"netease","channel":"game_center","exposures":33,"change":2},
+    {"app":"原神","publisher":"other","channel":"app_store","exposures":30,"change":0},
+    {"app":"逆水寒手游","publisher":"netease","channel":"game_center","exposures":26,"change":-2},
+    {"app":"崩坏:星穹铁道","publisher":"other","channel":"app_store","exposures":24,"change":1},
+    {"app":"英雄联盟手游","publisher":"tencent","channel":"game_center","exposures":22,"change":2},
+    {"app":"第五人格","publisher":"netease","channel":"app_store","exposures":19,"change":0}
+  ],
+  "anomalies": [
+    "🔥 华为纯血鸿蒙（HarmonyOS NEXT）游戏中心腾讯占比仅 28%，较 EMUI 双框架版本低 24pp —— 腾讯系游戏尚未完成鸿蒙版适配",
+    "荣耀游戏中心 banner 腾讯占比环比 ↑ 12.0pp，主要来自《王者荣耀》《元梦之星》加推",
+    "小米游戏中心 bigcard 网易占比环比 ↑ 6.0pp，《蛋仔派对》连续3天进入大卡",
+    "华为游戏中心纯血鸿蒙版《原神》首次进入开屏位（首发推荐）"
+  ]
+}

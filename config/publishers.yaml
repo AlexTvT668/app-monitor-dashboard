@@ -1,0 +1,52 @@
+# 包名归属配置：用于识别 App 是腾讯系 / 网易系 / 其他
+# 可持续补充，未命中的包名会进入 unknown 队列等待人工 review
+
+tencent:
+  # 核心手游
+  - com.tencent.tmgp.sgame           # 王者荣耀
+  - com.tencent.tmgp.pubgmhd         # 和平精英
+  - com.tencent.tmgp.speedmobile     # QQ飞车
+  - com.tencent.tmgp.cf              # 穿越火线:枪战王者
+  - com.tencent.jkchess              # 天天象棋
+  - com.tencent.tmgp.cod             # 使命召唤手游
+  - com.tencent.lolm                 # 英雄联盟手游
+  - com.tencent.tmgp.yuanmeng        # 元梦之星
+  - com.tencent.nijigen              # 波克斗地主
+  - com.tencent.tmgp.dnf             # 地下城与勇士：起源
+  - com.tencent.tmgp.nbamobile       # NBA2K Online 手游
+  - com.tencent.tmgp.supercell.clashroyale  # 皇室战争
+  - com.supercell.clashofclans.tencent      # 部落冲突
+  - com.tencent.tmgp.baolu           # 暴鸡电竞
+  # 通配：com.tencent.tmgp.* 一般都是腾讯游戏
+  prefix:
+    - com.tencent.tmgp.
+    - com.tencent.lolm
+
+netease:
+  - com.netease.onmyoji              # 阴阳师
+  - com.netease.mrzh                 # 梦幻西游
+  - com.netease.dwrg                 # 大话西游
+  - com.netease.g78na.gb             # 荒野行动
+  - com.netease.sky                  # 光·遇
+  - com.netease.party                # 蛋仔派对
+  - com.netease.x19                  # 永劫无间手游
+  - com.netease.hyxd                 # 哈利波特：魔法觉醒
+  - com.netease.g104na               # 第五人格
+  - com.netease.mchfy                # 我的世界
+  - com.netease.yzj                  # 逆水寒手游
+  - com.netease.wyjx                 # 倩女幽魂
+  prefix:
+    - com.netease.
+
+# 其他常见大厂（归入 other，但可单独统计）
+other_majors:
+  miHoYo:
+    - com.miHoYo.ys                  # 原神
+    - com.miHoYo.hkrpg               # 崩坏:星穹铁道
+    - com.miHoYo.bh3                 # 崩坏3
+    - com.miHoYo.enterprise.NGHSoD   # 崩坏:星穹铁道
+  lilith:
+    - com.lilithgames.xgame.gp       # 剑与远征
+    - com.lilith.igame               # 万国觉醒
+  xd:
+    - com.taptap                     # TapTap

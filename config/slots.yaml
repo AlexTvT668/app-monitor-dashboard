@@ -1,0 +1,578 @@
+# ============================================================
+#  OVHMR 资源位监控配置 v3
+#  数据来源：《OVHMR监控资源范围.xlsx》
+#  5 家厂商（OPPO / VIVO / 华为 / 小米 / 荣耀） × 71 个资源位
+#  字段说明：
+#    slot_id           资源位内部 id
+#    name              资源位名称（与 Excel 一致）
+#    reach             触达链路（打开时/首页首屏/二级页第1屏...）
+#    final_grade       最终定级（S / A+ / A / A- / B+ / B / C）
+#    combo_grade       综合建议等级
+#    op_grade_max      运营最高获取评级
+#    op_grade_min      运营最低获取评级
+#    channels          入口：app_store | game_center
+#    platforms         华为专属：emui | harmony_next；其他默认 [android]
+#    priority          采集优先级（S=1 每日必采，A+=2，A=3，B+=4，C=5）
+#    top_n             采集深度（S/A+：Top20；A：Top15；B+：Top10；C：Top5）
+# ============================================================
+
+rating_scheme:
+  levels: [S, "A+", A, "A-", "B+", B, C]
+  priority:
+    S: 1
+    "A+": 2
+    A: 3
+    "A-": 3
+    "B+": 4
+    B: 4
+    C: 5
+  top_n:
+    S: 20
+    "A+": 20
+    A: 15
+    "A-": 15
+    "B+": 10
+    B: 10
+    C: 5
+
+# ===================== 华为（含双框架） =====================
+huawei:
+  # 应用市场 AppGallery 应用商店入口
+  platforms: [emui, harmony_next]
+  channels: [app_store, game_center]
+  slots:
+    - slot_id: hw_01
+      name: 闪屏
+      reach: 打开时
+      final_grade: S
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: A
+      channels: [app_store, game_center]
+    - slot_id: hw_02
+      name: Today
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: A
+      channels: [app_store]
+    - slot_id: hw_03
+      name: 定制TAB
+      reach: 首页首屏
+      final_grade: S
+      combo_grade: S
+      op_grade_max: S
+      op_grade_min: A+
+      channels: [app_store, game_center]
+    - slot_id: hw_04
+      name: 定制底栏
+      reach: 首页首屏
+      final_grade: S
+      combo_grade: S
+      op_grade_max: S
+      op_grade_min: A+
+      channels: [app_store, game_center]
+    - slot_id: hw_05
+      name: 首页-精品首发
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A
+      op_grade_max: S
+      op_grade_min: A
+      channels: [app_store, game_center]
+    - slot_id: hw_06
+      name: 首页-编辑推荐
+      reach: 首页第2屏
+      final_grade: A
+      combo_grade: A
+      channels: [app_store, game_center]
+    - slot_id: hw_07
+      name: 首页-新游预约
+      reach: 首页第2屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: hw_08
+      name: 首页-编辑室专区
+      reach: 首页第3屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: hw_09
+      name: 首页-排行-畅销榜
+      reach: 二级页第1屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: hw_10
+      name: 首页-排行-人气榜
+      reach: 二级页第2屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: hw_11
+      name: 首页-排行-热门榜
+      reach: 二级页第2屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: hw_12
+      name: 社区-资讯大卡
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: A
+      channels: [game_center]
+
+# ===================== OPPO =====================
+oppo:
+  platforms: [android]
+  channels: [app_store, game_center]
+  slots:
+    - slot_id: op_01
+      name: 闪屏
+      reach: 打开时
+      final_grade: S
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [app_store, game_center]
+    - slot_id: op_02
+      name: 悬浮窗
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [app_store]
+    - slot_id: op_03
+      name: 每日一荐
+      reach: 首页首屏
+      final_grade: S
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [app_store, game_center]
+    - slot_id: op_04
+      name: 首页-热门游戏精选
+      reach: 首页首屏
+      final_grade: A
+      combo_grade: A
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [app_store, game_center]
+    - slot_id: op_05
+      name: 首页-地区大部分爱玩
+      reach: 首页第2屏
+      final_grade: A
+      combo_grade: A
+      channels: [app_store]
+    - slot_id: op_06
+      name: 排行-热门榜
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: A
+      channels: [app_store, game_center]
+    - slot_id: op_07
+      name: 排行-新游榜
+      reach: 二级页第2屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: A
+      channels: [app_store, game_center]
+    - slot_id: op_08
+      name: 排行-预约榜
+      reach: 二级页第2屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: op_09
+      name: 首页-好游大事件-精选新游
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [game_center]
+    - slot_id: op_10
+      name: 首页-好游大事件-新游种草
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [game_center]
+    - slot_id: op_11
+      name: 首页-好游大事件-即将上线
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [game_center]
+
+# ===================== VIVO =====================
+vivo:
+  platforms: [android]
+  channels: [app_store, game_center]
+  slots:
+    - slot_id: vv_01
+      name: 月度推荐
+      reach: 打开时
+      final_grade: S
+      combo_grade: S
+      op_grade_max: "S（3-4）"
+      op_grade_min: "S（3-4）"
+      channels: [app_store, game_center]
+    - slot_id: vv_02
+      name: 闪屏
+      reach: 打开时
+      final_grade: S
+      combo_grade: A+
+      op_grade_max: "S（3-4）"
+      op_grade_min: "A（1-2）"
+      channels: [app_store, game_center]
+    - slot_id: vv_03
+      name: 弹窗
+      reach: 打开后
+      final_grade: S
+      combo_grade: A+
+      op_grade_max: "S（3-4）"
+      op_grade_min: "S（1-2）"
+      channels: [app_store, game_center]
+    - slot_id: vv_04
+      name: 定制TAB
+      reach: 首页首屏顶部
+      final_grade: S
+      combo_grade: S
+      op_grade_max: "S（3-4）"
+      op_grade_min: "S（1-2）"
+      channels: [app_store, game_center]
+    - slot_id: vv_05
+      name: 推荐-每日一荐
+      reach: 首页首屏
+      final_grade: S
+      combo_grade: A+
+      op_grade_max: "S（3-4）"
+      op_grade_min: "S（1-2）"
+      channels: [app_store, game_center]
+    - slot_id: vv_06
+      name: 推荐-精品游戏
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A
+      channels: [app_store, game_center]
+    - slot_id: vv_07
+      name: 推荐-卡片推荐
+      reach: 首页第2屏往后
+      final_grade: A+
+      combo_grade: A
+      op_grade_max: "S（3-4）"
+      op_grade_min: "A（1-2）"
+      channels: [app_store, game_center]
+    - slot_id: vv_08
+      name: 推荐-卡片推荐-banner
+      reach: 首页第2屏
+      final_grade: A
+      combo_grade: A
+      op_grade_max: "S（3-4）"
+      op_grade_min: "A（1-2）"
+      channels: [app_store, game_center]
+    - slot_id: vv_09
+      name: 推荐-精选-小编推荐
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: "S（3-4）"
+      op_grade_min: B
+      channels: [app_store, game_center]
+    - slot_id: vv_10
+      name: 推荐-精选-热游驿站
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: "S（3-4）"
+      op_grade_min: B
+      channels: [app_store, game_center]
+    - slot_id: vv_11
+      name: 推荐-新游-banner
+      reach: 二级页第1屏
+      final_grade: A+
+      combo_grade: "B+"
+      op_grade_max: "S（3-4）"
+      op_grade_min: "S（3-4）"
+      channels: [game_center]
+    - slot_id: vv_12
+      name: 推荐-新游-新游首发
+      reach: 二级页第1屏
+      final_grade: A
+      combo_grade: "B+"
+      op_grade_max: "S（3-4）"
+      op_grade_min: B
+      channels: [game_center]
+    - slot_id: vv_13
+      name: 推荐-新游-高热预约
+      reach: 二级页第1屏
+      final_grade: A
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: vv_14
+      name: 找游戏-排行-热门榜
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: "S（3-4）"
+      op_grade_min: B
+      channels: [game_center]
+
+# ===================== 小米 =====================
+xiaomi:
+  platforms: [android]
+  channels: [app_store, game_center]
+  note: 新增 S 级资源「商店2楼」（待补充采集链路）
+  slots:
+    - slot_id: mi_01
+      name: 闪屏
+      reach: 打开时
+      final_grade: A+
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: "A-"
+      channels: [app_store, game_center]
+    - slot_id: mi_02
+      name: 弹窗
+      reach: 打开后
+      final_grade: A+
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: "A-"
+      channels: [app_store, game_center]
+    - slot_id: mi_03
+      name: 定制TAB
+      reach: 首页首屏顶部
+      final_grade: S
+      combo_grade: S
+      op_grade_max: S
+      op_grade_min: A+
+      channels: [app_store, game_center]
+    - slot_id: mi_04
+      name: 定制攻略专区
+      reach: 首页首屏底部
+      final_grade: S
+      combo_grade: S
+      channels: [game_center]
+    - slot_id: mi_05
+      name: 悬浮窗
+      reach: 首页首屏右下角
+      final_grade: A
+      combo_grade: A
+      op_grade_max: S
+      op_grade_min: "A-"
+      channels: [app_store]
+    - slot_id: mi_06
+      name: 今日推荐
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A+
+      op_grade_max: S
+      op_grade_min: "A-"
+      channels: [app_store, game_center]
+    - slot_id: mi_07
+      name: 首页-大卡
+      reach: 首页首屏
+      final_grade: A
+      combo_grade: A
+      op_grade_max: S
+      op_grade_min: "A-"
+      channels: [app_store, game_center]
+    - slot_id: mi_08
+      name: 首页-小编力荐
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [app_store, game_center]
+    - slot_id: mi_09
+      name: 首页-畅玩
+      reach: 首页第2屏
+      final_grade: A
+      combo_grade: A
+      channels: [app_store]
+    - slot_id: mi_10
+      name: 精选-经典好游
+      reach: 首页第2屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      op_grade_max: S
+      op_grade_min: "B+"
+      channels: [app_store, game_center]
+    - slot_id: mi_11
+      name: 首页-新游首发
+      reach: 首页第3屏 / 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: mi_12
+      name: 首页-重磅更新
+      reach: 二级页第3屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: mi_13
+      name: 首页-热门-大卡
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [app_store, game_center]
+    - slot_id: mi_14
+      name: 首页-新游-新游种草
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: mi_15
+      name: 首页-新游-今日推荐
+      reach: 二级页第1屏往后
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: mi_16
+      name: 排行-热玩榜
+      reach: 二级页第1屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: mi_17
+      name: 排行-新品榜
+      reach: 二级页第2屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: mi_18
+      name: 排行-预约榜
+      reach: 二级页第2屏
+      final_grade: C
+      combo_grade: C
+      channels: [game_center]
+    - slot_id: mi_19
+      name: 首页-插卡banner
+      reach: 首页第2屏
+      final_grade: A
+      combo_grade: A
+      channels: [app_store, game_center]
+    # 预留位 S 级：小米新增「商店2楼」（触达链路待补充）
+    - slot_id: mi_20
+      name: 商店2楼
+      reach: 首页上滑（待确认）
+      final_grade: S
+      combo_grade: S
+      channels: [app_store]
+      status: pending_detail   # 采集链路尚未稳定，先打占位
+
+# ===================== 荣耀 =====================
+honor:
+  platforms: [android]
+  channels: [app_store, game_center]
+  slots:
+    - slot_id: ho_01
+      name: 闪屏
+      reach: 打开时
+      final_grade: A+
+      combo_grade: A+
+      channels: [app_store, game_center]
+    - slot_id: ho_02
+      name: 弹窗
+      reach: 打开后
+      final_grade: A+
+      combo_grade: A+
+      channels: [app_store, game_center]
+    - slot_id: ho_03
+      name: 悬浮窗
+      reach: 首页首屏右下角
+      final_grade: A+
+      combo_grade: A+
+      channels: [app_store]
+    - slot_id: ho_04
+      name: 首页-定制入口
+      reach: 首页首屏顶部
+      final_grade: S
+      combo_grade: S
+      channels: [app_store, game_center]
+    - slot_id: ho_05
+      name: 定制TAB
+      reach: 首页首屏顶部
+      final_grade: S
+      combo_grade: S
+      channels: [app_store, game_center]
+    - slot_id: ho_06
+      name: 今日推荐
+      reach: 首页首屏
+      final_grade: S
+      combo_grade: A+
+      channels: [app_store, game_center]
+    - slot_id: ho_07
+      name: 热门游戏
+      reach: 首页首屏
+      final_grade: A+
+      combo_grade: A
+      channels: [app_store, game_center]
+    - slot_id: ho_08
+      name: 编辑推荐
+      reach: 首页首屏
+      final_grade: A
+      combo_grade: A
+      channels: [app_store, game_center]
+    - slot_id: ho_09
+      name: 新游抢鲜
+      reach: 首页第2屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: ho_10
+      name: 精品首发
+      reach: 首页第2屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: ho_11
+      name: 游戏圈头条
+      reach: 首页第3屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: ho_12
+      name: 头号爆料站
+      reach: 首页第4屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: ho_13
+      name: 首页-资讯大卡
+      reach: 二级页第1屏
+      final_grade: "B+"
+      combo_grade: "B+"
+      channels: [game_center]
+    - slot_id: ho_14
+      name: 排行-畅销榜
+      reach: 二级页第1屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: ho_15
+      name: 排行-新游榜
+      reach: 二级页第2屏
+      final_grade: C
+      combo_grade: C
+      channels: [app_store, game_center]
+    - slot_id: ho_16
+      name: 排行-预约榜
+      reach: 二级页第2屏
+      final_grade: C
+      combo_grade: C
+      channels: [game_center]
