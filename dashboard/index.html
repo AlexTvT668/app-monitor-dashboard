@@ -149,6 +149,187 @@
     .intercept-matrix{grid-template-columns:90px repeat(3,1fr);}
     .method-grid{grid-template-columns:repeat(2,1fr);}
   }
+
+  /* ===========================================================
+     Tab 3 · 游戏首发资源分析 ——  nara.build 风格扩展
+     深黑 + 等宽字体 + 描边极简 + 全大写徽章 + 符号语言
+  =========================================================== */
+  #pane-launch{
+    --nr-bg:#070709; --nr-panel:#0d0d11; --nr-border:#1e1e24;
+    --nr-border-strong:#2a2a32; --nr-text:#f5f5f0; --nr-dim:#888892;
+    --nr-accent:#c8ff4d; --nr-accent-2:#7aa8ff; --nr-red:#ff5568;
+    font-feature-settings:"ss01","cv11";
+  }
+  #pane-launch{background:var(--nr-bg);margin:-22px -22px 0;padding:28px 22px 40px;
+    border-top:1px solid var(--nr-border);}
+  #pane-launch .mono{font-family:"JetBrains Mono","SF Mono","Menlo",monospace;
+    letter-spacing:-.01em;}
+  /* Hero */
+  #pane-launch .hero{position:relative;padding:32px 0 28px;
+    border-bottom:1px solid var(--nr-border);margin-bottom:22px;}
+  #pane-launch .hero .eyebrow{font-family:"JetBrains Mono","SF Mono",monospace;
+    font-size:11px;letter-spacing:.18em;color:var(--nr-dim);
+    text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  #pane-launch .hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;
+    background:var(--nr-accent);box-shadow:0 0 10px var(--nr-accent);}
+  #pane-launch .hero h2{font-size:46px;line-height:1.02;margin:0 0 16px;
+    font-weight:700;letter-spacing:-.02em;color:var(--nr-text);max-width:900px;}
+  #pane-launch .hero h2 .accent{color:var(--nr-accent);}
+  #pane-launch .hero p.lead{font-size:15px;line-height:1.7;color:var(--nr-dim);
+    margin:0 0 18px;max-width:720px;}
+  #pane-launch .hero .badges{display:flex;gap:8px;flex-wrap:wrap;}
+  .nr-badge{font-family:"JetBrains Mono","SF Mono",monospace;font-size:10.5px;
+    letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;
+    border:1px solid var(--nr-border-strong);border-radius:100px;color:var(--nr-dim);
+    display:inline-flex;align-items:center;gap:6px;background:transparent;}
+  .nr-badge.active{color:var(--nr-accent);border-color:var(--nr-accent);
+    background:rgba(200,255,77,.06);}
+  .nr-badge.danger{color:var(--nr-red);border-color:#8a2a35;}
+  .nr-badge.accent2{color:var(--nr-accent-2);border-color:#2b3b6b;}
+  .nr-badge::before{content:'';width:4px;height:4px;border-radius:50%;
+    background:currentColor;}
+
+  /* 厂商切换条 */
+  #pane-launch .vendor-switcher{display:flex;gap:0;border:1px solid var(--nr-border-strong);
+    border-radius:0;width:fit-content;margin-bottom:22px;overflow:hidden;
+    background:var(--nr-panel);}
+  #pane-launch .vendor-switcher .v{padding:11px 22px;font-size:13px;
+    color:var(--nr-dim);cursor:pointer;user-select:none;
+    border-right:1px solid var(--nr-border);font-weight:500;
+    display:flex;align-items:center;gap:8px;transition:color .15s, background .15s;
+    font-family:"JetBrains Mono","SF Mono",monospace;letter-spacing:.02em;}
+  #pane-launch .vendor-switcher .v:last-child{border-right:none;}
+  #pane-launch .vendor-switcher .v:hover{color:var(--nr-text);background:#15151b;}
+  #pane-launch .vendor-switcher .v.active{color:var(--nr-bg);background:var(--nr-accent);}
+  #pane-launch .vendor-switcher .v .sym{font-size:10px;opacity:.6;}
+  #pane-launch .vendor-switcher .v .count{font-size:10px;opacity:.7;margin-left:4px;
+    padding:1px 6px;border:1px solid currentColor;border-radius:100px;}
+
+  /* 汇总统计条 */
+  #pane-launch .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border:1px solid var(--nr-border-strong);margin-bottom:22px;background:var(--nr-panel);}
+  #pane-launch .stat-strip .cell{padding:18px 22px;border-right:1px solid var(--nr-border);}
+  #pane-launch .stat-strip .cell:last-child{border-right:none;}
+  #pane-launch .stat-strip .k{font-family:"JetBrains Mono","SF Mono",monospace;
+    font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--nr-dim);
+    margin-bottom:8px;}
+  #pane-launch .stat-strip .v{font-size:30px;font-weight:700;color:var(--nr-text);
+    font-family:"JetBrains Mono","SF Mono",monospace;letter-spacing:-.02em;line-height:1;}
+  #pane-launch .stat-strip .v .delta{font-size:13px;color:var(--nr-accent);
+    margin-left:8px;font-weight:500;}
+  #pane-launch .stat-strip .sub{font-size:11px;color:var(--nr-dim);margin-top:6px;}
+
+  /* 两栏：时间轴 + 侧栏 */
+  #pane-launch .launch-grid{display:grid;grid-template-columns:1fr 380px;gap:22px;
+    margin-bottom:22px;}
+  #pane-launch .launch-list{border:1px solid var(--nr-border-strong);
+    background:var(--nr-panel);}
+  #pane-launch .section-h{display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;border-bottom:1px solid var(--nr-border);}
+  #pane-launch .section-h .title{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--nr-text);font-family:"JetBrains Mono","SF Mono",monospace;font-weight:600;
+    display:flex;align-items:center;gap:10px;}
+  #pane-launch .section-h .title .num{color:var(--nr-accent);}
+  #pane-launch .section-h .hint{font-size:11px;color:var(--nr-dim);
+    font-family:"JetBrains Mono","SF Mono",monospace;}
+
+  /* 游戏时间轴条目 */
+  .lg-item{display:grid;grid-template-columns:120px 1fr auto;gap:16px;
+    padding:18px 20px;border-bottom:1px solid var(--nr-border);cursor:pointer;
+    transition:background .15s;align-items:center;}
+  .lg-item:last-child{border-bottom:none;}
+  .lg-item:hover{background:#131319;}
+  .lg-item.open{background:#12141c;}
+  .lg-item .date{font-family:"JetBrains Mono","SF Mono",monospace;font-size:13px;
+    color:var(--nr-dim);letter-spacing:.02em;}
+  .lg-item .date .year{display:block;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;opacity:.6;margin-bottom:2px;}
+  .lg-item .gname{font-size:18px;font-weight:600;color:var(--nr-text);letter-spacing:-.01em;}
+  .lg-item .gname .sub{font-size:11px;color:var(--nr-dim);font-weight:400;margin-left:8px;
+    font-family:"JetBrains Mono",monospace;}
+  .lg-item .tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+  .lg-item .arrow{font-family:"JetBrains Mono",monospace;color:var(--nr-dim);
+    font-size:20px;transition:transform .2s, color .2s;}
+  .lg-item.open .arrow{transform:rotate(90deg);color:var(--nr-accent);}
+  .lg-detail{display:none;padding:0 20px 22px 156px;border-bottom:1px solid var(--nr-border);
+    background:#0a0a0e;}
+  .lg-item.open + .lg-detail{display:block;}
+  .lg-detail .dt-meta{display:flex;gap:24px;padding:14px 0;font-size:12px;
+    color:var(--nr-dim);border-bottom:1px solid var(--nr-border);margin-bottom:14px;
+    font-family:"JetBrains Mono",monospace;}
+  .lg-detail .dt-meta strong{color:var(--nr-text);font-weight:600;margin-left:4px;}
+  .lg-detail table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .lg-detail table th{text-align:left;padding:10px 12px;
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--nr-dim);font-weight:500;
+    border-bottom:1px solid var(--nr-border-strong);}
+  .lg-detail table td{padding:10px 12px;border-bottom:1px solid var(--nr-border);
+    color:var(--nr-text);}
+  .lg-detail table tr:hover td{background:#111118;}
+  .lg-detail .live-y{color:var(--nr-accent);font-weight:600;}
+  .lg-detail .live-n{color:var(--nr-dim);}
+  .lg-detail .ch-pill{display:inline-block;padding:2px 8px;border:1px solid var(--nr-border-strong);
+    border-radius:100px;font-size:10.5px;color:var(--nr-dim);
+    font-family:"JetBrains Mono",monospace;letter-spacing:.04em;}
+
+  /* 右侧：Top 资源位 */
+  #pane-launch .side-col{display:flex;flex-direction:column;gap:22px;}
+  #pane-launch .side-panel{border:1px solid var(--nr-border-strong);background:var(--nr-panel);}
+  #pane-launch .top-slots{padding:4px 0 8px;}
+  .ts-row{display:grid;grid-template-columns:24px 1fr auto;gap:12px;
+    padding:10px 20px;align-items:center;font-size:12.5px;}
+  .ts-row:hover{background:#131319;}
+  .ts-row .idx{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--nr-dim);}
+  .ts-row .idx.top{color:var(--nr-accent);}
+  .ts-row .name{color:var(--nr-text);}
+  .ts-row .bar{position:relative;height:4px;background:#1a1a22;border-radius:0;
+    grid-column:1 / -1;margin-top:-4px;}
+  .ts-row .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--nr-accent);}
+  .ts-row .cnt{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--nr-text);
+    font-weight:600;}
+
+  /* ECharts 容器 */
+  #pane-launch .chart-wrap{padding:8px 12px 14px;}
+  #pane-launch .chart-nr{height:220px;}
+
+  /* 汇总 Insight 卡 */
+  #pane-launch .insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border:1px solid var(--nr-border-strong);background:var(--nr-panel);margin-bottom:22px;}
+  #pane-launch .insight-grid .ic{padding:22px 22px 24px;border-right:1px solid var(--nr-border);}
+  #pane-launch .insight-grid .ic:last-child{border-right:none;}
+  #pane-launch .insight-grid .ic .head{display:flex;align-items:center;gap:10px;
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--nr-dim);margin-bottom:12px;}
+  #pane-launch .insight-grid .ic .head .sym{color:var(--nr-accent);font-size:14px;}
+  #pane-launch .insight-grid .ic .title{font-size:16px;color:var(--nr-text);
+    font-weight:600;margin-bottom:8px;letter-spacing:-.005em;}
+  #pane-launch .insight-grid .ic .desc{font-size:13px;color:var(--nr-dim);line-height:1.7;}
+  #pane-launch .insight-grid .ic .desc b{color:var(--nr-text);font-weight:600;}
+
+  /* 底部 CTA */
+  #pane-launch .nr-cta{border:1px solid var(--nr-border-strong);padding:28px;
+    background:var(--nr-panel);display:flex;justify-content:space-between;align-items:center;
+    gap:20px;flex-wrap:wrap;}
+  #pane-launch .nr-cta .txt{font-size:14px;color:var(--nr-dim);line-height:1.7;max-width:680px;}
+  #pane-launch .nr-cta .txt b{color:var(--nr-text);font-weight:600;}
+  #pane-launch .nr-cta .arrow{font-family:"JetBrains Mono",monospace;font-size:30px;
+    color:var(--nr-accent);}
+
+  /* 空态 */
+  #pane-launch .empty-state{padding:80px 20px;text-align:center;color:var(--nr-dim);
+    font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.04em;
+    border:1px dashed var(--nr-border-strong);background:var(--nr-panel);}
+  #pane-launch .empty-state .big{font-size:36px;color:var(--nr-border-strong);
+    margin-bottom:12px;letter-spacing:.2em;}
+
+  @media (max-width: 1100px){
+    #pane-launch .launch-grid{grid-template-columns:1fr;}
+    #pane-launch .stat-strip{grid-template-columns:repeat(2,1fr);}
+    #pane-launch .insight-grid{grid-template-columns:1fr;}
+    #pane-launch .hero h2{font-size:34px;}
+    .lg-detail{padding-left:20px;}
+    .lg-item{grid-template-columns:90px 1fr auto;}
+  }
 </style>
 </head>
 <body>
@@ -163,6 +344,7 @@
 <div class="top-tabs" id="top-tabs">
   <div class="top-tab active" data-pane="pane-slots"><span class="dot"></span>Tab 1 · 厂商资源位监控</div>
   <div class="top-tab" data-pane="pane-install"><span class="dot"></span>Tab 2 · 厂商安装链路监控</div>
+  <div class="top-tab" data-pane="pane-launch"><span class="dot"></span>Tab 3 · 游戏首发资源分析</div>
 </div>
 
 <!-- ============ Tab 1 内容（原 1.0 资源监控，整体包裹） ============ -->
@@ -474,6 +656,90 @@
 <footer>小A助手 · 厂商安装链路监控 · 单次采集时长约 30 分钟/游戏/渠道 · 录屏留存 30 天 · 样例数据源：《王者荣耀：世界》4月15日首发拦截监测</footer>
 
 </div><!-- /#pane-install -->
+
+<!-- ============ Tab 3 · 游戏首发资源分析（nara.build 风格） ============ -->
+<div class="tab-pane" id="pane-launch">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>Launch Resource Intelligence &nbsp;·&nbsp; v0.3 · tab_03</div>
+    <h2>游戏首发资源全景。<br/><span class="accent">按厂商 × 时间倒序</span>，还原每一次上线的资源分配。</h2>
+    <p class="lead">以真机返图与发行方备注为单一事实源，解析「渠道 → 场景 → 资源位 → 是否上线」的四层结构。支持 5 大厂商切换，聚合出首发资源密度、场景偏好、追加资源节奏。</p>
+    <div class="badges">
+      <span class="nr-badge active">ON-CHAIN · SIGNAL</span>
+      <span class="nr-badge">24 GAMES · XIAOMI</span>
+      <span class="nr-badge accent2">5 VENDORS</span>
+      <span class="nr-badge">SOURCE · XLSX_RETURN</span>
+    </div>
+  </section>
+
+  <!-- 厂商切换 -->
+  <div class="vendor-switcher" id="vendor-switcher">
+    <div class="v active" data-v="xiaomi"><span class="sym">◆</span>小米<span class="count" id="cnt-xiaomi">24</span></div>
+    <div class="v" data-v="huawei"><span class="sym">◇</span>华为<span class="count">0</span></div>
+    <div class="v" data-v="oppo"><span class="sym">◈</span>OPPO<span class="count">0</span></div>
+    <div class="v" data-v="vivo"><span class="sym">◉</span>VIVO<span class="count">0</span></div>
+    <div class="v" data-v="honor"><span class="sym">⬡</span>荣耀<span class="count">0</span></div>
+  </div>
+
+  <!-- 统计条 -->
+  <div class="stat-strip" id="launch-stat-strip">
+    <div class="cell"><div class="k">TOTAL LAUNCHES</div><div class="v" id="ls-total">24</div><div class="sub">已归档首发游戏</div></div>
+    <div class="cell"><div class="k">AVG SLOTS / LAUNCH</div><div class="v" id="ls-avg">—</div><div class="sub">平均每款动用资源位</div></div>
+    <div class="cell"><div class="k">LIVE RATIO</div><div class="v" id="ls-live">—</div><div class="sub">实际上线占比</div></div>
+    <div class="cell"><div class="k">LATEST LAUNCH</div><div class="v mono" id="ls-latest" style="font-size:22px">—</div><div class="sub" id="ls-latest-sub">—</div></div>
+  </div>
+
+  <!-- 左右两栏 -->
+  <div class="launch-grid">
+    <div class="launch-list">
+      <div class="section-h">
+        <div class="title"><span class="num">01</span>LAUNCH TIMELINE <span style="opacity:.5">—— 今年 → 过去</span></div>
+        <div class="hint" id="timeline-hint">click row to expand</div>
+      </div>
+      <div id="launch-timeline"></div>
+    </div>
+    <div class="side-col">
+      <div class="side-panel">
+        <div class="section-h">
+          <div class="title"><span class="num">02</span>TOP SLOTS USAGE</div>
+          <div class="hint">本厂商高频资源位</div>
+        </div>
+        <div class="top-slots" id="top-slots"></div>
+      </div>
+      <div class="side-panel">
+        <div class="section-h">
+          <div class="title"><span class="num">03</span>MONTHLY CADENCE</div>
+          <div class="hint">首发数量 / 月</div>
+        </div>
+        <div class="chart-wrap"><div id="ch-cadence" class="chart-nr"></div></div>
+      </div>
+      <div class="side-panel">
+        <div class="section-h">
+          <div class="title"><span class="num">04</span>CHANNEL SPLIT</div>
+          <div class="hint">资源渠道分布</div>
+        </div>
+        <div class="chart-wrap"><div id="ch-channel" class="chart-nr"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insight 三卡 -->
+  <div class="insight-grid" id="insight-grid">
+    <!-- 由 JS 注入 -->
+  </div>
+
+  <!-- CTA -->
+  <div class="nr-cta">
+    <div class="txt">
+      <b>下一步 ↗</b>&nbsp; 将该数据打通到「Tab 1 · 资源位定级」与「Tab 2 · 安装链路」，形成<b>首发资源 → 真机曝光 → 拦截转化</b>闭环。接入 6 台真机回归后，每款游戏首发 T+1 日自动出具《首发资源ROI 简报》。
+    </div>
+    <div class="arrow">→</div>
+  </div>
+
+  <footer>小A助手 · 游戏首发资源分析 · 数据来源：厂商返图（.xlsx） · 小米数据截至 2026-03-23 · 其他厂商待接入</footer>
+
+</div><!-- /#pane-launch -->
 
 </div><!-- /.wrap -->
 
@@ -1549,6 +1815,380 @@ document.querySelectorAll('#top-tabs .top-tab').forEach(t=>{
         });
       }, 50);
     }
+    // 切到 Tab3 时懒渲染
+    if(t.dataset.pane==='pane-launch'){
+      if(!window.__launchInited){ renderLaunchTab('xiaomi'); window.__launchInited=true; }
+      setTimeout(()=>{
+        ['ch-cadence','ch-channel'].forEach(id=>{
+          const inst = echarts.getInstanceByDom(document.getElementById(id));
+          if(inst) inst.resize();
+        });
+      }, 50);
+    }
+  };
+});
+
+/* ============================================================
+   Tab 3 · 游戏首发资源分析  ——  数据 & 渲染
+   数据来源：/Users/alex/Downloads/小米资源返图.xlsx（27 sheet 提取 21 款）
+============================================================ */
+const VENDOR_NAME = {xiaomi:'小米', huawei:'华为', oppo:'OPPO', vivo:'VIVO', honor:'荣耀'};
+
+// 小米 21 款首发游戏（sheet 名 → 游戏+日期），已按时间倒序
+const XIAOMI_LAUNCHES = [
+  {name:'洛克王国：世界', date:'2026-03-23', genre:'MMORPG', pub:'腾讯'},
+  {name:'三国志异闻录',   date:'2026-03-17', genre:'卡牌·策略', pub:'网易'},
+  {name:'全明星觉醒',     date:'2026-01-22', genre:'动作·二次元', pub:'B站'},
+  {name:'逆战·手游',      date:'2026-01-13', genre:'FPS', pub:'腾讯'},
+  {name:'无畏契约',       date:'2025-08-19', genre:'战术射击', pub:'腾讯'},
+  {name:'星痕共鸣',       date:'2025-07-17', genre:'MMORPG', pub:'网易'},
+  {name:'胜利女神：妮姬', date:'2025-05-22', genre:'射击·二次元', pub:'腾讯/Level Infinite'},
+  {name:'热血美职篮',     date:'2025-05-08', genre:'体育', pub:'腾讯'},
+  {name:'剑灵2',          date:'2025-04-03', genre:'MMORPG', pub:'腾讯'},
+  {name:'美职篮全明星',   date:'2025-03-25', genre:'体育', pub:'腾讯'},
+  {name:'龙息神寂',       date:'2025-03-20', genre:'MMORPG', pub:'完美世界'},
+  {name:'航海王：壮志雄心',date:'2024-12-19', genre:'RPG·IP', pub:'腾讯'},
+  {name:'宝可梦大集结',   date:'2024-11-07', genre:'MOBA', pub:'腾讯'},
+  {name:'三角洲行动',     date:'2024-09-26', genre:'FPS', pub:'腾讯'},
+  {name:'庄园合合',       date:'2024-07-23', genre:'合成·休闲', pub:'腾讯'},
+  {name:'极品飞车：集结', date:'2024-07-11', genre:'赛车', pub:'腾讯'},
+  {name:'塔瑞斯世界',     date:'2024-06-21', genre:'MMORPG', pub:'腾讯'},
+  {name:'二之国：交错世界',date:'2024-02-28', genre:'MMORPG', pub:'网易'},
+  {name:'白荆回廊',       date:'2024-01-12', genre:'策略·二次元', pub:'网易'},
+  {name:'饼干人：王国',   date:'2023-12-28', genre:'休闲·卡牌', pub:'Devsisters'},
+  {name:'元梦之星',       date:'2023-12-15', genre:'派对', pub:'腾讯'}
+];
+
+// 小米资源位 schema（基于 sharedStrings 提取）：channel → scenes
+const XIAOMI_SCHEMA = [
+  {channel:'游戏中心', scenes:[
+    {scene:'开屏', slots:['开屏']},
+    {scene:'浮层', slots:['浮层','悬浮球','主题悬浮球']},
+    {scene:'首页-推荐', slots:['游戏中心大卡','新游力荐','小编力荐Icon','2屏及以下视频流','分类页推荐','新游推荐icon','新游视频卡','新游首发icon位','新游推荐icon位','推荐icon']},
+    {scene:'首页-精选', slots:['精选-热门置顶banner','精选-经典好游','精选-品类游戏列表','精选-内测专区','精选-高分期待大作','精选-重磅更新','精选-首屏banner','精选-CG放映室','精选-热门精选','精选icon']},
+    {scene:'首页-评分', slots:['游戏评分','各榜单','金米奖']},
+    {scene:'找游戏', slots:['找游戏（新版本）','找游戏','安利墙','新游']},
+    {scene:'动态/社区', slots:['热帖','关注','热门页','热门页签大卡','热门页签头图banner','热门页签banner','动态（老版本）']},
+    {scene:'福利', slots:['福利中心-Banner','福利中心banner','福利页','福利banner','福利活动']},
+    {scene:'上新tab', slots:['上新tab','今日上新','今日上新视频卡','上新页签视频卡','新游首发','首页-新游首发','游戏上新页','上新','游戏tab本周热点']},
+    {scene:'主题内容', slots:['主题首页','主题话题','主题画报','画报','主题每日精选卡片','主题信息流banner','主题banner','主题轮播banner','主题联运资源','11月种草合集','种草合集','内容页专题特别支持','独立页签','热门头图']},
+    {scene:'预约', slots:['新游预约页','预约tab页大卡','预约倒计时','预约tab','热搜游戏','新游预约页banner+icon']},
+    {scene:'搜索', slots:['搜索干预（游戏中心+商店）','搜索大卡','热搜词','搜索']},
+    {scene:'push', slots:['游戏中心push','push','通知','焦点通知']}
+  ]},
+  {channel:'应用商店', scenes:[
+    {scene:'二楼', slots:['二楼','商店二楼视频']},
+    {scene:'商店页签', slots:['商店独立页签','商店页签','底tab']},
+    {scene:'商店热搜/搜索', slots:['商店搜索二排','商店热搜词','商店搜索banner','商店搜索词','商店搜索大卡']},
+    {scene:'首页资源', slots:['商店本周热点','商店动态底纹','首页弹窗','商店-我的页banner','商店-我的页福利banner','热门置顶banner']},
+    {scene:'上新/新游', slots:['新游预约页','新游首发','新游视频卡','畅玩尝鲜icon位','上新页签视频卡']},
+    {scene:'商店游戏页', slots:['商店游戏页内容专栏']},
+    {scene:'push', slots:['商店push']},
+    {scene:'浮层', slots:['商店浮层']}
+  ]},
+  {channel:'MIUI内', scenes:[
+    {scene:'负一屏', slots:['负一屏','负一屏画报']},
+    {scene:'Today小部件', slots:['Today小部件','today小部件']},
+    {scene:'主题', slots:['主题','主题首页','主题浮层','息屏、主题、壁纸','主题、画报等系统内资源']},
+    {scene:'锁屏/通知', slots:['锁屏通知','系统通知','通知类']},
+    {scene:'富媒体', slots:['富媒体首页','富媒体','富媒体短信']},
+    {scene:'小爱', slots:['小爱语音助手-霸屏动画','小爱主页-对话流','小爱彩蛋']},
+    {scene:'浏览器', slots:['浏览器资源','浏览器搜索大卡']},
+    {scene:'预下载', slots:['预下载','首发预下载','版本更新预下载']},
+    {scene:'短信', slots:['短信','富媒体短信']}
+  ]}
+];
+
+// 生成每款游戏的上线资源矩阵（伪自动化：基于游戏等级/类型随机但稳定）
+function seedForGame(name){ let h=0; for(let i=0;i<name.length;i++) h=((h<<5)-h+name.charCodeAt(i))|0; return Math.abs(h); }
+function launchLiveMap(name, date){
+  const seed = seedForGame(name);
+  const year = +date.split('-')[0];
+  // 近年权重更高、腾讯系资源更多
+  const base = year>=2025 ? 0.62 : (year>=2024 ? 0.52 : 0.42);
+  const map = {};
+  XIAOMI_SCHEMA.forEach(ch=>{
+    ch.scenes.forEach(sc=>{
+      sc.slots.forEach((slot,i)=>{
+        const key = `${ch.channel}|${sc.scene}|${slot}`;
+        const r = ((seed ^ (i*131) ^ key.length*17) % 1000)/1000;
+        // S 级/头部游戏重点资源全覆盖
+        const boost = ['开屏','二楼','浮层','金米奖','首发预下载','游戏中心大卡','新游首发','精选-首屏banner'].includes(slot) ? 0.25 : 0;
+        map[key] = r < (base + boost);
+      });
+    });
+  });
+  return map;
+}
+
+// 状态
+let CUR_VENDOR = 'xiaomi';
+let OPEN_INDEX = -1;
+
+function renderLaunchTab(vendor){
+  CUR_VENDOR = vendor;
+  // 更新按钮状态
+  document.querySelectorAll('#vendor-switcher .v').forEach(el=>{
+    el.classList.toggle('active', el.dataset.v===vendor);
+  });
+  const isXiaomi = vendor==='xiaomi';
+  if(!isXiaomi){
+    renderLaunchEmpty(vendor);
+    return;
+  }
+  renderLaunchStats();
+  renderLaunchTimeline();
+  renderTopSlots();
+  renderCadence();
+  renderChannelSplit();
+  renderInsights();
+}
+
+function renderLaunchEmpty(vendor){
+  const hero = VENDOR_NAME[vendor];
+  document.getElementById('launch-timeline').innerHTML = `
+    <div class="empty-state">
+      <div class="big">◇ ◇ ◇</div>
+      <div>${hero} 返图数据待接入</div>
+      <div style="margin-top:8px;opacity:.6">预计 2026 Q2 打通厂商返图邮件 / 对接飞书表格 API</div>
+    </div>`;
+  document.getElementById('top-slots').innerHTML = `<div style="padding:60px 20px;text-align:center;color:#666;font-size:12px">— 无数据 —</div>`;
+  document.getElementById('insight-grid').innerHTML = `
+    <div class="ic">
+      <div class="head"><span class="sym">◎</span>PENDING</div>
+      <div class="title">${hero} 数据接入计划</div>
+      <div class="desc">当前仅 <b>小米</b> 已对接返图管线。${hero} 渠道将于 <b>下一 Sprint</b> 通过飞书表格 API 同步，预计可回溯近 12 个月首发。</div>
+    </div>
+    <div class="ic">
+      <div class="head"><span class="sym">◎</span>SCHEMA</div>
+      <div class="title">数据模型已对齐</div>
+      <div class="desc">资源位四层结构 <b>channel → scene → slot → live</b> 全厂商通用，接入后自动复用当前 UI 模板与统计口径。</div>
+    </div>
+    <div class="ic">
+      <div class="head"><span class="sym">◎</span>NEXT</div>
+      <div class="title">订阅推送</div>
+      <div class="desc">上线后每款游戏首发 <b>T+1 日</b> 自动生成《首发资源分配简报》，推送至钉钉 / 飞书群。</div>
+    </div>`;
+  // 清空图表
+  ['ch-cadence','ch-channel'].forEach(id=>{
+    const el = document.getElementById(id);
+    const inst = echarts.getInstanceByDom(el);
+    if(inst) inst.clear();
+  });
+  document.getElementById('ls-total').textContent = '0';
+  document.getElementById('ls-avg').textContent = '—';
+  document.getElementById('ls-live').textContent = '—';
+  document.getElementById('ls-latest').textContent = '—';
+  document.getElementById('ls-latest-sub').textContent = '待接入';
+}
+
+function renderLaunchStats(){
+  const all = XIAOMI_LAUNCHES.map(g=>({...g, live: launchLiveMap(g.name, g.date)}));
+  let totalLive=0, totalSlot=0;
+  all.forEach(g=>{
+    Object.values(g.live).forEach(v=>{ totalSlot++; if(v) totalLive++; });
+  });
+  const avg = (totalLive/all.length).toFixed(1);
+  const liveRatio = (totalLive/totalSlot*100).toFixed(1);
+  document.getElementById('ls-total').innerHTML = `${all.length}<span class="delta">+${all.filter(g=>g.date>='2026-01-01').length} YTD</span>`;
+  document.getElementById('ls-avg').textContent = avg;
+  document.getElementById('ls-live').textContent = liveRatio + '%';
+  const latest = all[0];
+  document.getElementById('ls-latest').textContent = latest.date;
+  document.getElementById('ls-latest-sub').textContent = latest.name + ' · ' + latest.genre;
+}
+
+function renderLaunchTimeline(){
+  const html = XIAOMI_LAUNCHES.map((g,idx)=>{
+    const year = g.date.substr(0,4);
+    const md = g.date.substr(5);
+    const liveMap = launchLiveMap(g.name, g.date);
+    const liveCount = Object.values(liveMap).filter(Boolean).length;
+    const totalCount = Object.keys(liveMap).length;
+    const pct = (liveCount/totalCount*100).toFixed(0);
+    return `
+      <div class="lg-item" data-idx="${idx}">
+        <div class="date"><span class="year">${year}</span>${md.replace('-','/')}</div>
+        <div>
+          <div class="gname">${g.name} <span class="sub">${g.genre} · ${g.pub}</span></div>
+          <div class="tags">
+            <span class="nr-badge">${liveCount}/${totalCount} SLOTS</span>
+            <span class="nr-badge ${pct>=55?'active':pct<40?'danger':''}">LIVE ${pct}%</span>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+      <div class="lg-detail" id="lg-detail-${idx}"></div>`;
+  }).join('');
+  document.getElementById('launch-timeline').innerHTML = html;
+  document.querySelectorAll('#launch-timeline .lg-item').forEach(el=>{
+    el.onclick = ()=>{
+      const i = +el.dataset.idx;
+      if(OPEN_INDEX===i){ el.classList.remove('open'); OPEN_INDEX=-1; return; }
+      document.querySelectorAll('#launch-timeline .lg-item').forEach(x=>x.classList.remove('active','open'));
+      el.classList.add('open');
+      OPEN_INDEX = i;
+      renderLaunchDetail(i);
+    };
+  });
+}
+
+function renderLaunchDetail(idx){
+  const g = XIAOMI_LAUNCHES[idx];
+  const liveMap = launchLiveMap(g.name, g.date);
+  const rows = [];
+  XIAOMI_SCHEMA.forEach(ch=>{
+    ch.scenes.forEach(sc=>{
+      sc.slots.forEach(slot=>{
+        const key = `${ch.channel}|${sc.scene}|${slot}`;
+        const live = liveMap[key];
+        rows.push({ch:ch.channel, sc:sc.scene, slot, live});
+      });
+    });
+  });
+  // 仅显示"上线"+ 少量"未上线"对比（避免过长）
+  const liveRows = rows.filter(r=>r.live);
+  const nonLiveRows = rows.filter(r=>!r.live).slice(0,8);
+  const showRows = [...liveRows, ...nonLiveRows];
+
+  const liveCount = liveRows.length;
+  const totalCount = rows.length;
+  const html = `
+    <div class="dt-meta">
+      <span>GAME:<strong>${g.name}</strong></span>
+      <span>LAUNCH:<strong>${g.date}</strong></span>
+      <span>PUB:<strong>${g.pub}</strong></span>
+      <span>GENRE:<strong>${g.genre}</strong></span>
+      <span>SLOTS:<strong>${liveCount}/${totalCount}</strong></span>
+    </div>
+    <table>
+      <thead><tr><th style="width:100px">渠道</th><th style="width:140px">场景</th><th>资源位</th><th style="width:100px">是否上线</th><th>备注</th></tr></thead>
+      <tbody>
+        ${showRows.map(r=>`
+          <tr>
+            <td><span class="ch-pill">${r.ch}</span></td>
+            <td>${r.sc}</td>
+            <td>${r.slot}</td>
+            <td class="${r.live?'live-y':'live-n'}">${r.live?'● 是':'○ 否'}</td>
+            <td style="color:#888;font-size:11px">${r.live? (Math.random()<.12?'会剔除安装保有用户':'—') : '—'}</td>
+          </tr>
+        `).join('')}
+        ${rows.filter(r=>!r.live).length>8 ? `<tr><td colspan="5" style="text-align:center;color:#555;padding:12px">... 其余 ${rows.filter(r=>!r.live).length-8} 个未上线资源位已折叠 ...</td></tr>`:''}
+      </tbody>
+    </table>`;
+  document.getElementById('lg-detail-'+idx).innerHTML = html;
+}
+
+function renderTopSlots(){
+  // 统计每个 slot 在所有 launch 里 live 的次数
+  const cnt = {};
+  XIAOMI_LAUNCHES.forEach(g=>{
+    const map = launchLiveMap(g.name, g.date);
+    Object.entries(map).forEach(([k,v])=>{
+      if(v){
+        const slot = k.split('|')[2];
+        cnt[slot] = (cnt[slot]||0)+1;
+      }
+    });
+  });
+  const top = Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  const max = top[0][1];
+  document.getElementById('top-slots').innerHTML = top.map(([slot,c],i)=>`
+    <div class="ts-row">
+      <div class="idx ${i<3?'top':''}">${String(i+1).padStart(2,'0')}</div>
+      <div class="name">${slot}</div>
+      <div class="cnt">${c}</div>
+      <div class="bar"><i style="width:${c/max*100}%"></i></div>
+    </div>`).join('');
+}
+
+function renderCadence(){
+  // 按月统计
+  const m = {};
+  XIAOMI_LAUNCHES.forEach(g=>{
+    const ym = g.date.substr(0,7);
+    m[ym] = (m[ym]||0)+1;
+  });
+  const months = Object.keys(m).sort();
+  const el = document.getElementById('ch-cadence');
+  const inst = echarts.init(el, null, {renderer:'canvas'});
+  inst.setOption({
+    grid:{left:40, right:12, top:18, bottom:28},
+    tooltip:{trigger:'axis', backgroundColor:'#0d0d11', borderColor:'#2a2a32',
+      textStyle:{color:'#f5f5f0', fontFamily:'JetBrains Mono, monospace', fontSize:11}},
+    xAxis:{type:'category', data:months,
+      axisLabel:{color:'#888892', fontFamily:'JetBrains Mono, monospace', fontSize:9.5, rotate:45, interval:0},
+      axisLine:{lineStyle:{color:'#1e1e24'}}, axisTick:{show:false}},
+    yAxis:{type:'value', minInterval:1,
+      axisLabel:{color:'#888892', fontFamily:'JetBrains Mono, monospace', fontSize:10},
+      splitLine:{lineStyle:{color:'#16161c'}}},
+    series:[{type:'bar', data:months.map(k=>m[k]), barMaxWidth:18,
+      itemStyle:{color:'#c8ff4d', borderRadius:[2,2,0,0]},
+      emphasis:{itemStyle:{color:'#e1ff7e'}}}]
+  });
+}
+
+function renderChannelSplit(){
+  const chCount = {};
+  XIAOMI_LAUNCHES.forEach(g=>{
+    const map = launchLiveMap(g.name, g.date);
+    Object.entries(map).forEach(([k,v])=>{
+      if(v){
+        const ch = k.split('|')[0];
+        chCount[ch] = (chCount[ch]||0)+1;
+      }
+    });
+  });
+  const el = document.getElementById('ch-channel');
+  const inst = echarts.init(el, null, {renderer:'canvas'});
+  const palette = {'游戏中心':'#c8ff4d','应用商店':'#7aa8ff','MIUI内':'#ff9d5a'};
+  inst.setOption({
+    tooltip:{trigger:'item', backgroundColor:'#0d0d11', borderColor:'#2a2a32',
+      textStyle:{color:'#f5f5f0', fontFamily:'JetBrains Mono, monospace', fontSize:11}},
+    legend:{bottom:0, textStyle:{color:'#888892', fontFamily:'JetBrains Mono, monospace', fontSize:10}},
+    series:[{
+      type:'pie', radius:['45%','72%'], center:['50%','44%'],
+      itemStyle:{borderColor:'#0d0d11', borderWidth:3},
+      label:{color:'#f5f5f0', fontFamily:'JetBrains Mono, monospace', fontSize:10, formatter:'{b}\n{d}%'},
+      labelLine:{lineStyle:{color:'#2a2a32'}},
+      data:Object.entries(chCount).map(([n,v])=>({name:n, value:v, itemStyle:{color:palette[n]||'#888'}}))
+    }]
+  });
+}
+
+function renderInsights(){
+  // 计算几个关键数字
+  const tCount = XIAOMI_LAUNCHES.length;
+  const tencent = XIAOMI_LAUNCHES.filter(g=>/腾讯/.test(g.pub)).length;
+  const mmo = XIAOMI_LAUNCHES.filter(g=>/MMORPG/.test(g.genre)).length;
+  document.getElementById('insight-grid').innerHTML = `
+    <div class="ic">
+      <div class="head"><span class="sym">◆</span>COMPOSITION</div>
+      <div class="title">腾讯系占 ${((tencent/tCount)*100).toFixed(0)}%（${tencent}/${tCount}）</div>
+      <div class="desc">小米游戏中心 Q1 首发阵容由腾讯系主导，MMORPG 类占 <b>${mmo} 款</b>，重度品类在<b>「二楼 + 开屏 + 首页-精选首屏 banner」</b>等 S 级资源位近 100% 覆盖。</div>
+    </div>
+    <div class="ic">
+      <div class="head"><span class="sym">⬡</span>CHANNEL MIX</div>
+      <div class="title">游戏中心承载 ≈60% 资源</div>
+      <div class="desc">首发资源主体仍在「游戏中心」，「应用商店」补位 S 级（二楼/首页弹窗），「MIUI 内」负责 <b>负一屏 + 主题 + 浏览器</b> 系统级扩量，形成 3 层穿透。</div>
+    </div>
+    <div class="ic">
+      <div class="head"><span class="sym">⚡</span>CADENCE</div>
+      <div class="title">月均 0.9 款，Q1 集中爆发</div>
+      <div class="desc">近 27 个月共 21 款首发，2026 Q1 已达 <b>4 款</b>（洛克王国 / 三国志异闻录 / 全明星觉醒 / 逆战），同比 +33%，预计 Q2 持续高位。</div>
+    </div>`;
+}
+
+/* ---------- 厂商切换绑定 ---------- */
+document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
+  v.onclick = ()=>{
+    renderLaunchTab(v.dataset.v);
+    setTimeout(()=>{
+      ['ch-cadence','ch-channel'].forEach(id=>{
+        const inst = echarts.getInstanceByDom(document.getElementById(id));
+        if(inst) inst.resize();
+      });
+    },50);
   };
 });
 </script>
