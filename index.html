@@ -22,6 +22,45 @@
     --font-mono:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
     --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
   }
+  /* ====== Light 主题覆写（更舒适的明亮配色） ====== */
+  html[data-theme="light"]{
+    --bg:#f6f6f1;           /* 米白底 */
+    --panel:#ffffff;         /* 纯白面板 */
+    --panel-2:#f1f1ec;
+    --border:#e2e2d8;
+    --border-strong:#cfcfc2;
+    --text:#16161a;          /* 主文字：近黑，柔和 */
+    --text-dim:#5a5a66;      /* 次文字：中灰，对比舒适（>4.5:1） */
+    --up:#1f9c57; --down:#d93a4b;
+    --emui:#2b8ba0; --harmony:#8a5fd6;
+    --s:#d93a4b; --ap:#d97a28; --a:#b3881a; --bp:#2b8ba0; --c:#6b7283;
+    --accent-tab1:#d97a28;
+    --accent-tab2:#3c6fd1;
+    --accent-tab3:#5a9a14;
+  }
+  /* dark 下顶栏 hover 的深色色值在 light 里要变淡 */
+  html[data-theme="light"] .tab:hover,
+  html[data-theme="light"] .top-tab:hover{background:#ececdf !important;}
+  html[data-theme="light"] .top-tab.active{background:#ffffff !important;}
+  /* light 主题下：所有硬编码的深色 hover / 底纹一律替换为浅色 */
+  html[data-theme="light"] table.mini tr:hover td,
+  html[data-theme="light"] .lg-detail table tr:hover td{background:#f1f1ea !important;}
+  html[data-theme="light"] .im-cell:hover,
+  html[data-theme="light"] .lg-item:hover,
+  html[data-theme="light"] .ts-row:hover,
+  html[data-theme="light"] #pane-launch .vendor-switcher .v:hover{background:#ececdf !important;}
+  html[data-theme="light"] .lg-item.open{background:#eef1f7 !important;}
+  html[data-theme="light"] .method-step code{background:#ececdf !important;color:var(--text) !important;}
+  html[data-theme="light"] .im-cell .video-thumb{background:#e8e8df !important;color:#444 !important;}
+  html[data-theme="light"] .modal-body .video-area{background:#1a1a1a !important;color:#ddd !important;}
+  html[data-theme="light"] .ts-row .bar{background:#e0e0d4 !important;}
+  /* 轻量徽章/告警在 light 下加白底更清爽 */
+  html[data-theme="light"] .alert{background:#ffffff;}
+  html[data-theme="light"] .nr-badge.danger{border-color:#d9b2b8;}
+  html[data-theme="light"] .nr-badge.warn{border-color:#d9c58a;}
+  html[data-theme="light"] .nr-badge.accent2{color:#3c6fd1;border-color:#b4c6e8;}
+  html[data-theme="light"] .demo-banner{background:#fff8e5;}
+  html[data-theme="light"] footer{color:var(--text-dim);}
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:var(--font-sans);
@@ -114,8 +153,36 @@
 
   /* === Alert / Insight === */
   .alert{background:var(--panel);border:1px solid var(--border-strong);border-left:2px solid var(--tab-accent,#c8ff4d);
-    border-radius:0;padding:18px 20px;font-size:13px;line-height:1.9;color:var(--text-dim);}
-  .alert b{color:var(--text);font-weight:600;}
+    border-radius:0;padding:18px 20px;font-size:13px;line-height:1.9;color:var(--text-dim);
+    text-align:left;}
+  .alert b{color:var(--text);font-weight:700;}
+  /* 顶部 summary 正文：左对齐 + 整体加粗（b 元素保持高亮） */
+  .panel .alert{text-align:left;font-weight:600;}
+  .panel .alert b{font-weight:800;}
+
+  /* === Tab 顶部 summary 标题（xx 洞察） === */
+  .summary-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+    text-align:left;margin:0 0 10px;padding:0 0 8px;border-bottom:1px dashed var(--border);}
+  .summary-title .st-main{font-size:17px;font-weight:800;color:var(--text);
+    letter-spacing:-.01em;line-height:1.3;}
+  .summary-title .st-sub{font-family:var(--font-mono);font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:500;}
+  .summary-title .st-tag{display:inline-block;font-family:var(--font-mono);
+    font-size:10.5px;letter-spacing:.14em;padding:2px 8px;
+    background:var(--tab-accent,#c8ff4d);color:#0c0c10;font-weight:700;}
+  html[data-theme="light"] .summary-title .st-tag{color:#ffffff;}
+
+  /* === 主题切换按钮 === */
+  .theme-toggle{appearance:none;background:transparent;border:1px solid var(--border-strong);
+    color:var(--text-dim);font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.14em;padding:4px 10px;cursor:pointer;line-height:1;
+    display:inline-flex;align-items:center;gap:6px;transition:all .15s ease;}
+  .theme-toggle:hover{color:var(--text);border-color:var(--text-dim);}
+  .theme-toggle .tt-ic{display:none;}
+  html:not([data-theme="light"]) .theme-toggle .tt-dark{display:inline;color:var(--accent-tab3);}
+  html:not([data-theme="light"]) .theme-toggle .tt-light{display:none;}
+  html[data-theme="light"] .theme-toggle .tt-dark{display:none;}
+  html[data-theme="light"] .theme-toggle .tt-light{display:inline;color:var(--accent-tab2);}
 
   /* === Footer === */
   footer{color:var(--text-dim);font-size:11px;margin-top:22px;text-align:left;padding:18px 0 4px;
@@ -533,6 +600,11 @@
     <span>5 VENDORS · 72 SLOTS · 3 CHANNELS</span>
     <span class="sep">/</span>
     <span id="site-date">—</span>
+    <span class="sep">/</span>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换明暗主题">
+      <span class="tt-ic tt-dark">● DARK</span>
+      <span class="tt-ic tt-light">○ LIGHT</span>
+    </button>
   </div>
 </div>
 
@@ -585,7 +657,11 @@
 
 <!-- 顶部概要（原风格） -->
 <div class="panel" style="margin-bottom:14px;">
-  <h3>资源位视角洞察 · 今日自动生成</h3>
+  <div class="summary-title">
+    <span class="st-tag">TL;DR</span>
+    <span class="st-main">资源位洞察</span>
+    <span class="st-sub">今日自动生成 · SLOT VIEW</span>
+  </div>
   <div class="alert" id="alerts"></div>
 </div>
 
@@ -760,7 +836,11 @@
 
 <!-- 顶部案例洞察（原风格） -->
 <div class="panel" style="margin-bottom:14px;">
-  <h3>《王者荣耀：世界》案例洞察 · 基于 4/15 预下载监测</h3>
+  <div class="summary-title">
+    <span class="st-tag">TL;DR</span>
+    <span class="st-main">安装链路洞察</span>
+    <span class="st-sub">《王者荣耀：世界》· 基于 4/15 预下载监测</span>
+  </div>
   <div class="alert" id="install-insights">
     <b>🚫 强拦截集中在"未授权 + 手Q/应用宝"场景</b>：小米未开启三方授权时，yyb 和手Q <b>禁止安装且不能跳转设置</b>，仅微信支持"跳转到设置开启"——目前与渠道沟通中。<br>
     <b>⚠️ 弱拦截普遍存在于 OPPO/vivo 未授权态</b>：微信 / 手Q 会弹出「检测结果：涉及敏感权限」并要求多步确认，用户需点 3~5 次"下一步"才能完成，对转化折损明显。<br>
@@ -891,8 +971,15 @@
   </section>
 
   <!-- Insight 三卡（原风格，置顶） -->
-  <div class="insight-grid" id="insight-grid">
-    <!-- 由 JS 注入 -->
+  <div class="panel" style="margin-bottom:14px;background:transparent;border:none;padding:0;">
+    <div class="summary-title">
+      <span class="st-tag">TL;DR</span>
+      <span class="st-main">首发资源洞察</span>
+      <span class="st-sub">Vendor · <span id="st-launch-vendor">XIAOMI</span> · Auto</span>
+    </div>
+    <div class="insight-grid" id="insight-grid">
+      <!-- 由 JS 注入 -->
+    </div>
   </div>
 
   <!-- 厂商切换 -->
@@ -1597,6 +1684,39 @@ document.getElementById('today').textContent = new Date().toISOString().slice(0,
   const sdEl = document.getElementById('site-date');
   if(sdEl) sdEl.textContent = `${iso} · ${wk}`;
 })();
+
+/* ========== 主题切换（dark/light） ========== */
+(function(){
+  const KEY = 'doppel-theme';
+  const saved = localStorage.getItem(KEY);
+  const initial = saved === 'light' ? 'light' : 'dark';
+  applyTheme(initial);
+  const btn = document.getElementById('theme-toggle');
+  if(btn){
+    btn.addEventListener('click', ()=>{
+      const cur = document.documentElement.getAttribute('data-theme')==='light' ? 'light' : 'dark';
+      const next = cur === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem(KEY, next);
+    });
+  }
+  function applyTheme(t){
+    if(t === 'light'){
+      document.documentElement.setAttribute('data-theme','light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    // 重新渲染所有 ECharts 图表以适应新的文字/背景配色
+    setTimeout(()=>{
+      document.querySelectorAll('[id^=ch-]').forEach(el=>{
+        const inst = echarts.getInstanceByDom(el);
+        if(inst){ try{ inst.resize(); }catch(e){} }
+      });
+      if(typeof refreshAll === 'function') refreshAll();
+    }, 30);
+  }
+})();
+
 refreshAll();
 window.addEventListener('resize', ()=>{
   document.querySelectorAll('.panel [id^=ch-]').forEach(el=>{
@@ -2154,6 +2274,9 @@ let OPEN_INDEX = -1;
 
 function renderLaunchTab(vendor){
   CUR_VENDOR = vendor;
+  // 同步 summary 中厂商名
+  const stV = document.getElementById('st-launch-vendor');
+  if(stV) stV.textContent = (typeof VENDOR_NAME !== 'undefined' && VENDOR_NAME[vendor] ? VENDOR_NAME[vendor] : vendor).toUpperCase();
   // 更新按钮状态
   document.querySelectorAll('#vendor-switcher .v').forEach(el=>{
     el.classList.toggle('active', el.dataset.v===vendor);
