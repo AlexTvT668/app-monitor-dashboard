@@ -61,6 +61,94 @@
     display:flex;align-items:center;gap:10px;}
   .demo-banner .badge{background:#ff9f4a;color:#1a1200;font-weight:700;padding:2px 8px;
     border-radius:6px;font-size:11px;letter-spacing:.5px;}
+
+  /* ========== 顶级 Tab（Tab1 资源位 / Tab2 安装链路） ========== */
+  .top-tabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--border);
+    border-radius:12px;padding:5px;margin-bottom:14px;width:fit-content;}
+  .top-tab{padding:8px 18px;font-size:13px;color:var(--text-dim);cursor:pointer;border-radius:8px;
+    user-select:none;font-weight:500;display:flex;align-items:center;gap:6px;}
+  .top-tab .dot{width:6px;height:6px;border-radius:50%;background:var(--text-dim);}
+  .top-tab.active{background:linear-gradient(135deg,#1e2740,#2a3454);color:var(--text);
+    box-shadow:inset 0 0 0 1px #3a4a75;}
+  .top-tab.active .dot{background:#25c26b;box-shadow:0 0 8px #25c26b;}
+  .tab-pane{display:none;}
+  .tab-pane.active{display:block;}
+
+  /* ========== Tab2：安装链路拦截监控 ========== */
+  .intercept-matrix{display:grid;grid-template-columns:110px repeat(3, 1fr);gap:8px;}
+  .intercept-matrix .im-h{background:var(--panel-2);border:1px solid var(--border);
+    border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text-dim);text-align:center;
+    font-weight:600;letter-spacing:.3px;}
+  .intercept-matrix .im-row-label{background:var(--panel-2);border:1px solid var(--border);
+    border-radius:8px;padding:10px;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;gap:4px;}
+  .intercept-matrix .im-row-label .store-name{font-size:13px;font-weight:700;color:var(--text);}
+  .intercept-matrix .im-row-label .auth{font-size:11px;color:var(--text-dim);}
+  .im-cell{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;
+    padding:8px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;
+    transition:transform .15s, box-shadow .15s;}
+  .im-cell:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.35);}
+  .im-cell.lv-strong{border-color:#ff5a78aa;background:linear-gradient(180deg,#2a1a24,#1e2740);}
+  .im-cell.lv-weak{border-color:#ffc85788;background:linear-gradient(180deg,#2a2418,#1e2740);}
+  .im-cell.lv-none{border-color:#25c26b66;background:linear-gradient(180deg,#18281f,#1e2740);}
+  .im-cell .lv-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;
+    border-radius:20px;font-size:11px;font-weight:700;align-self:flex-start;}
+  .im-cell.lv-strong .lv-badge{background:#ff5a7822;color:#ff5a78;border:1px solid #ff5a7866;}
+  .im-cell.lv-weak .lv-badge{background:#ffc85722;color:#ffc857;border:1px solid #ffc85766;}
+  .im-cell.lv-none .lv-badge{background:#25c26b22;color:#25c26b;border:1px solid #25c26b66;}
+  .im-cell .metrics{display:flex;gap:10px;font-size:11px;color:var(--text-dim);}
+  .im-cell .metrics .k{color:var(--text);font-weight:600;margin-left:2px;}
+  .im-cell .video-thumb{height:78px;background:#0a0f1c;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;color:var(--text-dim);
+    font-size:11px;cursor:pointer;position:relative;overflow:hidden;
+    border:1px dashed #2a3454;}
+  .im-cell .video-thumb::before{content:'▶';font-size:28px;color:#25c26bcc;
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.9;}
+  .im-cell .video-thumb:hover{border-color:#25c26b;color:#25c26b;}
+  .im-cell .note{font-size:11px;color:var(--text-dim);line-height:1.5;margin:0;}
+  .im-cell.empty{opacity:.4;align-items:center;justify-content:center;min-height:120px;
+    color:var(--text-dim);font-size:12px;}
+
+  /* 拦截等级图例 */
+  .lv-legend{display:inline-flex;gap:12px;font-size:12px;color:var(--text-dim);}
+  .lv-legend .item{display:inline-flex;align-items:center;gap:5px;}
+  .lv-legend .sw{width:10px;height:10px;border-radius:3px;display:inline-block;}
+
+  /* 录屏模态 */
+  .modal-mask{position:fixed;inset:0;background:rgba(5,8,16,.78);display:none;
+    align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(4px);}
+  .modal-mask.show{display:flex;}
+  .modal-body{background:var(--panel);border:1px solid var(--border);border-radius:14px;
+    padding:18px;max-width:560px;width:90%;}
+  .modal-body h4{margin:0 0 10px 0;font-size:14px;display:flex;justify-content:space-between;align-items:center;}
+  .modal-body .close{cursor:pointer;color:var(--text-dim);font-size:18px;line-height:1;}
+  .modal-body .close:hover{color:var(--text);}
+  .modal-body .video-area{background:#000;border-radius:8px;aspect-ratio:9/16;max-height:520px;
+    margin:0 auto;display:flex;align-items:center;justify-content:center;color:#555;font-size:12px;
+    background-image:linear-gradient(135deg,#1a1f2e 25%,transparent 25%,transparent 50%,#1a1f2e 50%,#1a1f2e 75%,transparent 75%);
+    background-size:20px 20px;}
+  .modal-body .step-timeline{margin-top:12px;display:flex;flex-direction:column;gap:6px;font-size:12px;}
+  .modal-body .step-timeline .step{display:flex;align-items:center;gap:8px;padding:4px 0;}
+  .modal-body .step-timeline .t{color:var(--text-dim);font-family:monospace;min-width:46px;}
+  .modal-body .step-timeline .evt{flex:1;}
+  .modal-body .step-timeline .tag{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;}
+  .modal-body .step-timeline .tag.block{background:#ff5a7833;color:#ff5a78;}
+  .modal-body .step-timeline .tag.warn{background:#ffc85733;color:#ffc857;}
+  .modal-body .step-timeline .tag.ok{background:#25c26b33;color:#25c26b;}
+
+  /* 方法论面板 */
+  .method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:12px;}
+  .method-step{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;
+    padding:12px;position:relative;}
+  .method-step .num{position:absolute;top:10px;right:12px;font-size:22px;font-weight:800;
+    color:#ffffff10;font-family:monospace;}
+  .method-step .title{font-weight:600;font-size:13px;margin-bottom:4px;color:var(--text);}
+  .method-step .desc{color:var(--text-dim);line-height:1.6;}
+
+  @media (max-width: 1100px){
+    .intercept-matrix{grid-template-columns:90px repeat(3,1fr);}
+    .method-grid{grid-template-columns:repeat(2,1fr);}
+  }
 </style>
 </head>
 <body>
@@ -70,6 +158,15 @@
   <span class="badge">DEMO</span>
   <span>当前页面为<b>演示数据</b>（mock_data.json），用于展示监控体系的结构与指标口径；真机采集链路待 6 台真机 + 账号 + 固定 IP 到位后切换为实时数据。</span>
 </div>
+
+<!-- ============ 顶级 Tab：1.0 资源位监控 / 2.0 安装链路监控 ============ -->
+<div class="top-tabs" id="top-tabs">
+  <div class="top-tab active" data-pane="pane-slots"><span class="dot"></span>Tab 1 · 厂商资源位监控</div>
+  <div class="top-tab" data-pane="pane-install"><span class="dot"></span>Tab 2 · 厂商安装链路监控</div>
+</div>
+
+<!-- ============ Tab 1 内容（原 1.0 资源监控，整体包裹） ============ -->
+<div class="tab-pane active" id="pane-slots">
 
 <header>
   <div>
@@ -234,6 +331,161 @@
 </div>
 
 <footer>小A助手 · 厂商资源位监控 · 夜间 02:00 跑批 · 华为双设备（EMUI + 纯血鸿蒙）· 采集器：uiautomator2 / hdc + OCR · 仅统计 Excel 清单内资源位</footer>
+
+</div><!-- /#pane-slots -->
+
+<!-- ============ Tab 2 内容：厂商安装链路拦截监控 ============ -->
+<div class="tab-pane" id="pane-install">
+
+<header>
+  <div>
+    <h1>厂商安装链路拦截监控 <span class="tag">v1 · QQ / 微信 / 应用宝 × 5 厂商</span></h1>
+    <div class="meta">
+      监控目标：<b>腾讯游戏</b>在 <b>应用宝 / 微信游戏中心 / 手机QQ</b> 三大分发渠道，在<b>华为 / 小米 / OPPO / VIVO / 荣耀</b>五家厂商机型上的<b>安装链路体验</b>（下载进度 95% → 逐步确认 → 安装完成）·
+      录制口径：从下载进度条 95% 开始录屏 → 持续点击"下一步/安装" → 安装完成结束 ·
+      样本游戏：<b id="case-game">《王者荣耀：世界》4/15 预下载 · 4/17 首发</b>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div class="tabs" id="tab-auth">
+      <div class="tab active" data-v="all">全部</div>
+      <div class="tab" data-v="authed">开授权</div>
+      <div class="tab" data-v="unauthed">未授权</div>
+    </div>
+    <div class="tabs" id="tab-channel2">
+      <div class="tab active" data-v="all">全部渠道</div>
+      <div class="tab" data-v="qq">手机QQ</div>
+      <div class="tab" data-v="wechat">微信</div>
+      <div class="tab" data-v="yyb">应用宝</div>
+    </div>
+  </div>
+</header>
+
+<!-- Tab2 KPI -->
+<div class="kpi-row">
+  <div class="kpi"><div class="label">本轮采集样本</div><div class="value" id="ik-total">—</div><div class="sub">5 厂商 × 3 渠道 × 2 授权</div></div>
+  <div class="kpi"><div class="label">强拦截场景</div><div class="value" id="ik-strong" style="color:var(--s)">—</div><div class="sub">需输入密码 / 禁止安装</div></div>
+  <div class="kpi"><div class="label">弱拦截场景</div><div class="value" id="ik-weak" style="color:var(--a)">—</div><div class="sub">多步确认 + 风险提示</div></div>
+  <div class="kpi"><div class="label">一致可装</div><div class="value" id="ik-ok" style="color:var(--up)">—</div><div class="sub">开授权后无阻塞</div></div>
+  <div class="kpi"><div class="label">录屏覆盖</div><div class="value" id="ik-cov">—</div><div class="sub">含时间轴自动分析</div></div>
+</div>
+
+<!-- 拦截程度分布 + 环比 -->
+<div class="row">
+  <div class="panel">
+    <h3>拦截程度分布 · 厂商 × 渠道
+      <span class="lv-legend">
+        <span class="item"><span class="sw" style="background:#ff5a78"></span>强拦截</span>
+        <span class="item"><span class="sw" style="background:#ffc857"></span>弱拦截</span>
+        <span class="item"><span class="sw" style="background:#25c26b"></span>一致</span>
+      </span>
+    </h3>
+    <div id="ch-intercept-stack" class="chart-md"></div>
+  </div>
+  <div class="panel">
+    <h3>安装步骤数分布 <span class="sub">（用户点击"确认/下一步"次数 · 越多越劝退）</span></h3>
+    <div id="ch-steps" class="chart-md"></div>
+  </div>
+</div>
+
+<!-- 授权态对比 -->
+<div class="row-2">
+  <div class="panel">
+    <h3>开授权 · 5 厂商 × 3 渠道 <span class="sub">（正常用户链路）</span></h3>
+    <div id="ch-authed" class="chart-md"></div>
+  </div>
+  <div class="panel">
+    <h3>未授权 · 5 厂商 × 3 渠道 <span class="sub">（首次安装 / 新用户场景）</span></h3>
+    <div id="ch-unauthed" class="chart-md"></div>
+  </div>
+</div>
+
+<!-- 拦截矩阵（核心）：5 厂商 × 2 授权态 × 3 渠道 -->
+<div class="panel" style="margin-bottom:14px;">
+  <h3>🎯 安装链路拦截矩阵 · 《王者荣耀：世界》样例
+    <span class="sub">（点击"▶ 录屏"可播放该场景的完整安装过程录屏）</span>
+  </h3>
+  <div class="note" style="margin-bottom:12px;">
+    <b>矩阵含义：</b>每个格子 = 一家厂商机型（第N行）在对应渠道（QQ/微信/应用宝）、对应授权态下的<b>安装链路表现</b>。展示维度：① 拦截程度徽章 · ② 是否需要输入密码 / 是否无法安装 · ③ 录屏入口 · ④ 备注（异常链路说明）。
+  </div>
+  <div id="intercept-matrix-wrap"></div>
+</div>
+
+<!-- 拦截原因 Top 列表 + 方法论 -->
+<div class="row">
+  <div class="panel">
+    <h3>🔍 拦截/劝退原因 Top 5 <span class="sub">（基于录屏 UI 文本自动提取）</span></h3>
+    <table class="mini" id="tbl-reasons">
+      <thead><tr><th>#</th><th>提示文案</th><th>出现次数</th><th>厂商</th><th>等级</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <h3>📋 自动化检测流程 <span class="sub">（真机接入后 · 脚本化 → 报告）</span></h3>
+    <div class="method-grid">
+      <div class="method-step"><div class="num">01</div>
+        <div class="title">触发下载</div>
+        <div class="desc">脚本通过 ADB/HDC 控制真机，在目标渠道点击"下载"，监听下载进度。</div>
+      </div>
+      <div class="method-step"><div class="num">02</div>
+        <div class="title">95% 开始录屏</div>
+        <div class="desc">进度到达 95% 时 scrcpy / screenrecord 启动录制，并打点 <code>t0</code>。</div>
+      </div>
+      <div class="method-step"><div class="num">03</div>
+        <div class="title">逐步确认</div>
+        <div class="desc">自动点击"下一步/安装/同意"等按钮，OCR 提取每屏文案并打时间戳。</div>
+      </div>
+      <div class="method-step"><div class="num">04</div>
+        <div class="title">安装完成停止</div>
+        <div class="desc">检测到"打开/完成"按钮出现则结束录屏，得到 <code>Δt</code> 与步骤数。</div>
+      </div>
+      <div class="method-step"><div class="num">05</div>
+        <div class="title">UI 文案分类</div>
+        <div class="desc">对识别到的文案做规则 + LLM 双通道分类：确认类 / 风险类 / 阻塞类。</div>
+      </div>
+      <div class="method-step"><div class="num">06</div>
+        <div class="title">拦截分级</div>
+        <div class="desc">阻塞类 → 强拦截；风险类 ≥2 → 弱拦截；仅确认类 → 一致。</div>
+      </div>
+      <div class="method-step"><div class="num">07</div>
+        <div class="title">基线 diff</div>
+        <div class="desc">与同渠道"开授权"基线对比，若步骤数 +N 或出现新阻塞，生成告警。</div>
+      </div>
+      <div class="method-step"><div class="num">08</div>
+        <div class="title">生成报告</div>
+        <div class="desc">输出 Excel + HTML 两份：厂商×渠道×授权态矩阵 + 录屏回看 + 原因 Top 榜。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 案例洞察 -->
+<div class="panel" style="margin-top:14px;">
+  <h3>💡 《王者荣耀：世界》案例洞察 · 基于 4/15 预下载监测</h3>
+  <div class="alert" id="install-insights">
+    <b>🚫 强拦截集中在"未授权 + 手Q/应用宝"场景</b>：小米未开启三方授权时，yyb 和手Q <b>禁止安装且不能跳转设置</b>，仅微信支持"跳转到设置开启"——目前与渠道沟通中。<br>
+    <b>⚠️ 弱拦截普遍存在于 OPPO/vivo 未授权态</b>：微信 / 手Q 会弹出「检测结果：涉及敏感权限」并要求多步确认，用户需点 3~5 次"下一步"才能完成，对转化折损明显。<br>
+    <b>🎯 开授权态下 5 家厂商、3 渠道链路基本一致</b>：华为、荣耀表现最稳（无特殊链路）；应用宝在 vivo 上曾出现疑似<b>攻防技术手段</b>引起的新链路（密码二次确认），重新安装未复现，待持续观察。<br>
+    <b>📹 录屏方法论</b>：从进度条 <b>95% → 安装完成</b> 全程录制，搭配 UI 层级 OCR，可自动生成"用户需点击 N 次确认"的标准化指标，用于量化不同渠道的"安装阻力"。<br>
+    <b>🧪 真机接入计划</b>：当前为演示数据，待 6 台真机到位（华为 EMUI + HarmonyOS / 小米 / OPPO / VIVO / 荣耀 各一）后，此 Tab 切换为每日自动化回归，异常场景自动钉钉告警。
+  </div>
+</div>
+
+<footer>小A助手 · 厂商安装链路监控 · 单次采集时长约 30 分钟/游戏/渠道 · 录屏留存 30 天 · 样例数据源：《王者荣耀：世界》4月15日首发拦截监测</footer>
+
+</div><!-- /#pane-install -->
+
+</div><!-- /.wrap -->
+
+<!-- 录屏预览模态 -->
+<div class="modal-mask" id="video-modal">
+  <div class="modal-body">
+    <h4><span id="vm-title">录屏回看</span><span class="close" id="vm-close">✕</span></h4>
+    <div class="video-area" id="vm-area">
+      演示环境：录屏文件占位<br/><span id="vm-file" style="color:#999;font-size:11px"></span>
+    </div>
+    <div class="step-timeline" id="vm-timeline"></div>
+  </div>
 </div>
 
 <script>
@@ -857,6 +1109,447 @@ window.addEventListener('resize', ()=>{
   document.querySelectorAll('.panel [id^=ch-]').forEach(el=>{
     const inst = echarts.getInstanceByDom(el); if(inst) inst.resize();
   });
+});
+
+/* ============================================================
+   Tab 2 · 厂商安装链路拦截监控 · 基于《王者荣耀：世界》样例
+   数据结构：INSTALL_DATA[store][auth][channel] = { level, pwd, blocked, steps, video, note, timeline }
+   level: 'strong' 强拦截 | 'weak' 弱拦截 | 'none' 一致
+   真机接入后由 collector/install_chain.py 产出同结构 JSON
+============================================================ */
+const CHAN_NAME = {qq:'手机QQ', wechat:'微信', yyb:'应用宝'};
+const CHAN_ORDER = ['qq','wechat','yyb'];
+const STORE_ORDER2 = ['huawei','xiaomi','oppo','vivo','honor'];
+const LEVEL_COLOR = {strong:'#ff5a78', weak:'#ffc857', none:'#25c26b'};
+const LEVEL_NAME  = {strong:'强拦截',   weak:'弱拦截',  none:'一致'};
+
+// 基于《王者世界】拦截监控.xlsx》还原的样例数据
+const INSTALL_DATA = {
+  huawei: {
+    authed:   {
+      qq:     {level:'none', pwd:'否', blocked:'否', steps:2, note:'拦截情况一致',
+               video:'8bbd9a72af2885c7026f99cc191eb148.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'弹窗：是否安装此应用', tag:'ok'},{t:'00:05', evt:'点击"安装"', tag:'ok'},{t:'00:42', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'none', pwd:'否', blocked:'否', steps:2, note:'拦截情况一致',
+               video:'a8dfdecde4bce707b725203623fb1d4a.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'弹窗：安装应用', tag:'ok'},{t:'00:05', evt:'点击"继续安装"', tag:'ok'},{t:'00:40', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'none', pwd:'否', blocked:'否', steps:2, note:'拦截情况一致',
+               video:'00b52c421cb5e589b5f660980ad6c194.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:04', evt:'点击"安装"', tag:'ok'},{t:'00:38', evt:'安装完成', tag:'ok'}]}
+    },
+    unauthed: {
+      qq:     {level:'weak', pwd:'否', blocked:'否', steps:4, note:'拦截情况一致',
+               video:'cd49f89bd6dd78e471836b4dcc055b39.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'风险提示：未知来源应用', tag:'warn'},{t:'00:06', evt:'点击"仍要安装"', tag:'warn'},{t:'00:09', evt:'二次确认安装', tag:'warn'},{t:'00:48', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'weak', pwd:'否', blocked:'否', steps:4, note:'拦截情况一致',
+               video:'1ace5dd464f4aad094741ec3cee57ac2.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'风险提示', tag:'warn'},{t:'00:06', evt:'点击"继续安装"', tag:'warn'},{t:'00:09', evt:'最终确认', tag:'warn'},{t:'00:45', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'weak', pwd:'否', blocked:'否', steps:4, note:'拦截情况一致',
+               video:'bded0625a0da422b0d2f946b3418c88d.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:04', evt:'未授权提示', tag:'warn'},{t:'00:07', evt:'点击"我知道了"', tag:'warn'},{t:'00:10', evt:'再次确认', tag:'warn'},{t:'00:46', evt:'安装完成', tag:'ok'}]}
+    }
+  },
+  xiaomi: {
+    authed:   {
+      qq:     {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'acd0de1b62bb9e4c064001e12ba3b2d8.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:35', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'8194e9a38b8311a0c483a79d41b36971.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:34', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'dc56e592ee74e5325c760b7a408520b7.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:33', evt:'安装完成', tag:'ok'}]}
+    },
+    unauthed: {
+      qq:     {level:'strong', pwd:'—', blocked:'是', steps:0, note:'未授权时 手Q 禁止安装，且无法跳转设置（目前与渠道沟通中）',
+               video:'f59843bf993890332cd4296a333fc2a9.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'弹窗：安装被系统阻止', tag:'block'},{t:'00:05', evt:'"设置"按钮不可点击', tag:'block'},{t:'00:08', evt:'强制中断安装', tag:'block'}]},
+      wechat: {level:'weak', pwd:'否', blocked:'否', steps:3, note:'微信可跳转设置开启授权',
+               video:'e5dec0120dee5ec6f65ba617c59fc789.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'提示：需要开启授权', tag:'warn'},{t:'00:05', evt:'点击"去设置"', tag:'warn'},{t:'00:12', evt:'返回后点击"安装"', tag:'ok'},{t:'00:44', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'strong', pwd:'—', blocked:'是', steps:0, note:'未授权时 yyb 禁止安装，且无法跳转设置',
+               video:'744ebc844f23c739193112dac264b95c.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'弹窗：安装被阻止', tag:'block'},{t:'00:05', evt:'跳转设置失败', tag:'block'}]}
+    }
+  },
+  oppo: {
+    authed:   {
+      qq:     {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'c2b630e274d3c2cebcdd3b15a680f514.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:39', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'2094cc24da385f2a81906bbceb74d456.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:37', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'491d24c690518e6b3c943b55ff615064.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:36', evt:'安装完成', tag:'ok'}]}
+    },
+    unauthed: {
+      qq:     {level:'weak', pwd:'否', blocked:'否', steps:5, note:'微信/手Q 提示：检测结果：涉及敏感权限',
+               video:'ac64bffd96f7c9100aad84cca13059aa.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'安全检测中...', tag:'warn'},{t:'00:06', evt:'提示：涉及敏感权限', tag:'warn'},{t:'00:09', evt:'点击"仍要安装"', tag:'warn'},{t:'00:12', evt:'再次确认', tag:'warn'},{t:'00:52', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'weak', pwd:'否', blocked:'否', steps:5, note:'微信/手Q 提示：检测结果：涉及敏感权限',
+               video:'c1e7b8792ceb7e7f892d891c94b9dc4a.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'安全检测', tag:'warn'},{t:'00:06', evt:'敏感权限提示', tag:'warn'},{t:'00:09', evt:'确认安装', tag:'warn'},{t:'00:12', evt:'最终确认', tag:'warn'},{t:'00:50', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'weak', pwd:'否', blocked:'否', steps:4, note:'—',
+               video:'470_raw.MP4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'风险提示', tag:'warn'},{t:'00:06', evt:'继续安装', tag:'warn'},{t:'00:09', evt:'确认', tag:'warn'},{t:'00:47', evt:'安装完成', tag:'ok'}]}
+    }
+  },
+  vivo: {
+    authed:   {
+      qq:     {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'72923f04e7a1a236987ce2bcd1983f97.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:38', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'none', pwd:'否', blocked:'否', steps:2, note:'—',
+               video:'7512b8c59cd287825e006e56a8a9e8f6.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:37', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'weak', pwd:'是', blocked:'否', steps:3, note:'yyb 出现新链路，疑似攻防技术手段，重新安装未复现',
+               video:'cb30ffc21d366a8cb40e3f9e299b9f93.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'弹窗：请输入锁屏密码', tag:'warn'},{t:'00:08', evt:'输入密码后确认', tag:'warn'},{t:'00:11', evt:'点击"安装"', tag:'ok'},{t:'00:46', evt:'安装完成', tag:'ok'}]}
+    },
+    unauthed: {
+      qq:     {level:'weak', pwd:'否', blocked:'否', steps:5, note:'微信/手Q 提示：检测结果：涉及敏感权限',
+               video:'473_raw.MP4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'敏感权限提示', tag:'warn'},{t:'00:06', evt:'多次确认', tag:'warn'},{t:'00:12', evt:'风险二次提示', tag:'warn'},{t:'00:15', evt:'点击"仍要安装"', tag:'warn'},{t:'00:54', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'weak', pwd:'否', blocked:'否', steps:5, note:'微信/手Q 提示：检测结果：涉及敏感权限',
+               video:'qq确权.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'涉及敏感权限', tag:'warn'},{t:'00:06', evt:'继续', tag:'warn'},{t:'00:09', evt:'确认', tag:'warn'},{t:'00:12', evt:'最终安装', tag:'warn'},{t:'00:51', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'weak', pwd:'否', blocked:'否', steps:4, note:'—',
+               video:'yyb 确权.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'未授权提示', tag:'warn'},{t:'00:06', evt:'继续安装', tag:'warn'},{t:'00:09', evt:'确认', tag:'warn'},{t:'00:48', evt:'安装完成', tag:'ok'}]}
+    }
+  },
+  honor: {
+    authed:   {
+      qq:     {level:'none', pwd:'否', blocked:'否', steps:2, note:'拦截情况一致，未出现特殊链路',
+               video:'8316946c93fcc6258036e63b18eb64c4.mov',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:36', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'none', pwd:'否', blocked:'否', steps:2, note:'拦截情况一致',
+               video:'20f573c03f91936bba7d2d35e6e24d50.mov',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:35', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'none', pwd:'否', blocked:'否', steps:2, note:'拦截情况一致',
+               video:'0b110539d3e057e5d96cd78b25fba42a.mov',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:03', evt:'点击"安装"', tag:'ok'},{t:'00:34', evt:'安装完成', tag:'ok'}]}
+    },
+    unauthed: {
+      qq:     {level:'weak', pwd:'否', blocked:'否', steps:4, note:'拦截情况一致',
+               video:'video.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:04', evt:'未授权提示', tag:'warn'},{t:'00:07', evt:'继续', tag:'warn'},{t:'00:10', evt:'确认', tag:'warn'},{t:'00:46', evt:'安装完成', tag:'ok'}]},
+      wechat: {level:'weak', pwd:'否', blocked:'否', steps:4, note:'拦截情况一致',
+               video:'video.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:04', evt:'风险提示', tag:'warn'},{t:'00:07', evt:'继续', tag:'warn'},{t:'00:10', evt:'确认', tag:'warn'},{t:'00:45', evt:'安装完成', tag:'ok'}]},
+      yyb:    {level:'weak', pwd:'否', blocked:'否', steps:4, note:'拦截情况一致',
+               video:'video.mp4',
+               timeline:[{t:'00:00', evt:'下载进度 95%', tag:'ok'},{t:'00:04', evt:'未授权提示', tag:'warn'},{t:'00:07', evt:'继续', tag:'warn'},{t:'00:10', evt:'确认', tag:'warn'},{t:'00:44', evt:'安装完成', tag:'ok'}]}
+    }
+  }
+};
+
+// 筛选状态
+let ikAuth = 'all', ikChan = 'all';
+
+/* ---------- 工具：对所有 cell 的迭代 ---------- */
+function forEachCell(cb){
+  STORE_ORDER2.forEach(st=>{
+    ['authed','unauthed'].forEach(auth=>{
+      CHAN_ORDER.forEach(ch=>{
+        const d = INSTALL_DATA[st][auth][ch];
+        if(d) cb({store:st, auth, channel:ch, data:d});
+      });
+    });
+  });
+}
+
+function filterCell(c){
+  if(ikAuth !== 'all' && c.auth !== ikAuth) return false;
+  if(ikChan !== 'all' && c.channel !== ikChan) return false;
+  return true;
+}
+
+/* ---------- KPI ---------- */
+function renderIKPI(){
+  let total=0, strong=0, weak=0, none=0, videoN=0;
+  forEachCell(c=>{
+    if(!filterCell(c)) return;
+    total++;
+    if(c.data.level==='strong') strong++;
+    else if(c.data.level==='weak') weak++;
+    else none++;
+    if(c.data.video) videoN++;
+  });
+  const $ = id => document.getElementById(id);
+  $('ik-total').textContent = total;
+  $('ik-strong').textContent = strong;
+  $('ik-weak').textContent = weak;
+  $('ik-ok').textContent = none;
+  $('ik-cov').textContent = total ? Math.round(videoN/total*100)+'%' : '—';
+}
+
+/* ---------- 拦截矩阵渲染 ---------- */
+function renderMatrix(){
+  const wrap = document.getElementById('intercept-matrix-wrap');
+  const rows = [];
+  STORE_ORDER2.forEach(st=>{
+    ['authed','unauthed'].forEach(auth=>{
+      if(ikAuth !== 'all' && auth !== ikAuth) return;
+      rows.push({store:st, auth});
+    });
+  });
+
+  let html = `<div class="intercept-matrix">
+    <div class="im-h">厂商 · 授权态</div>`;
+  CHAN_ORDER.forEach(ch=>{
+    if(ikChan !== 'all' && ch !== ikChan) return;
+    html += `<div class="im-h">${CHAN_NAME[ch]}</div>`;
+  });
+
+  rows.forEach(({store, auth})=>{
+    html += `<div class="im-row-label">
+      <div class="store-name">${STORE_NAME[store]}</div>
+      <div class="auth">${auth==='authed'?'开授权':'未授权'}</div>
+    </div>`;
+    CHAN_ORDER.forEach(ch=>{
+      if(ikChan !== 'all' && ch !== ikChan) return;
+      const d = INSTALL_DATA[store][auth][ch];
+      if(!d){ html += `<div class="im-cell empty">—</div>`; return; }
+      const lvClass = 'lv-'+d.level;
+      html += `<div class="im-cell ${lvClass}">
+        <span class="lv-badge">${LEVEL_NAME[d.level]}</span>
+        <div class="metrics">
+          <span>密码<span class="k">${d.pwd}</span></span>
+          <span>阻塞<span class="k">${d.blocked}</span></span>
+          <span>步骤<span class="k">${d.steps}</span></span>
+        </div>
+        <div class="video-thumb" data-store="${store}" data-auth="${auth}" data-ch="${ch}"></div>
+        <div class="note">${d.note||'—'}</div>
+      </div>`;
+    });
+  });
+  html += `</div>`;
+  wrap.innerHTML = html;
+
+  wrap.querySelectorAll('.video-thumb').forEach(el=>{
+    el.onclick = ()=>{
+      openVideoModal(el.dataset.store, el.dataset.auth, el.dataset.ch);
+    };
+  });
+}
+
+/* ---------- 拦截程度堆叠图：厂商×渠道 ---------- */
+let chIntStack;
+function renderInterceptStack(){
+  const cats = [];
+  STORE_ORDER2.forEach(st=> CHAN_ORDER.forEach(ch=>{
+    if(ikChan!=='all' && ch!==ikChan) return;
+    cats.push(STORE_NAME[st]+' / '+CHAN_NAME[ch]);
+  }));
+  const strong=[], weak=[], none=[];
+  STORE_ORDER2.forEach(st=> CHAN_ORDER.forEach(ch=>{
+    if(ikChan!=='all' && ch!==ikChan) return;
+    let s=0,w=0,n=0;
+    ['authed','unauthed'].forEach(auth=>{
+      if(ikAuth!=='all' && auth!==ikAuth) return;
+      const d = INSTALL_DATA[st][auth][ch];
+      if(!d) return;
+      if(d.level==='strong') s++;
+      else if(d.level==='weak') w++;
+      else n++;
+    });
+    strong.push(s); weak.push(w); none.push(n);
+  }));
+  if(!chIntStack) chIntStack = echarts.init(document.getElementById('ch-intercept-stack'),'dark');
+  chIntStack.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+    legend:{data:['强拦截','弱拦截','一致'], textStyle:{color:'#9aa4bf'}, top:0},
+    grid:{left:36, right:20, top:32, bottom:70},
+    xAxis:{type:'category', data:cats,
+      axisLabel:{color:'#9aa4bf', fontSize:10, rotate:35, interval:0}},
+    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, name:'场景数', nameTextStyle:{color:'#9aa4bf'},
+      splitLine:{lineStyle:{color:'#2a3454'}}},
+    series:[
+      {name:'强拦截', type:'bar', stack:'lv', data:strong, itemStyle:{color:'#ff5a78'}, barMaxWidth:22},
+      {name:'弱拦截', type:'bar', stack:'lv', data:weak,   itemStyle:{color:'#ffc857'}, barMaxWidth:22},
+      {name:'一致',   type:'bar', stack:'lv', data:none,   itemStyle:{color:'#25c26b'}, barMaxWidth:22},
+    ]
+  });
+}
+
+/* ---------- 步骤数分布 ---------- */
+let chSteps;
+function renderStepsChart(){
+  const buckets = {};
+  forEachCell(c=>{
+    if(!filterCell(c)) return;
+    const k = c.data.steps;
+    buckets[k] = (buckets[k]||0)+1;
+  });
+  const keys = Object.keys(buckets).map(Number).sort((a,b)=>a-b);
+  const data = keys.map(k=>({
+    value: buckets[k],
+    itemStyle:{color: k===0 ? '#ff5a78' : k<=2 ? '#25c26b' : k<=4 ? '#ffc857' : '#ff8a3d',
+      borderRadius:[4,4,0,0]}
+  }));
+  if(!chSteps) chSteps = echarts.init(document.getElementById('ch-steps'),'dark');
+  chSteps.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'},
+      formatter:p=>`${p[0].name===''?'0（完全阻塞）':p[0].name+' 步'}<br/>场景数：<b>${p[0].value}</b>`},
+    grid:{left:36, right:20, top:20, bottom:36},
+    xAxis:{type:'category', data:keys.map(k=>k+' 步'), axisLabel:{color:'#9aa4bf'},
+      name:'用户点击"确认/下一步"次数', nameLocation:'middle', nameGap:26,
+      nameTextStyle:{color:'#9aa4bf', fontSize:11}},
+    yAxis:{type:'value', axisLabel:{color:'#9aa4bf'}, splitLine:{lineStyle:{color:'#2a3454'}}},
+    series:[{type:'bar', data, barWidth:'50%',
+      label:{show:true, position:'top', color:'#e7ecf5', fontSize:11}}]
+  });
+}
+
+/* ---------- 授权 / 未授权 两张分图 ---------- */
+function renderAuthCompare(auth, elId, inst){
+  const opt = {
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'},
+      formatter:params=>{
+        const st = params[0].name;
+        const lines = params.map(p=>`${p.marker}${p.seriesName}：<b>${p.value}</b>`);
+        return st+'<br/>'+lines.join('<br/>');
+      }},
+    legend:{data:['强拦截','弱拦截','一致'], textStyle:{color:'#9aa4bf'}, top:0},
+    grid:{left:36, right:20, top:32, bottom:36},
+    xAxis:{type:'category', data:STORE_ORDER2.map(s=>STORE_NAME[s]),
+      axisLabel:{color:'#9aa4bf'}},
+    yAxis:{type:'value', max:3, axisLabel:{color:'#9aa4bf'},
+      splitLine:{lineStyle:{color:'#2a3454'}},
+      name:'渠道数（最多3）', nameTextStyle:{color:'#9aa4bf', fontSize:11}},
+    series:[]
+  };
+  ['strong','weak','none'].forEach(lv=>{
+    opt.series.push({
+      name: LEVEL_NAME[lv], type:'bar', stack:'a',
+      itemStyle:{color:LEVEL_COLOR[lv], borderRadius: lv==='none'?[4,4,0,0]:0},
+      barMaxWidth:34,
+      data:STORE_ORDER2.map(st=>{
+        let n=0;
+        CHAN_ORDER.forEach(ch=>{
+          const d = INSTALL_DATA[st][auth][ch];
+          if(d && d.level===lv) n++;
+        });
+        return n;
+      })
+    });
+  });
+  if(!inst) inst = echarts.init(document.getElementById(elId),'dark');
+  inst.setOption(opt);
+  return inst;
+}
+let chAuthed, chUnauthed;
+function renderAuthPanels(){
+  chAuthed   = renderAuthCompare('authed',   'ch-authed',   chAuthed);
+  chUnauthed = renderAuthCompare('unauthed', 'ch-unauthed', chUnauthed);
+}
+
+/* ---------- Top 5 原因（根据备注 + timeline tag=block/warn 汇总） ---------- */
+function renderReasons(){
+  const reasonMap = {};
+  forEachCell(c=>{
+    if(!filterCell(c)) return;
+    (c.data.timeline||[]).forEach(ev=>{
+      if(ev.tag==='block' || ev.tag==='warn'){
+        const key = ev.evt.replace(/^点击[""]?/,'').replace(/[""]/g,'').trim();
+        if(!reasonMap[key]) reasonMap[key] = {n:0, stores:new Set(), worstLv:'none'};
+        reasonMap[key].n++;
+        reasonMap[key].stores.add(c.store);
+        const order = {strong:3, weak:2, none:1};
+        if(order[c.data.level] > order[reasonMap[key].worstLv]) reasonMap[key].worstLv = c.data.level;
+      }
+    });
+  });
+  const top = Object.entries(reasonMap).sort((a,b)=>b[1].n - a[1].n).slice(0,5);
+  const tbody = document.querySelector('#tbl-reasons tbody');
+  tbody.innerHTML = top.map((r,i)=>{
+    const stores = [...r[1].stores].map(s=>STORE_NAME[s]).join('、');
+    const lvCls = r[1].worstLv==='strong'?'grade-s':r[1].worstLv==='weak'?'grade-a':'';
+    return `<tr>
+      <td>${i+1}</td>
+      <td style="max-width:240px">${r[0]}</td>
+      <td><b>${r[1].n}</b> 次</td>
+      <td style="color:var(--text-dim);font-size:11px">${stores}</td>
+      <td class="${lvCls}">${LEVEL_NAME[r[1].worstLv]}</td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="5" style="text-align:center;color:var(--text-dim)">当前筛选下无数据</td></tr>`;
+}
+
+/* ---------- 录屏模态 ---------- */
+function openVideoModal(store, auth, ch){
+  const d = INSTALL_DATA[store][auth][ch];
+  if(!d) return;
+  document.getElementById('vm-title').textContent =
+    `${STORE_NAME[store]} · ${auth==='authed'?'开授权':'未授权'} · ${CHAN_NAME[ch]}`;
+  document.getElementById('vm-file').textContent = d.video || '—';
+  const tl = document.getElementById('vm-timeline');
+  tl.innerHTML = (d.timeline||[]).map(ev=>
+    `<div class="step"><span class="t">${ev.t}</span>
+      <span class="evt">${ev.evt}</span>
+      <span class="tag ${ev.tag}">${ev.tag==='block'?'阻塞':ev.tag==='warn'?'风险':'正常'}</span>
+    </div>`
+  ).join('');
+  document.getElementById('video-modal').classList.add('show');
+}
+document.getElementById('vm-close').onclick =
+  ()=> document.getElementById('video-modal').classList.remove('show');
+document.getElementById('video-modal').onclick = (e)=>{
+  if(e.target.id==='video-modal') e.target.classList.remove('show');
+};
+
+/* ---------- Tab2 汇总刷新 ---------- */
+function refreshTab2(){
+  renderIKPI();
+  renderMatrix();
+  renderInterceptStack();
+  renderStepsChart();
+  renderAuthPanels();
+  renderReasons();
+}
+
+/* ---------- Tab2 筛选器事件 ---------- */
+document.querySelectorAll('#tab-auth .tab').forEach(t=>{
+  t.onclick = ()=>{
+    document.querySelectorAll('#tab-auth .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    ikAuth = t.dataset.v;
+    refreshTab2();
+  };
+});
+document.querySelectorAll('#tab-channel2 .tab').forEach(t=>{
+  t.onclick = ()=>{
+    document.querySelectorAll('#tab-channel2 .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    ikChan = t.dataset.v;
+    refreshTab2();
+  };
+});
+
+/* ---------- 顶级 Tab 切换 ---------- */
+document.querySelectorAll('#top-tabs .top-tab').forEach(t=>{
+  t.onclick = ()=>{
+    document.querySelectorAll('#top-tabs .top-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.pane).classList.add('active');
+    // 切到 Tab2 时首次渲染 + resize（避免 echarts 宽度为 0）
+    if(t.dataset.pane==='pane-install'){
+      refreshTab2();
+      setTimeout(()=>{
+        ['ch-intercept-stack','ch-steps','ch-authed','ch-unauthed'].forEach(id=>{
+          const inst = echarts.getInstanceByDom(document.getElementById(id));
+          if(inst) inst.resize();
+        });
+      }, 50);
+    }
+  };
 });
 </script>
 </body>
