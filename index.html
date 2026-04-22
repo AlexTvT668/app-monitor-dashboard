@@ -191,43 +191,7 @@
     background:var(--accent-tab3);box-shadow:0 0 10px var(--accent-tab3);
     animation:pulse 1.6s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-
-  /* ========== Tab 顶部总结概要卡 · summary card ========== */
-  .summary-card{background:var(--panel);border:1px solid var(--border-strong);
-    border-left:3px solid var(--tab-accent,#c8ff4d);padding:20px 24px 22px;margin-bottom:22px;
-    position:relative;}
-  .summary-card .sc-head{display:flex;align-items:center;justify-content:space-between;
-    gap:12px;flex-wrap:wrap;padding-bottom:12px;margin-bottom:14px;
-    border-bottom:1px solid var(--border);}
-  .summary-card .sc-head .sc-title{font-family:var(--font-mono);font-size:11px;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--tab-accent,#c8ff4d);
-    font-weight:600;display:inline-flex;align-items:center;gap:10px;}
-  .summary-card .sc-head .sc-title::before{content:'TL;DR';background:var(--tab-accent,#c8ff4d);
-    color:var(--bg);padding:3px 8px;font-size:10px;letter-spacing:.1em;font-weight:700;}
-  .summary-card .sc-head .sc-sub{font-family:var(--font-mono);font-size:10.5px;
-    letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
-  .summary-card .sc-body{font-size:13px;line-height:1.9;color:var(--text-dim);}
-  .summary-card .sc-body b{color:var(--text);font-weight:600;}
-  .summary-card .sc-body p{margin:0 0 8px;}
-  .summary-card .sc-body p:last-child{margin-bottom:0;}
-  .summary-card .sc-body .k{color:var(--tab-accent,#c8ff4d);font-weight:600;font-family:var(--font-mono);}
-  /* 内部三列洞察（Tab3 用） */
-  .summary-card .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-    border:1px solid var(--border);background:var(--bg);}
-  .summary-card .sc-grid .ic{padding:16px 18px;border-right:1px solid var(--border);}
-  .summary-card .sc-grid .ic:last-child{border-right:none;}
-  .summary-card .sc-grid .ic .head{font-family:var(--font-mono);font-size:10.5px;
-    letter-spacing:.12em;text-transform:uppercase;color:var(--tab-accent,#c8ff4d);
-    margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-  .summary-card .sc-grid .ic .head .sym{font-size:13px;}
-  .summary-card .sc-grid .ic .title{font-size:14px;color:var(--text);
-    font-weight:600;margin:4px 0 8px;line-height:1.4;letter-spacing:-.005em;}
-  .summary-card .sc-grid .ic .desc{font-size:12.5px;color:var(--text-dim);line-height:1.7;}
-  .summary-card .sc-grid .ic .desc b{color:var(--text);font-weight:600;}
   @media (max-width: 1100px){
-    .summary-card .sc-grid{grid-template-columns:1fr;}
-    .summary-card .sc-grid .ic{border-right:none;border-bottom:1px solid var(--border);}
-    .summary-card .sc-grid .ic:last-child{border-bottom:none;}
     .site-header h1.site-title{font-size:26px;}
   }
 
@@ -910,6 +874,18 @@
   </div>
 </div>
 
+<!-- 案例洞察 -->
+<div class="panel" style="margin-top:14px;">
+  <h3>《王者荣耀：世界》案例洞察 · 基于 4/15 预下载监测</h3>
+  <div class="alert" id="install-insights">
+    <b>🚫 强拦截集中在"未授权 + 手Q/应用宝"场景</b>：小米未开启三方授权时，yyb 和手Q <b>禁止安装且不能跳转设置</b>，仅微信支持"跳转到设置开启"——目前与渠道沟通中。<br>
+    <b>⚠️ 弱拦截普遍存在于 OPPO/vivo 未授权态</b>：微信 / 手Q 会弹出「检测结果：涉及敏感权限」并要求多步确认，用户需点 3~5 次"下一步"才能完成，对转化折损明显。<br>
+    <b>🎯 开授权态下 5 家厂商、3 渠道链路基本一致</b>：华为、荣耀表现最稳（无特殊链路）；应用宝在 vivo 上曾出现疑似<b>攻防技术手段</b>引起的新链路（密码二次确认），重新安装未复现，待持续观察。<br>
+    <b>📹 录屏方法论</b>：从进度条 <b>95% → 安装完成</b> 全程录制，搭配 UI 层级 OCR，可自动生成"用户需点击 N 次确认"的标准化指标，用于量化不同渠道的"安装阻力"。<br>
+    <b>🧪 真机接入计划</b>：当前为演示数据，待 6 台真机到位（华为 EMUI + HarmonyOS / 小米 / OPPO / VIVO / 荣耀 各一）后，此 Tab 切换为每日自动化回归，异常场景自动钉钉告警。
+  </div>
+</div>
+
 <footer>小A助手 · 厂商安装链路监控 · 单次采集时长约 30 分钟/游戏/渠道 · 录屏留存 30 天 · 样例数据源：《王者荣耀：世界》4月15日首发拦截监测</footer>
 
 </div><!-- /#pane-install -->
@@ -990,6 +966,11 @@
         <div class="chart-wrap"><div id="ch-channel" class="chart-nr"></div></div>
       </div>
     </div>
+  </div>
+
+  <!-- Insight 三卡 -->
+  <div class="insight-grid" id="insight-grid">
+    <!-- 由 JS 注入 -->
   </div>
 
   <!-- CTA -->
@@ -1591,7 +1572,7 @@ function renderAlerts(){
 <b>⚠️ 入口偏斜</b>：游戏中心独有资源位 25 个（新游/预约/资讯类为主），应用商店独有 3 个；评级为 A/B+ 的资源位多数只在游戏中心可见。<br>
 <b>🧭 触达层级</b>：60% 资源位集中在"打开时 / 首页首屏 / 首页第2屏"，属于曝光密度最高的黄金三屏；二级页资源位 24 个，多为榜单/编辑室，用户到达率低但稳定性好。
 `;
-  document.getElementById('alerts-top').innerHTML = html;
+  document.getElementById('alerts').innerHTML = html;
 }
 
 /* ======= 刷新 & Tab ======= */
@@ -1633,15 +1614,13 @@ document.querySelectorAll('#tab-grade .tab').forEach(t=>{
   };
 });
 document.getElementById('today').textContent = new Date().toISOString().slice(0,10);
-/* 站点 Header 日期 + Tab1 概要日期 */
+/* 站点 Header 日期 */
 (function(){
   const d = new Date();
   const iso = d.toISOString().slice(0,10);
   const wk = ['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()];
   const sdEl = document.getElementById('site-date');
   if(sdEl) sdEl.textContent = `${iso} · ${wk}`;
-  const scdEl = document.getElementById('sc-slots-date');
-  if(scdEl) scdEl.textContent = iso;
 })();
 refreshAll();
 window.addEventListener('resize', ()=>{
