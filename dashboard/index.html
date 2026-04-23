@@ -3590,6 +3590,22 @@ const NEW_GAME_PIPELINE = [
     windowLabel:'Q3 预计',
     src:'米哈游官方 / 测试招募公告'
   },
+  {
+    date:'2026-07', name:'无限大 (Ananta / Project Mugen)', genre:'都市开放世界 RPG',
+    dev:'网易·无限大工作室', pub:'网易游戏',
+    focus:'网易对标《原神/绝区零》的二次元都市开放世界，2025-01 首次线下技术测试、2025-09 实机预告全球预约破千万；官方最新口径「预计 2026 年 7 月公测」',
+    plat:['手游','PC'],
+    windowLabel:'7 月 预计',
+    src:'projectmugen.163.com / 9game 2026-01-28'
+  },
+  {
+    date:'2026-TBA', name:'遗忘之海 (Sea of Remnants)', genre:'海洋奇遇·开放世界 RPG',
+    dev:'网易·Joker 工作室（《第五人格》原班）', pub:'网易游戏',
+    focus:'网易 Joker 工作室自研海洋冒险 RPG，融合生存+回合制策略+海战；2025-06 PlayStation State of Play 预告确认「2026 年发售」，2026-02-05 开启「流浪号测试」招募，具体发售日未公布',
+    plat:['PC','PS5','手游'],
+    windowLabel:'2026 年内',
+    src:'sea.163.com / PS State of Play 2025-06'
+  },
   // ===== 已官宣但完全未定档（TBA） =====
   {
     date:'2026-12-31', name:'黑神话：钟馗', genre:'动作·单机',
@@ -3689,9 +3705,13 @@ function renderPipelineList(){
   const sortKey = (p) => {
     if(p.tba) return '9999-12-31';
     if(p.windowLabel){
-      // 2026-Q1 → '2026-02-15'，2026-Q2 → '2026-05-15'，Q3 → '2026-08-15'，Q4 → '2026-11-15'
-      const m = /(\d{4})-Q([1-4])/.exec(p.date);
-      if(m){ const qMid = ['02-15','05-15','08-15','11-15'][+m[2]-1]; return `${m[1]}-${qMid}`; }
+      // 支持格式：2026-Q3 / 2026-07 / 2026-TBA
+      const mq = /(\d{4})-Q([1-4])/.exec(p.date);
+      if(mq){ const qMid = ['02-15','05-15','08-15','11-15'][+mq[2]-1]; return `${mq[1]}-${qMid}`; }
+      const mm = /^(\d{4})-(\d{2})$/.exec(p.date);
+      if(mm) return `${mm[1]}-${mm[2]}-15`;
+      const mt = /^(\d{4})-TBA$/i.exec(p.date);
+      if(mt) return `${mt[1]}-12-30`;
     }
     return p.date;
   };
@@ -3718,7 +3738,7 @@ function renderPipelineList(){
     let y, md;
     if(p.tba){ y = '2026'; md = 'TBA'; }
     else if(p.windowLabel){
-      const m = /(\d{4})-(Q[1-4]|\d{1,2}月)/.exec(p.date);
+      const m = /^(\d{4})/.exec(p.date);
       y = m ? m[1] : '2026';
       md = p.windowLabel;
     } else {
