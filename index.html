@@ -888,7 +888,7 @@
 
 <!-- ============ 顶级 Tab：1.0 资源位监控 / 2.0 安装链路监控 ============ -->
 <div class="top-tabs" id="top-tabs">
-  <div class="top-tab active" data-pane="pane-news"><span class="dot"></span>Tab 1 · 行业新游监控</div>
+  <div class="top-tab active" data-pane="pane-news"><span class="dot"></span>Tab 1 · 行业早知道</div>
   <div class="top-tab" data-pane="pane-slots"><span class="dot"></span>Tab 2 · 厂商资源位监控</div>
   <div class="top-tab" data-pane="pane-install"><span class="dot"></span>Tab 3 · 厂商安装链路监控</div>
   <div class="top-tab" data-pane="pane-launch"><span class="dot"></span>Tab 4 · 游戏首发资源分析</div>
@@ -899,9 +899,9 @@
 
   <header class="nr-hero">
     <div>
-      <div class="eyebrow"><span class="dot" style="background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);"></span>Industry News Radar &nbsp;·&nbsp; v1 · tab_01</div>
-      <h1>行业新游监控 <span class="mono" style="color:var(--accent-tab4);">NEWS RADAR</span></h1>
-      <p class="lead">每日 06:30 自动爬取 <b>游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap 发现好游戏</b> 等公众号与站点，聚合「行业最新资讯」与「新游 Pipeline」两大视图，辅助 BD 与产品团队快速掌握行业动态与待发行游戏阵容。</p>
+      <div class="eyebrow"><span class="dot" style="background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);"></span>Industry Early Brief &nbsp;·&nbsp; v1 · tab_01</div>
+      <h1>行业早知道 <span class="mono" style="color:var(--accent-tab4);">EARLY BRIEF</span></h1>
+      <p class="lead">每日 06:30 自动爬取 <b>游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap 发现好游戏</b> 等公众号与站点，聚合「行业最新资讯」与「新游 Pipeline」两大视图，辅助 BD 与产品团队在早会前快速掌握行业动态与待发行游戏阵容。</p>
       <div class="badges">
         <span class="nr-badge" id="news-src-badge">5 SOURCES</span>
         <span class="nr-badge" id="news-cnt-badge">— ARTICLES</span>
@@ -957,7 +957,7 @@
     </section>
   </div>
 
-  <footer>小A助手 · 行业新游监控 · 数据源：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap · 每日 06:30 爬虫聚合 · 本页 demo 数据为示例</footer>
+  <footer>小A助手 · 行业早知道 · 数据源：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap · 每日 06:30 爬虫聚合 · 本页 demo 数据为示例</footer>
 </div><!-- /#pane-news -->
 
 <!-- ============ Tab 2 内容（原 1.0 资源监控，整体包裹） ============ -->
@@ -3656,11 +3656,30 @@ function renderPipelineList(){
 }
 
 // 默认 Tab1 就是 News Radar，直接渲染一次（避免首次进入时空白）
-try{
-  if(document.getElementById('pane-news') && document.getElementById('pane-news').classList.contains('active')){
-    renderNewsTab(); window.__newsInited = true;
+function __bootNewsTab(){
+  try{
+    var pane = document.getElementById('pane-news');
+    if(!pane) return;
+    if(window.__newsInited) return;
+    // 默认 pane-news 在 HTML 里是 active；即使不是也主动渲染一次确保不空
+    renderNewsTab();
+    window.__newsInited = true;
+  }catch(e){ console.warn('[news] init error', e); }
+}
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', __bootNewsTab);
+}else{
+  __bootNewsTab();
+}
+// 二次兜底：部分极端情况下 (如 echarts 并发) 首轮 DOM 查询失败，100ms 后再试一次
+setTimeout(function(){
+  var feed = document.getElementById('news-feed');
+  var list = document.getElementById('pipeline-list');
+  if(feed && list && (!feed.children.length || !list.children.length)){
+    try{ renderNewsTab(); window.__newsInited = true; }
+    catch(e){ console.warn('[news] retry error', e); }
   }
-}catch(e){ console.warn('[news] init error', e); }
+}, 150);
 </script>
 </body>
 </html>
