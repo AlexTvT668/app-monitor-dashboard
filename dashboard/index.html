@@ -966,7 +966,7 @@
     <section class="news-col">
       <div class="section-h">
         <div class="title"><span class="num">02</span>新游 Pipeline <span style="opacity:.5">—— Upcoming</span></div>
-        <div class="hint">按首发时间排序</div>
+        <div class="hint">已上线仅展示本周内·非腾讯</div>
       </div>
       <div id="pipeline-list">
         <div class="pl-skeleton" style="padding:24px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;">
@@ -3695,12 +3695,25 @@ function renderPipelineList(){
     }
     return p.date;
   };
-  const rows = [...NEW_GAME_PIPELINE].sort((a,b)=>{
+  // 已上线条目的展示规则：只保留「非腾讯系 + 本周内（7 天内）首发」的，超期自动清理
+  // 未上线 / 窗口期 / TBA 条目不受此规则影响，永远保留
+  const todayStr = new Date().toISOString().slice(0,10);
+  const now = new Date(todayStr);
+  const TENCENT_RE = /腾讯|天美|光子|魔方|NExT|波波米|Level Infinite|Riot|拳头/i;
+  const rows = [...NEW_GAME_PIPELINE].filter(p=>{
+    if(p.tba || p.windowLabel) return true;          // 未定档/窗口期保留
+    if(p.date > todayStr) return true;                // 未来上线保留
+    // 以下为已上线条目：需满足「非腾讯系 + 距今 ≤ 7 天」
+    const pubDev = `${p.pub} ${p.dev}`;
+    if(TENCENT_RE.test(pubDev)) return false;
+    const d = new Date(p.date);
+    const diffDays = Math.floor((now - d) / 86400000);
+    return diffDays >= 0 && diffDays <= 7;
+  }).sort((a,b)=>{
     if(a.tba && !b.tba) return 1;
     if(!a.tba && b.tba) return -1;
     return sortKey(a).localeCompare(sortKey(b));
   });
-  const todayStr = new Date().toISOString().slice(0,10);
   const html = rows.map(p=>{
     let y, md;
     if(p.tba){ y = '2026'; md = 'TBA'; }
