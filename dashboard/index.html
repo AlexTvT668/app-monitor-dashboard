@@ -260,6 +260,8 @@
   /* 按分组/pane 染 accent */
   .sn-item[data-group="intel"].active{border-left-color:var(--accent-tab4);}
   .sn-item[data-group="intel"].active .sn-dot{background:var(--accent-tab4);box-shadow:0 0 8px var(--accent-tab4);}
+  .sn-item[data-group="pipe"].active{border-left-color:var(--accent-tab4);}
+  .sn-item[data-group="pipe"].active .sn-dot{background:var(--accent-tab4);box-shadow:0 0 8px var(--accent-tab4);}
   .sn-item[data-group="ops"].active{border-left-color:var(--accent-tab2);}
   .sn-item[data-group="ops"].active .sn-dot{background:var(--accent-tab2);box-shadow:0 0 8px var(--accent-tab2);}
   .sn-item[data-pane="pane-slots"].active{border-left-color:var(--accent-tab1);}
@@ -690,6 +692,9 @@
     padding:4px 10px;cursor:pointer;line-height:1;transition:all .15s;}
   .logout-btn:hover{color:var(--down);border-color:var(--down);}
 
+  /* BD 角色不可见模块（业务数据分析 / 反拦截进展） */
+  html[data-role="bd"] .role-hide-bd{display:none !important;}
+
 
   /* ---------- BD 录入面板 ---------- */
   #bd-entry-panel{display:none;margin:18px 0;border:1px solid var(--border-strong);
@@ -976,23 +981,33 @@
       <div class="sn-item active" data-pane="pane-news" data-group="intel">
         <span class="sn-dot"></span><span class="sn-t">行业新闻</span>
       </div>
-      <div class="sn-item" data-pane="pane-pipeline" data-group="intel">
-        <span class="sn-dot"></span><span class="sn-t">新游 Pipeline</span>
-      </div>
       <div class="sn-item" data-pane="pane-rival" data-group="intel">
         <span class="sn-dot"></span><span class="sn-t">友商首发数据</span><span class="sn-tag">WIP</span>
       </div>
     </div>
   </div>
-  <!-- 模块二：经营分析 -->
-  <div class="sn-group" data-group="ops">
+  <!-- 模块二：新游 Pipeline（从行业早知道中提升为一级目录） -->
+  <div class="sn-group" data-group="pipe">
     <div class="sn-group-head">
       <span class="sn-gh-idx">02</span>
+      <span class="sn-gh-t">新游 Pipeline</span>
+      <span class="sn-gh-sub">UPCOMING</span>
+    </div>
+    <div class="sn-items">
+      <div class="sn-item" data-pane="pane-pipeline" data-group="pipe">
+        <span class="sn-dot"></span><span class="sn-t">新游概览</span>
+      </div>
+    </div>
+  </div>
+  <!-- 模块三：经营分析 -->
+  <div class="sn-group" data-group="ops">
+    <div class="sn-group-head">
+      <span class="sn-gh-idx">03</span>
       <span class="sn-gh-t">经营分析</span>
       <span class="sn-gh-sub">OPERATIONS</span>
     </div>
     <div class="sn-items">
-      <div class="sn-item" data-pane="pane-biz" data-group="ops">
+      <div class="sn-item role-hide-bd" data-pane="pane-biz" data-group="ops">
         <span class="sn-dot"></span><span class="sn-t">业务数据分析</span><span class="sn-tag">WIP</span>
       </div>
       <div class="sn-sub-head">资源情况分析</div>
@@ -1007,15 +1022,15 @@
       </div>
     </div>
   </div>
-  <!-- 模块三：专项进展 -->
+  <!-- 模块四：专项进展 -->
   <div class="sn-group" data-group="proj">
     <div class="sn-group-head">
-      <span class="sn-gh-idx">03</span>
+      <span class="sn-gh-idx">04</span>
       <span class="sn-gh-t">专项进展</span>
       <span class="sn-gh-sub">PROJECTS</span>
     </div>
     <div class="sn-items">
-      <div class="sn-item" data-pane="pane-anti" data-group="proj">
+      <div class="sn-item role-hide-bd" data-pane="pane-anti" data-group="proj">
         <span class="sn-dot"></span><span class="sn-t">反拦截进展</span><span class="sn-tag">WIP</span>
       </div>
       <div class="sn-item" data-pane="pane-install" data-group="proj">
@@ -1611,7 +1626,7 @@
 <!-- ============ 占位 pane：新游 Pipeline（独立子模块，后续从 Tab1 中拆出） ============ -->
 <div class="tab-pane" id="pane-pipeline">
   <div class="stub-pane" data-accent="tab4">
-    <div class="stub-kicker"><span class="dot"></span>01 · 行业早知道 / 新游 Pipeline</div>
+    <div class="stub-kicker"><span class="dot"></span>02 · 新游 Pipeline</div>
     <h1>新游 Pipeline <span class="stub-status">独立视图 · 待细化</span></h1>
     <p class="stub-lead">从「行业新闻」中拆出，聚焦 <b>待发行 / 测试中 / 已定档</b> 游戏阵容。后续将补充：厂商归属、玩法品类、版号状态、测试里程碑、发行档期冲突分析。</p>
     <div class="stub-meta">
@@ -1635,7 +1650,7 @@
 <!-- ============ 占位 pane：业务数据分析 ============ -->
 <div class="tab-pane" id="pane-biz">
   <div class="stub-pane" data-accent="tab2">
-    <div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 业务数据分析</div>
+    <div class="stub-kicker"><span class="dot"></span>03 · 经营分析 / 业务数据分析</div>
     <h1>业务数据分析 <span class="stub-status">WIP · 待完善</span></h1>
     <p class="stub-lead">覆盖<b>收入 / DAU / 新增 / 付费 / ARPPU / LTV</b> 等核心经营指标的多维分析视图。支持按游戏、渠道、区域、时间粒度（日 / 周 / 月 / 季）下钻，输出经营周报和异常波动归因。</p>
     <div class="stub-meta">
@@ -1647,7 +1662,7 @@
 <!-- ============ 占位 pane：线下资源 ============ -->
 <div class="tab-pane" id="pane-offline">
   <div class="stub-pane" data-accent="tab1">
-    <div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 资源情况分析 / 线下资源</div>
+    <div class="stub-kicker"><span class="dot"></span>03 · 经营分析 / 资源情况分析 / 线下资源</div>
     <h1>线下资源 <span class="stub-status">WIP · 待完善</span></h1>
     <p class="stub-lead">覆盖<b>线下零售门店 / 展会活动 / 主机端售卖 / 周边联名</b>等非线上渠道的资源投放与效果归因。支持门店清单、铺货节奏、KA 达成率、线下到线上转化追踪。</p>
     <div class="stub-meta">
@@ -1659,7 +1674,7 @@
 <!-- ============ 占位 pane：反拦截进展 ============ -->
 <div class="tab-pane" id="pane-anti">
   <div class="stub-pane" data-accent="tab3">
-    <div class="stub-kicker"><span class="dot"></span>03 · 专项进展 / 反拦截进展</div>
+    <div class="stub-kicker"><span class="dot"></span>04 · 专项进展 / 反拦截进展</div>
     <h1>反拦截进展 <span class="stub-status">WIP · 待完善</span></h1>
     <p class="stub-lead">厂商侧<b>拦截策略</b>与我方<b>反拦截方案</b>的对抗进展跟踪。包含：各渠道拦截规则梳理、绕过方案（代理 / 签名池 / 包名混淆 / hook）落地状态、成功率与稳定性监测、灰度发布时间线。</p>
     <div class="stub-meta">
