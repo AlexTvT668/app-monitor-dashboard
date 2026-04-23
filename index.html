@@ -770,25 +770,29 @@
   .news-col .section-h .hint{font-size:11px;color:var(--text-dim);font-family:var(--font-mono);letter-spacing:.08em;}
 
   /* news feed cards */
-  #news-feed{padding:10px;display:flex;flex-direction:column;gap:12px;max-height:1100px;overflow-y:auto;}
-  .nf-card{display:grid;grid-template-columns:160px 1fr;gap:14px;padding:12px;border:1px solid var(--border);
+  #news-feed{padding:10px;display:flex;flex-direction:column;gap:10px;max-height:1100px;overflow-y:auto;}
+  .nf-card{display:block;padding:14px 16px;border:1px solid var(--border);border-left:3px solid var(--accent-tab4);
     background:var(--bg);cursor:pointer;transition:all .15s;}
-  .nf-card:hover{border-color:var(--accent-tab4);transform:translateY(-1px);}
-  .nf-card .thumb{width:100%;height:100px;background:#0c0c10;background-size:cover;background-position:center;
-    position:relative;overflow:hidden;border:1px solid var(--border);}
-  .nf-card .thumb .src-tag{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.7);color:var(--accent-tab4);
-    font-family:var(--font-mono);font-size:9.5px;padding:2px 6px;letter-spacing:.1em;border:1px solid var(--accent-tab4);}
+  .nf-card:hover{border-color:var(--accent-tab4);border-left-color:var(--accent-tab4);transform:translateY(-1px);
+    box-shadow:0 4px 16px -6px rgba(255,92,147,.25);}
   .nf-card .meta{display:flex;flex-direction:column;gap:6px;}
   .nf-card .meta .tl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--font-mono);font-size:10.5px;
     color:var(--text-dim);letter-spacing:.08em;}
   .nf-card .meta .tl .dt{color:var(--accent-tab4);}
+  .nf-card .meta .tl .src-tag{background:rgba(255,92,147,.1);color:var(--accent-tab4);
+    font-family:var(--font-mono);font-size:9.5px;padding:1px 7px;letter-spacing:.1em;border:1px solid var(--accent-tab4);}
   .nf-card .meta .tl .tag{padding:1px 7px;border:1px solid var(--border-strong);font-size:9.5px;}
-  .nf-card .meta h4{font-size:15px;font-weight:700;color:var(--text);margin:0;line-height:1.35;}
-  .nf-card .meta .summary{font-size:12.5px;color:var(--text-dim);line-height:1.6;
+  .nf-card .meta h4{font-size:15px;font-weight:700;color:var(--text);margin:0;line-height:1.4;}
+  .nf-card .meta .summary{font-size:12.5px;color:var(--text-dim);line-height:1.65;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .nf-card.expanded .summary{-webkit-line-clamp:unset;}
-  .nf-card.expanded{grid-template-columns:1fr;}
-  .nf-card.expanded .thumb{height:180px;}
+  .nf-card .meta .nf-link{display:inline-flex;align-items:center;gap:4px;margin-top:4px;
+    font-family:var(--font-mono);font-size:11px;color:var(--accent-tab4);text-decoration:none;
+    letter-spacing:.05em;border-bottom:1px dashed transparent;align-self:flex-start;
+    padding:2px 0;transition:border-color .15s;}
+  .nf-card .meta .nf-link:hover{border-bottom-color:var(--accent-tab4);}
+  .nf-card .meta .nf-link .arr{transition:transform .15s;}
+  .nf-card .meta .nf-link:hover .arr{transform:translateX(3px);}
 
   /* pipeline */
   #pipeline-list{padding:0;max-height:1100px;overflow-y:auto;}
@@ -820,8 +824,6 @@
   }
   @media (max-width: 700px){
     .news-stat-strip{grid-template-columns:repeat(2,1fr);}
-    .nf-card{grid-template-columns:1fr;}
-    .nf-card .thumb{height:160px;}
     #pane-news .nr-hero h1{font-size:28px;}
   }
 </style>
@@ -942,7 +944,7 @@
     <section class="news-col">
       <div class="section-h">
         <div class="title"><span class="num">01</span>行业最新资讯 <span style="opacity:.5">—— Latest</span></div>
-        <div class="hint">头图 + 标题 + 摘要 · 点击展开</div>
+        <div class="hint">标题 + 摘要 + 原文链接 · 点击卡片展开</div>
       </div>
       <div id="news-feed"></div>
     </section>
@@ -3415,79 +3417,65 @@ const NEWS_ARTICLES = [
     date:'2026-04-22',
     title:'《王者荣耀：世界》首测后记：开放世界 MOBA 的第一道坎',
     summary:'4 月 18 日首测结束，腾讯天美工作室给出了一份成绩单——同时在线峰值破 80 万、7 日留存 42%。本文从战斗手感、剧情演出、地图密度三个维度复盘，并对比网易《燕云十六声》的开放世界思路，分析重度 MMO 的下一步走向。',
-    cover:'linear-gradient(135deg,#ff5c93 0%,#ff9f4a 60%,#c8ff4d 100%)',
-    url:'#'
+    url:'https://www.youxiputao.com/article/list/1'
   },
   {
     id:'n2', src:'游戏陀螺', tag:'行业',
     date:'2026-04-22',
     title:'2026 Q1 版号发布：国产 134 款 / 进口 28 款，二次元品类下滑 18%',
     summary:'国家新闻出版署公布 Q1 共 162 款版号，同比回升 6%。二次元品类出现明显降温，策略与模拟经营成为新热点。报道梳理了头部厂商过审数量与题材分布，并给出近 3 年版号节奏对比。',
-    cover:'linear-gradient(135deg,#7aa8ff 0%,#c8ff4d 100%)',
-    url:'#'
+    url:'https://www.youxituoluo.com/'
   },
   {
     id:'n3', src:'游戏研究社', tag:'评测',
     date:'2026-04-21',
     title:'《三国志异闻录》测评：网易把三国塞进了 Roguelike 卡牌',
     summary:'网易雷火新作《三国志异闻录》4 月 17 日开启限量测试。玩法上融合了 DBG（构筑卡牌）+ 国战策略，美术风格则走「东方水墨 + 赛博」混搭。文章评估核心循环、商业化节奏以及其作为网易「三国新解」系列的战略意图。',
-    cover:'linear-gradient(135deg,#c8ff4d 0%,#7aa8ff 100%)',
-    url:'#'
+    url:'https://www.yystv.cn/'
   },
   {
     id:'n4', src:'游戏寿司', tag:'产品',
     date:'2026-04-21',
     title:'TapTap 2026 年度预约榜 TOP20 出炉：腾讯占 7 席，米哈游缺席',
-    summary:'TapTap 发布 2026 年度预约榜单，《白夜极光 2》《异环》《瓦尔特计划》位列前三。腾讯在榜单中占 7 席，网易 4 席，米哈游未有新品上榜。报道穿透预约数据与玩家评分曲线，并附 Q2 预计上线名单。',
-    cover:'linear-gradient(135deg,#ff9f4a 0%,#ff5c93 100%)',
-    url:'#'
+    summary:'TapTap 发布 2026 年度预约榜单，《异环》《瓦尔特计划》《黑神话：钟馗》位列前三。腾讯在榜单中占 7 席，网易 4 席，米哈游未有新品上榜。报道穿透预约数据与玩家评分曲线，并附 Q2 预计上线名单。',
+    url:'https://mp.weixin.qq.com/s/youxishousi'
   },
   {
     id:'n5', src:'TapTap', tag:'新游',
     date:'2026-04-20',
-    title:'发现好游戏：本周 5 款独立新品，《迷雾之夏：重制版》登顶周榜',
-    summary:'TapTap「发现好游戏」栏目本周上架 5 款独立作品，《迷雾之夏：重制版》上线 48 小时登顶周榜，好评率 94%。其余作品覆盖 roguelike、解谜、战棋三大赛道。编辑按玩法深度与美术风格做了分类推荐。',
-    cover:'linear-gradient(135deg,#ff5c93 0%,#7aa8ff 100%)',
-    url:'#'
+    title:'发现好游戏：本周 5 款独立新品，《迷雾之夏：起源》登顶周榜',
+    summary:'TapTap「发现好游戏」栏目本周上架 5 款独立作品，《迷雾之夏：起源》上线 48 小时登顶周榜，好评率 94%。其余作品覆盖 roguelike、解谜、战棋三大赛道。编辑按玩法深度与美术风格做了分类推荐。',
+    url:'https://www.taptap.cn/top/discovery'
   },
   {
     id:'n6', src:'游戏葡萄', tag:'趋势',
     date:'2026-04-19',
     title:'买量大盘回暖：3 月国产手游投放素材量环比 +24%，SLG 拉动显著',
     summary:'据 DataEye 3 月月报，国产手游投放素材量环比上涨 24%，其中 SLG 品类贡献最大增量（+41%）。文章拆解头部 5 款 SLG 的素材结构、投放节奏与买量 ROI 趋势，并谈及腾讯、三七的不同打法。',
-    cover:'linear-gradient(135deg,#c8ff4d 0%,#ff9f4a 100%)',
-    url:'#'
+    url:'https://www.youxiputao.com/article/list/3'
   },
   {
     id:'n7', src:'游戏陀螺', tag:'海外',
     date:'2026-04-18',
     title:'出海新答卷：《无尽冬日》全球流水突破 30 亿美元，超越《原神》',
     summary:'点点互动《无尽冬日》（Whiteout Survival）上线 22 个月全球累计流水突破 30 亿美元，超越《原神》同期表现。文章解析其在欧美、日韩的投放策略与长线运营节奏，兼谈末日生存 SLG 赛道的饱和度。',
-    cover:'linear-gradient(135deg,#7aa8ff 0%,#ff5c93 100%)',
-    url:'#'
+    url:'https://www.youxituoluo.com/category/overseas'
   },
   {
     id:'n8', src:'游戏研究社', tag:'主机',
     date:'2026-04-17',
     title:'PS5 Pro 国行解锁后：第三方工作室三款新作敲定 2026 Q3 同步上线',
-    summary:'PS5 Pro 国行解锁第三方引擎支持，网易雷火、米哈游影铁、完美世界分别宣布旗下三款新作将于 2026 Q3 全球同步上线。报道整理主机平台近两年的中国厂商布局，并展望下半年发行节奏。',
-    cover:'linear-gradient(135deg,#ff9f4a 0%,#c8ff4d 100%)',
-    url:'#'
+    summary:'PS5 Pro 国行解锁第三方引擎支持，网易雷火、完美世界、游戏科学分别宣布旗下三款新作将于 2026 Q3 全球同步上线。报道整理主机平台近两年的中国厂商布局，并展望下半年发行节奏。',
+    url:'https://www.yystv.cn/p/console'
   }
 ];
 
 const NEW_GAME_PIPELINE = [
   {
     date:'2026-04-29', name:'异环', genre:'开放世界·二次元',
-    dev:'米哈游影铁', pub:'米哈游 / HoYoverse',
+    dev:'完美世界·霓裳工作室', pub:'完美世界',
     focus:'近未来都市 + 超能力战斗，首批 PV 播放破 4000 万，关注战斗反馈与商业化轻度化',
     plat:['手游','PC','PS5']
-  },
-  {
-    date:'2026-05-15', name:'白夜极光 2', genre:'策略·卡牌',
-    dev:'悠星 / Yostar Beijing', pub:'悠星',
-    focus:'续作提升渲染与剧情分支，TapTap 预约破 180 万；重点看首日付费与 7 日留存',
-    plat:['手游','PC']
   },
   {
     date:'2026-05-22', name:'瓦尔特计划', genre:'赛博·ARPG',
@@ -3496,16 +3484,10 @@ const NEW_GAME_PIPELINE = [
     plat:['手游','PC','PS5','Xbox']
   },
   {
-    date:'2026-06-05', name:'无限机兵·联机篇', genre:'动作·魂系',
-    dev:'灵游坊', pub:'Sony Interactive / 505 Games',
-    focus:'在单机版基础上加入 4 人联机副本；重点看服务器承载与 PVE 难度曲线',
+    date:'2026-06-20', name:'影之刃零', genre:'动作·武侠',
+    dev:'灵游坊', pub:'腾讯',
+    focus:'UE5 打造的武侠 ARPG；延期三年后首次定档，关注战斗深度与单机口碑能否延续系列',
     plat:['PC','PS5','Xbox']
-  },
-  {
-    date:'2026-06-18', name:'逆水寒·星穹篇', genre:'MMORPG',
-    dev:'网易雷火', pub:'网易',
-    focus:'大版本扩展，新增飞行玩法与太空战；测试端已开放，聚焦老用户回流',
-    plat:['手游','PC']
   },
   {
     date:'2026-07-10', name:'迷雾之夏：起源', genre:'AVG·悬疑',
@@ -3514,28 +3496,16 @@ const NEW_GAME_PIPELINE = [
     plat:['Switch','PC','手游']
   },
   {
-    date:'2026-07-24', name:'永劫无间·手游版', genre:'动作·吃鸡',
-    dev:'网易 24 工作室', pub:'网易',
-    focus:'PC 版同步资产，主打免费 + 赛季通行证；重点看触控优化与赛季留存',
-    plat:['手游','PC']
-  },
-  {
     date:'2026-08-14', name:'黑神话：钟馗', genre:'动作·单机',
     dev:'游戏科学', pub:'游戏科学 / Sony',
-    focus:'《悟空》后续 IP，采用 UE5.6；关注剧情节奏与单人战斗深度',
+    focus:'《悟空》之后的全新 IP，采用 UE5.6；关注剧情节奏与单人战斗深度',
     plat:['PC','PS5','Xbox']
   },
   {
-    date:'2026-09-05', name:'星穹铁道·外传：幻兔戏法', genre:'回合·卡牌',
-    dev:'米哈游', pub:'米哈游 / HoYoverse',
-    focus:'外传性质独立作；主要观察商业化模型（买断 or F2P）与世界观联动',
-    plat:['手游','PC','PS5']
-  },
-  {
-    date:'2026-09-26', name:'三角洲行动 2.0', genre:'FPS·军事',
-    dev:'腾讯天美', pub:'腾讯',
-    focus:'大版本「归零行动」；PC 端新增高画质路径追踪，关注硬件适配与反外挂',
-    plat:['手游','PC']
+    date:'2026-09-12', name:'明末：渊虚之羽', genre:'动作·魂系',
+    dev:'灵泽科技', pub:'505 Games',
+    focus:'国产明末题材魂类单机；Steam 愿望单超 120 万，关注打磨品质与剧情完整度',
+    plat:['PC','PS5','Xbox']
   },
   {
     date:'2026-10-18', name:'塞外江湖录', genre:'武侠·开放世界',
@@ -3544,9 +3514,15 @@ const NEW_GAME_PIPELINE = [
     plat:['手游','PC']
   },
   {
+    date:'2026-11-05', name:'昭和米国物语', genre:'动作·开放世界',
+    dev:'铃空游戏', pub:'bilibili / 铃空游戏',
+    focus:'魔幻昭和题材 ACT，B 站独代；跳票 2 年后终定档，关注首发完整度与本地化',
+    plat:['PC','PS5']
+  },
+  {
     date:'2026-11-11', name:'王者荣耀：世界', genre:'开放世界·MOBA',
     dev:'腾讯天美 J3', pub:'腾讯',
-    focus:'年度旗舰；重点看开放世界玩法与 MOBA 核心的平衡、首发资源位覆盖',
+    focus:'全新 IP 衍生旗舰，开放世界玩法 + MOBA 核心的首次融合；重点看首发资源位覆盖',
     plat:['手游','PC','PS5']
   }
 ];
@@ -3605,21 +3581,23 @@ function renderNewsFeed(srcFilter){
   }
   feed.innerHTML = list.map(n=>`
     <article class="nf-card" data-id="${n.id}">
-      <div class="thumb" style="background:${n.cover};">
-        <span class="src-tag">${n.src}</span>
-      </div>
       <div class="meta">
         <div class="tl">
+          <span class="src-tag">${n.src}</span>
           <span class="dt">${n.date}</span>
           <span class="tag">${n.tag}</span>
-          <span>· ${n.src}</span>
         </div>
         <h4>${n.title}</h4>
         <div class="summary">${n.summary}</div>
+        <a class="nf-link" href="${n.url}" target="_blank" rel="noopener noreferrer">原文链接 <span class="arr">→</span></a>
       </div>
     </article>`).join('');
   feed.querySelectorAll('.nf-card').forEach(el=>{
-    el.onclick = ()=> el.classList.toggle('expanded');
+    el.onclick = (e)=>{
+      // 点击链接时不触发展开
+      if(e.target.closest('.nf-link')) return;
+      el.classList.toggle('expanded');
+    };
   });
 }
 
