@@ -821,8 +821,12 @@
     padding:1px 7px;border:1px solid var(--border);border-radius:3px;white-space:nowrap;}
   .pl-row .pl-body .pl-status.live{color:#16a34a;border-color:#16a34a;background:rgba(22,163,74,.08);}
   .pl-row .pl-body .pl-status.up{color:var(--text-dim);}
+  .pl-row .pl-body .pl-status.tba{color:#9a8300;border-color:#c9b34c;background:rgba(201,179,76,.08);}
+  .pl-row .pl-body .pl-src{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);
+    opacity:.7;margin-top:6px;letter-spacing:.02em;}
   .pl-row.is-live .pl-date .md{color:#16a34a;}
   .pl-row.is-live{background:linear-gradient(90deg,rgba(22,163,74,.05),transparent 40%);}
+  .pl-row.is-tba .pl-date .md{color:#9a8300;font-size:14px;letter-spacing:.1em;}
 
   @media (max-width: 1100px){
     .news-grid{grid-template-columns:1fr;}
@@ -3529,60 +3533,52 @@ const NEWS_ARTICLES = [
   }
 ];
 
+// 已经官宣/可查证的新游管线（仅列入有公开发售日或明确窗口的条目）
 const NEW_GAME_PIPELINE = [
   {
-    date:'2026-04-29', name:'异环', genre:'开放世界·二次元',
-    dev:'完美世界·霓裳工作室', pub:'完美世界',
-    focus:'近未来都市 + 超能力战斗，首批 PV 播放破 4000 万，关注战斗反馈与商业化轻度化',
-    plat:['手游','PC','PS5']
+    date:'2026-04-17', name:'王者荣耀：世界', genre:'开放世界·MMOARPG',
+    dev:'腾讯天美工作室群', pub:'腾讯',
+    focus:'PC 端 4/10 公测 · 移动端 4/17 首发上线，PC/移动双端数据互通；首周留存与商业化表现为重点观察',
+    plat:['PC','手游'],
+    src:'腾讯官方公告 world.qq.com'
   },
   {
-    date:'2026-05-22', name:'瓦尔特计划', genre:'赛博·ARPG',
-    dev:'英雄游戏·星智', pub:'腾讯·英雄互娱',
-    focus:'工作室首款大世界 ARPG；关注装备 build 深度、动作手感是否对标《绝区零》',
-    plat:['手游','PC','PS5','Xbox']
+    date:'2026-04-23', name:'异环', genre:'超自然都市·开放世界 RPG',
+    dev:'完美世界·幻塔工作室 (Hotta Studio)', pub:'完美世界',
+    focus:'全平台公测，同步登陆 PC/安卓/iOS/Mac/鸿蒙/PS5 六平台；UE5 研发，全球预约破 3500 万',
+    plat:['手游','PC','PS5','Mac'],
+    src:'完美世界官方 / 多家媒体报道'
   },
   {
-    date:'2026-06-20', name:'影之刃零', genre:'动作·武侠',
-    dev:'灵游坊', pub:'腾讯',
-    focus:'UE5 打造的武侠 ARPG；延期三年后首次定档，关注战斗深度与单机口碑能否延续系列',
-    plat:['PC','PS5','Xbox']
+    date:'2026-09-09', name:'影之刃零 (Phantom Blade Zero)', genre:'武侠·动作 ARPG',
+    dev:'灵游坊 (S-GAME)', pub:'灵游坊',
+    focus:'TGA 2025 官宣定档 9/9 全球发售；国产武侠 3A，登陆 PC 与 PS5',
+    plat:['PC','PS5'],
+    src:'TGA 2025 官方公告'
   },
   {
-    date:'2026-07-10', name:'迷雾之夏：起源', genre:'AVG·悬疑',
-    dev:'橘子班', pub:'WhisperGames / Aniplex',
-    focus:'IP 系列前传，全程 Live2D 演出；关注 AVG 赛道能否突破百万首周销量',
-    plat:['Switch','PC','手游']
+    date:'2026-11-19', name:'Grand Theft Auto VI', genre:'开放世界·ACT',
+    dev:'Rockstar Games', pub:'Take-Two Interactive',
+    focus:'Rockstar 官宣定档 11/19（2025 年经历两次跳票后的最新日期），首发仅 PS5/Xbox Series X|S',
+    plat:['PS5','Xbox'],
+    src:'Rockstar Newswire 官方'
+  },
+  // ---- 已官宣但未定档的重点观察项 ----
+  {
+    date:'2026-12-31', name:'黑神话：钟馗', genre:'动作·单机',
+    dev:'游戏科学 (Game Science)', pub:'游戏科学',
+    focus:'2025 科隆游戏展压轴官宣的《黑神话》系列新作，仅放出 CG 先导预告；尚未公布具体发售日期，年内/跨年均有可能',
+    plat:['PC','PS5','Xbox'],
+    tba:true,
+    src:'2025 科隆游戏展 / 游戏科学'
   },
   {
-    date:'2026-08-14', name:'黑神话：钟馗', genre:'动作·单机',
-    dev:'游戏科学', pub:'游戏科学 / Sony',
-    focus:'《悟空》之后的全新 IP，采用 UE5.6；关注剧情节奏与单人战斗深度',
-    plat:['PC','PS5','Xbox']
-  },
-  {
-    date:'2026-09-12', name:'明末：渊虚之羽', genre:'动作·魂系',
-    dev:'灵泽科技', pub:'505 Games',
-    focus:'国产明末题材魂类单机；Steam 愿望单超 120 万，关注打磨品质与剧情完整度',
-    plat:['PC','PS5','Xbox']
-  },
-  {
-    date:'2026-10-18', name:'塞外江湖录', genre:'武侠·开放世界',
-    dev:'完美世界郢都', pub:'完美世界',
-    focus:'武侠开放世界 + 轻社交，引入方言配音与真实地貌扫描；前测口碑两极',
-    plat:['手游','PC']
-  },
-  {
-    date:'2026-11-05', name:'昭和米国物语', genre:'动作·开放世界',
-    dev:'铃空游戏', pub:'bilibili / 铃空游戏',
-    focus:'魔幻昭和题材 ACT，B 站独代；跳票 2 年后终定档，关注首发完整度与本地化',
-    plat:['PC','PS5']
-  },
-  {
-    date:'2026-04-17', name:'王者荣耀：世界', genre:'开放世界·MOBA',
-    dev:'腾讯天美 J3', pub:'腾讯',
-    focus:'4/15 预下载 · 4/17 全球首发；开放世界玩法 + MOBA 核心的首次融合，首周留存与付费表现为重点观察项',
-    plat:['手游','PC','PS5']
+    date:'2026-12-31', name:'昭和米国物语', genre:'动作·开放世界 RPG',
+    dev:'铃空游戏', pub:'2P Games / 香港 GSE',
+    focus:'原定 2025 年发售，2025/11 官宣跳票至 2026 年，具体日期尚未公布；铃空 10 周年纪念作',
+    plat:['PC','PS5'],
+    tba:true,
+    src:'铃空游戏官方致玩家信'
   }
 ];
 
@@ -3590,10 +3586,11 @@ function renderNewsTab(){
   // 统计
   const now = new Date();
   const thisMonth = now.toISOString().slice(0,7);
-  const pipelineMonth = NEW_GAME_PIPELINE.filter(p => p.date.slice(0,7) === thisMonth).length;
+  const pipelineMonth = NEW_GAME_PIPELINE.filter(p => !p.tba && p.date.slice(0,7) === thisMonth).length;
   document.getElementById('ns-articles').textContent = NEWS_ARTICLES.length;
   document.getElementById('ns-pipeline').textContent = NEW_GAME_PIPELINE.length;
   document.getElementById('ns-month').textContent   = pipelineMonth || NEW_GAME_PIPELINE.filter(p=>{
+    if(p.tba) return false;
     const d = new Date(p.date); return d.getFullYear()===now.getFullYear() && d.getMonth()>=now.getMonth()-1;
   }).length;
   const syncStr = now.toISOString().slice(0,10) + ' 06:30';
@@ -3661,21 +3658,29 @@ function renderNewsFeed(srcFilter){
 }
 
 function renderPipelineList(){
-  const rows = [...NEW_GAME_PIPELINE].sort((a,b)=> a.date.localeCompare(b.date));
+  const rows = [...NEW_GAME_PIPELINE].sort((a,b)=>{
+    // TBA 条目统一放到最后
+    if(a.tba && !b.tba) return 1;
+    if(!a.tba && b.tba) return -1;
+    return a.date.localeCompare(b.date);
+  });
   const todayStr = new Date().toISOString().slice(0,10);
   const html = rows.map(p=>{
-    const y = p.date.slice(0,4);
-    const md = p.date.slice(5).replace('-','/');
+    const y = p.tba ? '2026' : p.date.slice(0,4);
+    const md = p.tba ? 'TBA' : p.date.slice(5).replace('-','/');
     const plat = p.plat.map(x=>{
       const hot = /手游|PC|PS5/i.test(x) ? 'hot' : '';
       return `<span class="p ${hot}">${x}</span>`;
     }).join('');
-    const isLive = p.date <= todayStr;
-    const statusBadge = isLive
-      ? `<span class="pl-status live">● LIVE · 已上线</span>`
-      : `<span class="pl-status up">◌ 即将上线</span>`;
+    const isLive = !p.tba && p.date <= todayStr;
+    let statusBadge;
+    if(p.tba) statusBadge = `<span class="pl-status tba">◇ 待定档</span>`;
+    else if(isLive) statusBadge = `<span class="pl-status live">● LIVE · 已上线</span>`;
+    else statusBadge = `<span class="pl-status up">◌ 即将上线</span>`;
+    const srcLine = p.src
+      ? `<div class="pl-src">来源：${p.src}</div>` : '';
     return `
-      <div class="pl-row ${isLive?'is-live':''}">
+      <div class="pl-row ${isLive?'is-live':''} ${p.tba?'is-tba':''}">
         <div class="pl-date">
           <span class="y">${y}</span>
           <span class="md">${md}</span>
@@ -3692,6 +3697,7 @@ function renderPipelineList(){
           </div>
           <div class="pl-plat">${plat}</div>
           <div class="pl-note"><b>关注点：</b>${p.focus}</div>
+          ${srcLine}
         </div>
       </div>`;
   }).join('');
