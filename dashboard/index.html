@@ -817,6 +817,12 @@
   .pl-row .pl-body .pl-plat .p.hot{border-color:var(--accent-tab4);color:var(--accent-tab4);}
   .pl-row .pl-body .pl-note{font-size:12px;color:var(--text-dim);line-height:1.55;}
   .pl-row .pl-body .pl-note b{color:var(--text);}
+  .pl-row .pl-body .pl-status{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+    padding:1px 7px;border:1px solid var(--border);border-radius:3px;white-space:nowrap;}
+  .pl-row .pl-body .pl-status.live{color:#16a34a;border-color:#16a34a;background:rgba(22,163,74,.08);}
+  .pl-row .pl-body .pl-status.up{color:var(--text-dim);}
+  .pl-row.is-live .pl-date .md{color:#16a34a;}
+  .pl-row.is-live{background:linear-gradient(90deg,rgba(22,163,74,.05),transparent 40%);}
 
   @media (max-width: 1100px){
     .news-grid{grid-template-columns:1fr;}
@@ -3574,9 +3580,9 @@ const NEW_GAME_PIPELINE = [
     plat:['PC','PS5']
   },
   {
-    date:'2026-11-11', name:'王者荣耀：世界', genre:'开放世界·MOBA',
+    date:'2026-04-17', name:'王者荣耀：世界', genre:'开放世界·MOBA',
     dev:'腾讯天美 J3', pub:'腾讯',
-    focus:'全新 IP 衍生旗舰，开放世界玩法 + MOBA 核心的首次融合；重点看首发资源位覆盖',
+    focus:'4/15 预下载 · 4/17 全球首发；开放世界玩法 + MOBA 核心的首次融合，首周留存与付费表现为重点观察项',
     plat:['手游','PC','PS5']
   }
 ];
@@ -3657,6 +3663,7 @@ function renderNewsFeed(srcFilter){
 
 function renderPipelineList(){
   const rows = [...NEW_GAME_PIPELINE].sort((a,b)=> a.date.localeCompare(b.date));
+  const todayStr = new Date().toISOString().slice(0,10);
   const html = rows.map(p=>{
     const y = p.date.slice(0,4);
     const md = p.date.slice(5).replace('-','/');
@@ -3664,8 +3671,12 @@ function renderPipelineList(){
       const hot = /手游|PC|PS5/i.test(x) ? 'hot' : '';
       return `<span class="p ${hot}">${x}</span>`;
     }).join('');
+    const isLive = p.date <= todayStr;
+    const statusBadge = isLive
+      ? `<span class="pl-status live">● LIVE · 已上线</span>`
+      : `<span class="pl-status up">◌ 即将上线</span>`;
     return `
-      <div class="pl-row">
+      <div class="pl-row ${isLive?'is-live':''}">
         <div class="pl-date">
           <span class="y">${y}</span>
           <span class="md">${md}</span>
@@ -3674,6 +3685,7 @@ function renderPipelineList(){
           <div class="pl-head">
             <span class="pl-name">${p.name}</span>
             <span class="pl-genre">${p.genre}</span>
+            ${statusBadge}
           </div>
           <div class="pl-meta">
             <span>研发 <b>${p.dev}</b></span><span class="sep">·</span>
