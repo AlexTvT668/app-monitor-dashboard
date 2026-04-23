@@ -18,6 +18,7 @@
     --accent-tab1:#ff9f4a;      /* 橙 · 资源位监控 */
     --accent-tab2:#7aa8ff;      /* 蓝 · 安装链路监控 */
     --accent-tab3:#c8ff4d;      /* 柠檬绿 · 首发资源分析 */
+    --accent-tab4:#ff5c93;      /* 品红 · 行业新游监控 */
     /* 字体 */
     --font-mono:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
     --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
@@ -37,6 +38,7 @@
     --accent-tab1:#d97a28;
     --accent-tab2:#3c6fd1;
     --accent-tab3:#5a9a14;
+    --accent-tab4:#c83a6f;
   }
   /* dark 下顶栏 hover 的深色色值在 light 里要变淡 */
   html[data-theme="light"] .tab:hover,
@@ -223,6 +225,8 @@
   .top-tab[data-pane="pane-install"].active .dot{background:var(--accent-tab2);box-shadow:0 0 10px var(--accent-tab2);}
   .top-tab[data-pane="pane-launch"].active{color:var(--accent-tab3);box-shadow:inset 0 -2px 0 var(--accent-tab3);}
   .top-tab[data-pane="pane-launch"].active .dot{background:var(--accent-tab3);box-shadow:0 0 10px var(--accent-tab3);}
+  .top-tab[data-pane="pane-news"].active{color:var(--accent-tab4);box-shadow:inset 0 -2px 0 var(--accent-tab4);}
+  .top-tab[data-pane="pane-news"].active .dot{background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);}
   .tab-pane{display:none;}
   .tab-pane.active{display:block;}
 
@@ -230,6 +234,7 @@
   #pane-slots{--tab-accent:var(--accent-tab1);}
   #pane-install{--tab-accent:var(--accent-tab2);}
   #pane-launch{--tab-accent:var(--accent-tab3);}
+  #pane-news{--tab-accent:var(--accent-tab4);}
 
   /* ========== 站点 Header · 小A的影分身 ========== */
   .site-header{padding:32px 0 22px;margin:0 0 18px;border-bottom:1px solid var(--border-strong);
@@ -712,6 +717,113 @@
     #upload-report .ur-body .cell{border-right:none;border-bottom:1px solid var(--border);}
     #upload-report .ur-rank{grid-template-columns:1fr;}
   }
+
+  /* ========== Tab1 · 行业新游监控 ========== */
+  #pane-news{--nr-accent:var(--accent-tab4);--nr-border:var(--border);--nr-border-strong:var(--border-strong);
+    --nr-panel:var(--panel);--nr-text:var(--text);--nr-dim:var(--text-dim);--nr-bg:var(--bg);}
+  #pane-news .nr-hero{padding:32px 0 22px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+  #pane-news .nr-hero .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+  #pane-news .nr-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-tab4);}
+  #pane-news .nr-hero h1{font-size:38px;line-height:1.1;margin:0 0 12px;letter-spacing:-.01em;font-weight:800;}
+  #pane-news .nr-hero h1 .mono{font-family:var(--font-mono);font-size:30px;margin-left:10px;letter-spacing:.04em;}
+  #pane-news .nr-hero p.lead{font-size:14px;line-height:1.75;color:var(--text-dim);max-width:940px;margin:0 0 14px;}
+  #pane-news .nr-hero p.lead b{color:var(--text);font-weight:600;}
+  #pane-news .nr-hero .badges{display:flex;gap:8px;flex-wrap:wrap;}
+  #pane-news .nr-hero .nr-badge{display:inline-block;padding:4px 10px;border:1px solid var(--border-strong);
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:var(--text-dim);}
+  #pane-news .nr-hero .nr-badge.active{background:var(--accent-tab4);color:#0c0c10;border-color:var(--accent-tab4);font-weight:700;}
+
+  .news-stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border:1px solid var(--border-strong);background:var(--panel);margin-bottom:14px;}
+  .news-stat-strip .cell{padding:16px 20px;border-right:1px solid var(--border);}
+  .news-stat-strip .cell:last-child{border-right:none;}
+  .news-stat-strip .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+    color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;}
+  .news-stat-strip .v{font-size:26px;font-weight:700;color:var(--text);}
+  .news-stat-strip .sub{font-size:11px;color:var(--text-dim);margin-top:4px;}
+
+  .news-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:12px 16px;border:1px solid var(--border-strong);background:var(--panel);margin-bottom:14px;flex-wrap:wrap;}
+  .news-toolbar .nt-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .news-toolbar .nt-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+    color:var(--text-dim);text-transform:uppercase;}
+  .src-filter{display:inline-flex;gap:0;border:1px solid var(--border-strong);}
+  .src-filter .sf{padding:6px 12px;font-size:12px;color:var(--text-dim);cursor:pointer;
+    border-right:1px solid var(--border);font-family:var(--font-mono);letter-spacing:.08em;user-select:none;}
+  .src-filter .sf:last-child{border-right:none;}
+  .src-filter .sf:hover{background:#15151b;color:var(--text);}
+  .src-filter .sf.active{background:var(--accent-tab4);color:#0c0c10;font-weight:700;}
+  .nt-btn{appearance:none;background:transparent;border:1px solid var(--border-strong);color:var(--text);
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;padding:6px 14px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+  .nt-btn:hover{border-color:var(--accent-tab4);color:var(--accent-tab4);}
+  .nt-btn .ic{font-size:13px;}
+
+  .news-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-bottom:20px;}
+  .news-col{border:1px solid var(--border-strong);background:var(--panel);}
+  .news-col .section-h{display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;border-bottom:1px solid var(--border);background:var(--panel-2, var(--panel));}
+  .news-col .section-h .title{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--text);font-weight:700;font-family:var(--font-mono);}
+  .news-col .section-h .title .num{color:var(--accent-tab4);margin-right:8px;}
+  .news-col .section-h .hint{font-size:11px;color:var(--text-dim);font-family:var(--font-mono);letter-spacing:.08em;}
+
+  /* news feed cards */
+  #news-feed{padding:10px;display:flex;flex-direction:column;gap:12px;max-height:1100px;overflow-y:auto;}
+  .nf-card{display:grid;grid-template-columns:160px 1fr;gap:14px;padding:12px;border:1px solid var(--border);
+    background:var(--bg);cursor:pointer;transition:all .15s;}
+  .nf-card:hover{border-color:var(--accent-tab4);transform:translateY(-1px);}
+  .nf-card .thumb{width:100%;height:100px;background:#0c0c10;background-size:cover;background-position:center;
+    position:relative;overflow:hidden;border:1px solid var(--border);}
+  .nf-card .thumb .src-tag{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.7);color:var(--accent-tab4);
+    font-family:var(--font-mono);font-size:9.5px;padding:2px 6px;letter-spacing:.1em;border:1px solid var(--accent-tab4);}
+  .nf-card .meta{display:flex;flex-direction:column;gap:6px;}
+  .nf-card .meta .tl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--font-mono);font-size:10.5px;
+    color:var(--text-dim);letter-spacing:.08em;}
+  .nf-card .meta .tl .dt{color:var(--accent-tab4);}
+  .nf-card .meta .tl .tag{padding:1px 7px;border:1px solid var(--border-strong);font-size:9.5px;}
+  .nf-card .meta h4{font-size:15px;font-weight:700;color:var(--text);margin:0;line-height:1.35;}
+  .nf-card .meta .summary{font-size:12.5px;color:var(--text-dim);line-height:1.6;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .nf-card.expanded .summary{-webkit-line-clamp:unset;}
+  .nf-card.expanded{grid-template-columns:1fr;}
+  .nf-card.expanded .thumb{height:180px;}
+
+  /* pipeline */
+  #pipeline-list{padding:0;max-height:1100px;overflow-y:auto;}
+  .pl-row{display:grid;grid-template-columns:82px 1fr;gap:14px;padding:12px 16px;border-bottom:1px solid var(--border);
+    transition:background .12s;}
+  .pl-row:hover{background:#13131a;}
+  .pl-row:last-child{border-bottom:none;}
+  .pl-row .pl-date{font-family:var(--font-mono);font-size:11px;color:var(--accent-tab4);letter-spacing:.06em;}
+  .pl-row .pl-date .y{display:block;font-size:10px;color:var(--text-dim);margin-bottom:2px;letter-spacing:.14em;}
+  .pl-row .pl-date .md{font-size:15px;font-weight:700;}
+  .pl-row .pl-body .pl-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:5px;}
+  .pl-row .pl-body .pl-name{font-size:14.5px;font-weight:700;color:var(--text);}
+  .pl-row .pl-body .pl-genre{font-family:var(--font-mono);font-size:10.5px;color:var(--accent-tab4);
+    padding:1px 7px;border:1px solid var(--accent-tab4);letter-spacing:.08em;}
+  .pl-row .pl-body .pl-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--text-dim);
+    font-family:var(--font-mono);letter-spacing:.04em;margin-bottom:5px;}
+  .pl-row .pl-body .pl-meta b{color:var(--text);font-weight:600;}
+  .pl-row .pl-body .pl-meta .sep{color:#333;}
+  .pl-row .pl-body .pl-plat{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px;}
+  .pl-row .pl-body .pl-plat .p{font-family:var(--font-mono);font-size:9.5px;padding:1px 6px;
+    border:1px solid var(--border-strong);color:var(--text-dim);letter-spacing:.08em;}
+  .pl-row .pl-body .pl-plat .p.hot{border-color:var(--accent-tab4);color:var(--accent-tab4);}
+  .pl-row .pl-body .pl-note{font-size:12px;color:var(--text-dim);line-height:1.55;}
+  .pl-row .pl-body .pl-note b{color:var(--text);}
+
+  @media (max-width: 1100px){
+    .news-grid{grid-template-columns:1fr;}
+    #news-feed, #pipeline-list{max-height:none;}
+  }
+  @media (max-width: 700px){
+    .news-stat-strip{grid-template-columns:repeat(2,1fr);}
+    .nf-card{grid-template-columns:1fr;}
+    .nf-card .thumb{height:160px;}
+    #pane-news .nr-hero h1{font-size:28px;}
+  }
 </style>
 </head>
 <body>
@@ -776,13 +888,80 @@
 
 <!-- ============ 顶级 Tab：1.0 资源位监控 / 2.0 安装链路监控 ============ -->
 <div class="top-tabs" id="top-tabs">
-  <div class="top-tab active" data-pane="pane-slots"><span class="dot"></span>Tab 1 · 厂商资源位监控</div>
-  <div class="top-tab" data-pane="pane-install"><span class="dot"></span>Tab 2 · 厂商安装链路监控</div>
-  <div class="top-tab" data-pane="pane-launch"><span class="dot"></span>Tab 3 · 游戏首发资源分析</div>
+  <div class="top-tab active" data-pane="pane-news"><span class="dot"></span>Tab 1 · 行业新游监控</div>
+  <div class="top-tab" data-pane="pane-slots"><span class="dot"></span>Tab 2 · 厂商资源位监控</div>
+  <div class="top-tab" data-pane="pane-install"><span class="dot"></span>Tab 3 · 厂商安装链路监控</div>
+  <div class="top-tab" data-pane="pane-launch"><span class="dot"></span>Tab 4 · 游戏首发资源分析</div>
 </div>
 
-<!-- ============ Tab 1 内容（原 1.0 资源监控，整体包裹） ============ -->
-<div class="tab-pane active" id="pane-slots">
+<!-- ============ Tab 1 内容 · 行业新游监控（News Radar） ============ -->
+<div class="tab-pane active" id="pane-news">
+
+  <header class="nr-hero">
+    <div>
+      <div class="eyebrow"><span class="dot" style="background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);"></span>Industry News Radar &nbsp;·&nbsp; v1 · tab_01</div>
+      <h1>行业新游监控 <span class="mono" style="color:var(--accent-tab4);">NEWS RADAR</span></h1>
+      <p class="lead">每日 06:30 自动爬取 <b>游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap 发现好游戏</b> 等公众号与站点，聚合「行业最新资讯」与「新游 Pipeline」两大视图，辅助 BD 与产品团队快速掌握行业动态与待发行游戏阵容。</p>
+      <div class="badges">
+        <span class="nr-badge" id="news-src-badge">5 SOURCES</span>
+        <span class="nr-badge" id="news-cnt-badge">— ARTICLES</span>
+        <span class="nr-badge active" id="news-refresh-badge">AUTO · 06:30 DAILY</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 顶部 stat strip -->
+  <div class="news-stat-strip">
+    <div class="cell"><div class="k">ARTICLES</div><div class="v" id="ns-articles">—</div><div class="sub">今日聚合资讯条数</div></div>
+    <div class="cell"><div class="k">PIPELINE</div><div class="v" id="ns-pipeline">—</div><div class="sub">跟踪待发行 / 新游数</div></div>
+    <div class="cell"><div class="k">THIS MONTH</div><div class="v" id="ns-month">—</div><div class="sub">本月首发/上线</div></div>
+    <div class="cell"><div class="k">LAST SYNC</div><div class="v mono" id="ns-sync" style="font-size:20px">—</div><div class="sub">最后同步时间</div></div>
+  </div>
+
+  <!-- 工具条：来源筛选 + 手动刷新 -->
+  <div class="news-toolbar">
+    <div class="nt-left">
+      <span class="nt-label">SOURCES</span>
+      <div class="src-filter" id="src-filter">
+        <span class="sf active" data-s="all">全部</span>
+        <span class="sf" data-s="游戏葡萄">游戏葡萄</span>
+        <span class="sf" data-s="游戏寿司">游戏寿司</span>
+        <span class="sf" data-s="游戏研究社">游戏研究社</span>
+        <span class="sf" data-s="游戏陀螺">游戏陀螺</span>
+        <span class="sf" data-s="TapTap">TapTap</span>
+      </div>
+    </div>
+    <div class="nt-right">
+      <button type="button" class="nt-btn" id="news-refresh-btn"><span class="ic">↻</span>手动刷新</button>
+    </div>
+  </div>
+
+  <!-- 两栏：左 最新资讯 / 右 新游 Pipeline -->
+  <div class="news-grid">
+    <!-- ① 行业最新资讯 -->
+    <section class="news-col">
+      <div class="section-h">
+        <div class="title"><span class="num">01</span>行业最新资讯 <span style="opacity:.5">—— Latest</span></div>
+        <div class="hint">头图 + 标题 + 摘要 · 点击展开</div>
+      </div>
+      <div id="news-feed"></div>
+    </section>
+
+    <!-- ② 新游 Pipeline -->
+    <section class="news-col">
+      <div class="section-h">
+        <div class="title"><span class="num">02</span>新游 Pipeline <span style="opacity:.5">—— Upcoming</span></div>
+        <div class="hint">按首发时间排序</div>
+      </div>
+      <div id="pipeline-list"></div>
+    </section>
+  </div>
+
+  <footer>小A助手 · 行业新游监控 · 数据源：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap · 每日 06:30 爬虫聚合 · 本页 demo 数据为示例</footer>
+</div><!-- /#pane-news -->
+
+<!-- ============ Tab 2 内容（原 1.0 资源监控，整体包裹） ============ -->
+<div class="tab-pane" id="pane-slots">
 
 <header class="nr-hero">
   <div>
@@ -2411,6 +2590,12 @@ document.querySelectorAll('#top-tabs .top-tab').forEach(t=>{
         });
       }, 50);
     }
+    // 切到行业新游监控（News Radar）时懒渲染
+    if(t.dataset.pane==='pane-news'){
+      if(typeof renderNewsTab === 'function' && !window.__newsInited){
+        renderNewsTab(); window.__newsInited=true;
+      }
+    }
   };
 });
 
@@ -2599,7 +2784,7 @@ function renderLaunchTimeline(){
       <div class="lg-item" data-idx="${idx}">
         <div class="date"><span class="year">${year}</span>${md.replace('-','/')}</div>
         <div>
-          <div class="gname">${g.name} <span class="sub">${g.genre} · ${g.pub}</span></div>
+          <div class="gname">${g.name} <span class="sub">${g.genre}</span></div>
           <div class="tags">
             <span class="nr-badge">${liveCount}/${totalCount} SLOTS</span>
             <span class="nr-badge ${pct>=55?'active':pct<40?'danger':''}">LIVE ${pct}%</span>
@@ -2646,7 +2831,6 @@ function renderLaunchDetail(idx){
     <div class="dt-meta">
       <span>GAME:<strong>${g.name}</strong></span>
       <span>LAUNCH:<strong>${g.date}</strong></span>
-      <span>PUB:<strong>${g.pub}</strong></span>
       <span>GENRE:<strong>${g.genre}</strong></span>
       <span>SLOTS:<strong>${liveCount}/${totalCount}</strong></span>
     </div>
@@ -2748,13 +2932,13 @@ function renderChannelSplit(){
 function renderInsights(){
   // 计算几个关键数字
   const tCount = XIAOMI_LAUNCHES.length;
-  const tencent = XIAOMI_LAUNCHES.filter(g=>/腾讯/.test(g.pub)).length;
   const mmo = XIAOMI_LAUNCHES.filter(g=>/MMORPG/.test(g.genre)).length;
+  const fps = XIAOMI_LAUNCHES.filter(g=>/FPS|射击/.test(g.genre)).length;
   document.getElementById('insight-grid').innerHTML = `
     <div class="ic">
       <div class="head"><span class="sym">◆</span>COMPOSITION</div>
-      <div class="title">腾讯系占 ${((tencent/tCount)*100).toFixed(0)}%（${tencent}/${tCount}）</div>
-      <div class="desc">小米游戏中心 Q1 首发阵容由腾讯系主导，MMORPG 类占 <b>${mmo} 款</b>，重度品类在<b>「二楼 + 开屏 + 首页-精选首屏 banner」</b>等 S 级资源位近 100% 覆盖。</div>
+      <div class="title">MMORPG 占 ${((mmo/tCount)*100).toFixed(0)}%（${mmo}/${tCount}）</div>
+      <div class="desc">小米游戏中心近 27 个月共 <b>${tCount} 款</b>腾讯系首发，其中 MMORPG 类 <b>${mmo} 款</b>、FPS/射击 <b>${fps} 款</b>，重度品类在<b>「二楼 + 开屏 + 首页-精选首屏 banner」</b>等 S 级资源位近 100% 覆盖。</div>
     </div>
     <div class="ic">
       <div class="head"><span class="sym">⬡</span>CHANNEL MIX</div>
@@ -3074,8 +3258,7 @@ function initBDPanel(){
     date:   ['date','日期','首发日期','launch_date','首发时间','上线时间','release'],
     slots:  ['slots','资源位','资源位数','slot_count','资源数','slot'],
     channel:['channel','渠道','主渠道','来源'],
-    genre:  ['genre','品类','类型','category'],
-    pub:    ['publisher','发行','发行方','pub','厂商发行']
+    genre:  ['genre','品类','类型','category']
   };
   function pick(row, key){
     const keys = Object.keys(row);
@@ -3096,7 +3279,6 @@ function initBDPanel(){
     const vendorCount = {};
     const channelCount = {};
     const genreCount = {};
-    const pubCount = {};
     const gameSet = new Set();
     let slotsSum = 0, slotsN = 0;
     let dateMin = null, dateMax = null;
@@ -3107,8 +3289,6 @@ function initBDPanel(){
       if(c) channelCount[c] = (channelCount[c]||0) + 1;
       const g = String(pick(r,'genre') || '').trim();
       if(g) genreCount[g] = (genreCount[g]||0) + 1;
-      const p = String(pick(r,'pub') || '').trim();
-      if(p) pubCount[p] = (pubCount[p]||0) + 1;
       const gm = String(pick(r,'game') || '').trim();
       if(gm) gameSet.add(gm);
       const s = Number(pick(r,'slots'));
@@ -3124,7 +3304,6 @@ function initBDPanel(){
     const topVendor = topN(vendorCount, 1)[0];
     const topChannel = topN(channelCount, 1)[0];
     const topGenre = topN(genreCount, 1)[0];
-    const topPub = topN(pubCount, 1)[0];
     return {
       filename, total,
       games: gameSet.size,
@@ -3135,8 +3314,7 @@ function initBDPanel(){
       topVendors: topN(vendorCount, 5),
       topChannels: topN(channelCount, 5),
       topGenres: topN(genreCount, 5),
-      topPubs: topN(pubCount, 5),
-      topVendor, topChannel, topGenre, topPub
+      topVendor, topChannel, topGenre
     };
   }
 
@@ -3146,9 +3324,9 @@ function initBDPanel(){
     if(!grid) return;
     const pct = (pair)=> pair && a.total ? ((pair[1]/a.total)*100).toFixed(0)+'%' : '—';
 
-    const c1Title = a.topPub
-      ? `${escapeHtml(a.topPub[0])} 主导 · ${pct(a.topPub)}（${a.topPub[1]}/${a.total}）`
-      : (a.topGenre ? `${escapeHtml(a.topGenre[0])} 占 ${pct(a.topGenre)}` : `共 ${a.games} 款游戏`);
+    const c1Title = a.topGenre
+      ? `${escapeHtml(a.topGenre[0])} 占 ${pct(a.topGenre)}`
+      : `共 ${a.games} 款游戏`;
     const c1Desc = `上传文件共 <b>${a.total}</b> 条记录 / <b>${a.games}</b> 款游戏，覆盖 <b>${a.vendors || '—'}</b> 家厂商。`
       + (a.topGenre ? ` 头部品类为 <b>${escapeHtml(a.topGenre[0])}</b>（${a.topGenre[1]} 款）。` : '')
       + (a.dateRange ? ` 数据区间：<b>${a.dateRange}</b>。` : '');
@@ -3214,7 +3392,7 @@ function initBDPanel(){
       </div>
       <div class="ur-rank">
         ${rankHtml('Top 厂商', a.topVendors)}
-        ${rankHtml('Top 渠道', a.topChannels) || rankHtml('Top 品类', a.topGenres) || rankHtml('Top 发行', a.topPubs)}
+        ${rankHtml('Top 渠道', a.topChannels) || rankHtml('Top 品类', a.topGenres)}
       </div>`;
     reportEl.classList.add('show');
   }
@@ -3225,6 +3403,264 @@ function initBDPanel(){
     }[c]));
   }
 })();
+
+/* ================================================================== */
+/*  Tab1 · 行业新游监控（News Radar）                                  */
+/*  数据源（示例 mock）：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap */
+/*  生产环境：scheduler/beat.py 每日 06:30 调度爬虫拉取 RSS / 公众号    */
+/* ================================================================== */
+const NEWS_ARTICLES = [
+  {
+    id:'n1', src:'游戏葡萄', tag:'深度',
+    date:'2026-04-22',
+    title:'《王者荣耀：世界》首测后记：开放世界 MOBA 的第一道坎',
+    summary:'4 月 18 日首测结束，腾讯天美工作室给出了一份成绩单——同时在线峰值破 80 万、7 日留存 42%。本文从战斗手感、剧情演出、地图密度三个维度复盘，并对比网易《燕云十六声》的开放世界思路，分析重度 MMO 的下一步走向。',
+    cover:'linear-gradient(135deg,#ff5c93 0%,#ff9f4a 60%,#c8ff4d 100%)',
+    url:'#'
+  },
+  {
+    id:'n2', src:'游戏陀螺', tag:'行业',
+    date:'2026-04-22',
+    title:'2026 Q1 版号发布：国产 134 款 / 进口 28 款，二次元品类下滑 18%',
+    summary:'国家新闻出版署公布 Q1 共 162 款版号，同比回升 6%。二次元品类出现明显降温，策略与模拟经营成为新热点。报道梳理了头部厂商过审数量与题材分布，并给出近 3 年版号节奏对比。',
+    cover:'linear-gradient(135deg,#7aa8ff 0%,#c8ff4d 100%)',
+    url:'#'
+  },
+  {
+    id:'n3', src:'游戏研究社', tag:'评测',
+    date:'2026-04-21',
+    title:'《三国志异闻录》测评：网易把三国塞进了 Roguelike 卡牌',
+    summary:'网易雷火新作《三国志异闻录》4 月 17 日开启限量测试。玩法上融合了 DBG（构筑卡牌）+ 国战策略，美术风格则走「东方水墨 + 赛博」混搭。文章评估核心循环、商业化节奏以及其作为网易「三国新解」系列的战略意图。',
+    cover:'linear-gradient(135deg,#c8ff4d 0%,#7aa8ff 100%)',
+    url:'#'
+  },
+  {
+    id:'n4', src:'游戏寿司', tag:'产品',
+    date:'2026-04-21',
+    title:'TapTap 2026 年度预约榜 TOP20 出炉：腾讯占 7 席，米哈游缺席',
+    summary:'TapTap 发布 2026 年度预约榜单，《白夜极光 2》《异环》《瓦尔特计划》位列前三。腾讯在榜单中占 7 席，网易 4 席，米哈游未有新品上榜。报道穿透预约数据与玩家评分曲线，并附 Q2 预计上线名单。',
+    cover:'linear-gradient(135deg,#ff9f4a 0%,#ff5c93 100%)',
+    url:'#'
+  },
+  {
+    id:'n5', src:'TapTap', tag:'新游',
+    date:'2026-04-20',
+    title:'发现好游戏：本周 5 款独立新品，《迷雾之夏：重制版》登顶周榜',
+    summary:'TapTap「发现好游戏」栏目本周上架 5 款独立作品，《迷雾之夏：重制版》上线 48 小时登顶周榜，好评率 94%。其余作品覆盖 roguelike、解谜、战棋三大赛道。编辑按玩法深度与美术风格做了分类推荐。',
+    cover:'linear-gradient(135deg,#ff5c93 0%,#7aa8ff 100%)',
+    url:'#'
+  },
+  {
+    id:'n6', src:'游戏葡萄', tag:'趋势',
+    date:'2026-04-19',
+    title:'买量大盘回暖：3 月国产手游投放素材量环比 +24%，SLG 拉动显著',
+    summary:'据 DataEye 3 月月报，国产手游投放素材量环比上涨 24%，其中 SLG 品类贡献最大增量（+41%）。文章拆解头部 5 款 SLG 的素材结构、投放节奏与买量 ROI 趋势，并谈及腾讯、三七的不同打法。',
+    cover:'linear-gradient(135deg,#c8ff4d 0%,#ff9f4a 100%)',
+    url:'#'
+  },
+  {
+    id:'n7', src:'游戏陀螺', tag:'海外',
+    date:'2026-04-18',
+    title:'出海新答卷：《无尽冬日》全球流水突破 30 亿美元，超越《原神》',
+    summary:'点点互动《无尽冬日》（Whiteout Survival）上线 22 个月全球累计流水突破 30 亿美元，超越《原神》同期表现。文章解析其在欧美、日韩的投放策略与长线运营节奏，兼谈末日生存 SLG 赛道的饱和度。',
+    cover:'linear-gradient(135deg,#7aa8ff 0%,#ff5c93 100%)',
+    url:'#'
+  },
+  {
+    id:'n8', src:'游戏研究社', tag:'主机',
+    date:'2026-04-17',
+    title:'PS5 Pro 国行解锁后：第三方工作室三款新作敲定 2026 Q3 同步上线',
+    summary:'PS5 Pro 国行解锁第三方引擎支持，网易雷火、米哈游影铁、完美世界分别宣布旗下三款新作将于 2026 Q3 全球同步上线。报道整理主机平台近两年的中国厂商布局，并展望下半年发行节奏。',
+    cover:'linear-gradient(135deg,#ff9f4a 0%,#c8ff4d 100%)',
+    url:'#'
+  }
+];
+
+const NEW_GAME_PIPELINE = [
+  {
+    date:'2026-04-29', name:'异环', genre:'开放世界·二次元',
+    dev:'米哈游影铁', pub:'米哈游 / HoYoverse',
+    focus:'近未来都市 + 超能力战斗，首批 PV 播放破 4000 万，关注战斗反馈与商业化轻度化',
+    plat:['手游','PC','PS5']
+  },
+  {
+    date:'2026-05-15', name:'白夜极光 2', genre:'策略·卡牌',
+    dev:'悠星 / Yostar Beijing', pub:'悠星',
+    focus:'续作提升渲染与剧情分支，TapTap 预约破 180 万；重点看首日付费与 7 日留存',
+    plat:['手游','PC']
+  },
+  {
+    date:'2026-05-22', name:'瓦尔特计划', genre:'赛博·ARPG',
+    dev:'英雄游戏·星智', pub:'腾讯·英雄互娱',
+    focus:'工作室首款大世界 ARPG；关注装备 build 深度、动作手感是否对标《绝区零》',
+    plat:['手游','PC','PS5','Xbox']
+  },
+  {
+    date:'2026-06-05', name:'无限机兵·联机篇', genre:'动作·魂系',
+    dev:'灵游坊', pub:'Sony Interactive / 505 Games',
+    focus:'在单机版基础上加入 4 人联机副本；重点看服务器承载与 PVE 难度曲线',
+    plat:['PC','PS5','Xbox']
+  },
+  {
+    date:'2026-06-18', name:'逆水寒·星穹篇', genre:'MMORPG',
+    dev:'网易雷火', pub:'网易',
+    focus:'大版本扩展，新增飞行玩法与太空战；测试端已开放，聚焦老用户回流',
+    plat:['手游','PC']
+  },
+  {
+    date:'2026-07-10', name:'迷雾之夏：起源', genre:'AVG·悬疑',
+    dev:'橘子班', pub:'WhisperGames / Aniplex',
+    focus:'IP 系列前传，全程 Live2D 演出；关注 AVG 赛道能否突破百万首周销量',
+    plat:['Switch','PC','手游']
+  },
+  {
+    date:'2026-07-24', name:'永劫无间·手游版', genre:'动作·吃鸡',
+    dev:'网易 24 工作室', pub:'网易',
+    focus:'PC 版同步资产，主打免费 + 赛季通行证；重点看触控优化与赛季留存',
+    plat:['手游','PC']
+  },
+  {
+    date:'2026-08-14', name:'黑神话：钟馗', genre:'动作·单机',
+    dev:'游戏科学', pub:'游戏科学 / Sony',
+    focus:'《悟空》后续 IP，采用 UE5.6；关注剧情节奏与单人战斗深度',
+    plat:['PC','PS5','Xbox']
+  },
+  {
+    date:'2026-09-05', name:'星穹铁道·外传：幻兔戏法', genre:'回合·卡牌',
+    dev:'米哈游', pub:'米哈游 / HoYoverse',
+    focus:'外传性质独立作；主要观察商业化模型（买断 or F2P）与世界观联动',
+    plat:['手游','PC','PS5']
+  },
+  {
+    date:'2026-09-26', name:'三角洲行动 2.0', genre:'FPS·军事',
+    dev:'腾讯天美', pub:'腾讯',
+    focus:'大版本「归零行动」；PC 端新增高画质路径追踪，关注硬件适配与反外挂',
+    plat:['手游','PC']
+  },
+  {
+    date:'2026-10-18', name:'塞外江湖录', genre:'武侠·开放世界',
+    dev:'完美世界郢都', pub:'完美世界',
+    focus:'武侠开放世界 + 轻社交，引入方言配音与真实地貌扫描；前测口碑两极',
+    plat:['手游','PC']
+  },
+  {
+    date:'2026-11-11', name:'王者荣耀：世界', genre:'开放世界·MOBA',
+    dev:'腾讯天美 J3', pub:'腾讯',
+    focus:'年度旗舰；重点看开放世界玩法与 MOBA 核心的平衡、首发资源位覆盖',
+    plat:['手游','PC','PS5']
+  }
+];
+
+function renderNewsTab(){
+  // 统计
+  const now = new Date();
+  const thisMonth = now.toISOString().slice(0,7);
+  const pipelineMonth = NEW_GAME_PIPELINE.filter(p => p.date.slice(0,7) === thisMonth).length;
+  document.getElementById('ns-articles').textContent = NEWS_ARTICLES.length;
+  document.getElementById('ns-pipeline').textContent = NEW_GAME_PIPELINE.length;
+  document.getElementById('ns-month').textContent   = pipelineMonth || NEW_GAME_PIPELINE.filter(p=>{
+    const d = new Date(p.date); return d.getFullYear()===now.getFullYear() && d.getMonth()>=now.getMonth()-1;
+  }).length;
+  const syncStr = now.toISOString().slice(0,10) + ' 06:30';
+  document.getElementById('ns-sync').textContent = syncStr;
+  document.getElementById('news-cnt-badge').textContent = NEWS_ARTICLES.length + ' ARTICLES';
+
+  renderNewsFeed('all');
+  renderPipelineList();
+
+  // 来源筛选
+  document.querySelectorAll('#src-filter .sf').forEach(el=>{
+    el.onclick = ()=>{
+      document.querySelectorAll('#src-filter .sf').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');
+      renderNewsFeed(el.dataset.s);
+    };
+  });
+  // 手动刷新（demo：打点动画 + 更新同步时间）
+  const refBtn = document.getElementById('news-refresh-btn');
+  if(refBtn){
+    refBtn.onclick = ()=>{
+      refBtn.disabled = true;
+      refBtn.innerHTML = '<span class="ic">↻</span>正在同步…';
+      setTimeout(()=>{
+        const d = new Date();
+        const pad = n=>String(n).padStart(2,'0');
+        document.getElementById('ns-sync').textContent =
+          `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        refBtn.disabled = false;
+        refBtn.innerHTML = '<span class="ic">↻</span>手动刷新';
+      }, 800);
+    };
+  }
+}
+
+function renderNewsFeed(srcFilter){
+  const list = srcFilter === 'all'
+    ? NEWS_ARTICLES
+    : NEWS_ARTICLES.filter(n => n.src === srcFilter || (srcFilter==='TapTap' && /TapTap/i.test(n.src)));
+  const feed = document.getElementById('news-feed');
+  if(!list.length){
+    feed.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);">该来源暂无资讯</div>`;
+    return;
+  }
+  feed.innerHTML = list.map(n=>`
+    <article class="nf-card" data-id="${n.id}">
+      <div class="thumb" style="background:${n.cover};">
+        <span class="src-tag">${n.src}</span>
+      </div>
+      <div class="meta">
+        <div class="tl">
+          <span class="dt">${n.date}</span>
+          <span class="tag">${n.tag}</span>
+          <span>· ${n.src}</span>
+        </div>
+        <h4>${n.title}</h4>
+        <div class="summary">${n.summary}</div>
+      </div>
+    </article>`).join('');
+  feed.querySelectorAll('.nf-card').forEach(el=>{
+    el.onclick = ()=> el.classList.toggle('expanded');
+  });
+}
+
+function renderPipelineList(){
+  const rows = [...NEW_GAME_PIPELINE].sort((a,b)=> a.date.localeCompare(b.date));
+  const html = rows.map(p=>{
+    const y = p.date.slice(0,4);
+    const md = p.date.slice(5).replace('-','/');
+    const plat = p.plat.map(x=>{
+      const hot = /手游|PC|PS5/i.test(x) ? 'hot' : '';
+      return `<span class="p ${hot}">${x}</span>`;
+    }).join('');
+    return `
+      <div class="pl-row">
+        <div class="pl-date">
+          <span class="y">${y}</span>
+          <span class="md">${md}</span>
+        </div>
+        <div class="pl-body">
+          <div class="pl-head">
+            <span class="pl-name">${p.name}</span>
+            <span class="pl-genre">${p.genre}</span>
+          </div>
+          <div class="pl-meta">
+            <span>研发 <b>${p.dev}</b></span><span class="sep">·</span>
+            <span>发行 <b>${p.pub}</b></span>
+          </div>
+          <div class="pl-plat">${plat}</div>
+          <div class="pl-note"><b>关注点：</b>${p.focus}</div>
+        </div>
+      </div>`;
+  }).join('');
+  document.getElementById('pipeline-list').innerHTML = html;
+}
+
+// 默认 Tab1 就是 News Radar，直接渲染一次（避免首次进入时空白）
+try{
+  if(document.getElementById('pane-news') && document.getElementById('pane-news').classList.contains('active')){
+    renderNewsTab(); window.__newsInited = true;
+  }
+}catch(e){ console.warn('[news] init error', e); }
 </script>
 </body>
 </html>
