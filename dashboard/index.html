@@ -822,11 +822,13 @@
   .pl-row .pl-body .pl-status.live{color:#16a34a;border-color:#16a34a;background:rgba(22,163,74,.08);}
   .pl-row .pl-body .pl-status.up{color:var(--text-dim);}
   .pl-row .pl-body .pl-status.tba{color:#9a8300;border-color:#c9b34c;background:rgba(201,179,76,.08);}
+  .pl-row .pl-body .pl-status.window{color:#1e6fbf;border-color:#1e6fbf;background:rgba(30,111,191,.08);}
   .pl-row .pl-body .pl-src{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);
     opacity:.7;margin-top:6px;letter-spacing:.02em;}
   .pl-row.is-live .pl-date .md{color:#16a34a;}
   .pl-row.is-live{background:linear-gradient(90deg,rgba(22,163,74,.05),transparent 40%);}
   .pl-row.is-tba .pl-date .md{color:#9a8300;font-size:14px;letter-spacing:.1em;}
+  .pl-row.is-window .pl-date .md{color:#1e6fbf;font-size:14px;letter-spacing:.08em;}
 
   @media (max-width: 1100px){
     .news-grid{grid-template-columns:1fr;}
@@ -3533,21 +3535,37 @@ const NEWS_ARTICLES = [
   }
 ];
 
-// 已经官宣/可查证的新游管线（仅列入有公开发售日或明确窗口的条目）
+// 头部厂商新游管线（网易/米哈游/莉莉丝/叠纸/鹰角/完美世界/灵犀等）
+// 原则：只写官方已公开信息；确定首发写确切日期，未定档写 TBA，有窗口期写季度/月份预计
 const NEW_GAME_PIPELINE = [
+  // ===== 已定档首发 =====
+  {
+    date:'2026-01-22', name:'明日方舟：终末地', genre:'3D 即时策略 RPG',
+    dev:'鹰角网络', pub:'鹰角网络',
+    focus:'鹰角四年磨一剑的《方舟》同 IP 衍生作，PC/iOS/Android/PS5 全平台公测；首月口碑两极但工业化水准一流',
+    plat:['手游','PC','PS5'],
+    src:'鹰角网络官方 / endfield.hypergryph.com'
+  },
   {
     date:'2026-04-17', name:'王者荣耀：世界', genre:'开放世界·MMOARPG',
     dev:'腾讯天美工作室群', pub:'腾讯',
-    focus:'PC 端 4/10 公测 · 移动端 4/17 首发上线，PC/移动双端数据互通；首周留存与商业化表现为重点观察',
+    focus:'PC 端 4/10 公测 · 移动端 4/17 首发上线，PC/移动双端数据互通；重点观察首周留存与商业化表现',
     plat:['PC','手游'],
     src:'腾讯官方公告 world.qq.com'
   },
   {
     date:'2026-04-23', name:'异环', genre:'超自然都市·开放世界 RPG',
-    dev:'完美世界·幻塔工作室 (Hotta Studio)', pub:'完美世界',
-    focus:'全平台公测，同步登陆 PC/安卓/iOS/Mac/鸿蒙/PS5 六平台；UE5 研发，全球预约破 3500 万',
+    dev:'完美世界·Hotta Studio（幻塔工作室）', pub:'完美世界',
+    focus:'全平台公测，同步登陆 PC/Android/iOS/Mac/鸿蒙/PS5 六端；UE5 研发，全球预约破 3500 万',
     plat:['手游','PC','PS5','Mac'],
-    src:'完美世界官方 / 多家媒体报道'
+    src:'完美世界官方'
+  },
+  {
+    date:'2026-04-24', name:'无限暖暖 Mac 版', genre:'开放世界·换装冒险',
+    dev:'叠纸游戏', pub:'叠纸游戏',
+    focus:'暖暖 IP 第五代，原作 2024-12-05 全球公测；本次随 2.5 版本上线 Mac 版（需 Apple M 系列芯片），非新作但叠纸 2026 重要端口扩展',
+    plat:['Mac'],
+    src:'叠纸游戏官方'
   },
   {
     date:'2026-09-09', name:'影之刃零 (Phantom Blade Zero)', genre:'武侠·动作 ARPG',
@@ -3563,11 +3581,20 @@ const NEW_GAME_PIPELINE = [
     plat:['PS5','Xbox'],
     src:'Rockstar Newswire 官方'
   },
-  // ---- 已官宣但未定档的重点观察项 ----
+  // ===== 有测试进度但未定档公测 =====
+  {
+    date:'2026-Q3', name:'星布谷地 (Petit Planet)', genre:'模拟经营·生活',
+    dev:'米哈游·璃月科技', pub:'米哈游',
+    focus:'米哈游首款 Q 版二次元模拟经营新游，4/21 已开启第二次「星旅测试」（限量删档），公测尚未定档；业内预计最快 2026 Q3',
+    plat:['手游','PC'],
+    windowLabel:'Q3 预计',
+    src:'米哈游官方 / 测试招募公告'
+  },
+  // ===== 已官宣但完全未定档（TBA） =====
   {
     date:'2026-12-31', name:'黑神话：钟馗', genre:'动作·单机',
     dev:'游戏科学 (Game Science)', pub:'游戏科学',
-    focus:'2025 科隆游戏展压轴官宣的《黑神话》系列新作，仅放出 CG 先导预告；尚未公布具体发售日期，年内/跨年均有可能',
+    focus:'2025 科隆游戏展压轴官宣的《黑神话》系列新作，仅放出 CG 先导预告；尚未公布具体发售日期',
     plat:['PC','PS5','Xbox'],
     tba:true,
     src:'2025 科隆游戏展 / 游戏科学'
@@ -3586,11 +3613,11 @@ function renderNewsTab(){
   // 统计
   const now = new Date();
   const thisMonth = now.toISOString().slice(0,7);
-  const pipelineMonth = NEW_GAME_PIPELINE.filter(p => !p.tba && p.date.slice(0,7) === thisMonth).length;
+  const pipelineMonth = NEW_GAME_PIPELINE.filter(p => !p.tba && !p.windowLabel && p.date.slice(0,7) === thisMonth).length;
   document.getElementById('ns-articles').textContent = NEWS_ARTICLES.length;
   document.getElementById('ns-pipeline').textContent = NEW_GAME_PIPELINE.length;
   document.getElementById('ns-month').textContent   = pipelineMonth || NEW_GAME_PIPELINE.filter(p=>{
-    if(p.tba) return false;
+    if(p.tba || p.windowLabel) return false;
     const d = new Date(p.date); return d.getFullYear()===now.getFullYear() && d.getMonth()>=now.getMonth()-1;
   }).length;
   const syncStr = now.toISOString().slice(0,10) + ' 06:30';
@@ -3658,29 +3685,47 @@ function renderNewsFeed(srcFilter){
 }
 
 function renderPipelineList(){
+  // 用于排序的辅助函数：windowLabel 类型（季度/月份）按年季度中位数估算，TBA 永远在最后
+  const sortKey = (p) => {
+    if(p.tba) return '9999-12-31';
+    if(p.windowLabel){
+      // 2026-Q1 → '2026-02-15'，2026-Q2 → '2026-05-15'，Q3 → '2026-08-15'，Q4 → '2026-11-15'
+      const m = /(\d{4})-Q([1-4])/.exec(p.date);
+      if(m){ const qMid = ['02-15','05-15','08-15','11-15'][+m[2]-1]; return `${m[1]}-${qMid}`; }
+    }
+    return p.date;
+  };
   const rows = [...NEW_GAME_PIPELINE].sort((a,b)=>{
-    // TBA 条目统一放到最后
     if(a.tba && !b.tba) return 1;
     if(!a.tba && b.tba) return -1;
-    return a.date.localeCompare(b.date);
+    return sortKey(a).localeCompare(sortKey(b));
   });
   const todayStr = new Date().toISOString().slice(0,10);
   const html = rows.map(p=>{
-    const y = p.tba ? '2026' : p.date.slice(0,4);
-    const md = p.tba ? 'TBA' : p.date.slice(5).replace('-','/');
+    let y, md;
+    if(p.tba){ y = '2026'; md = 'TBA'; }
+    else if(p.windowLabel){
+      const m = /(\d{4})-(Q[1-4]|\d{1,2}月)/.exec(p.date);
+      y = m ? m[1] : '2026';
+      md = p.windowLabel;
+    } else {
+      y = p.date.slice(0,4);
+      md = p.date.slice(5).replace('-','/');
+    }
     const plat = p.plat.map(x=>{
       const hot = /手游|PC|PS5/i.test(x) ? 'hot' : '';
       return `<span class="p ${hot}">${x}</span>`;
     }).join('');
-    const isLive = !p.tba && p.date <= todayStr;
+    const isLive = !p.tba && !p.windowLabel && p.date <= todayStr;
     let statusBadge;
     if(p.tba) statusBadge = `<span class="pl-status tba">◇ 待定档</span>`;
+    else if(p.windowLabel) statusBadge = `<span class="pl-status window">◇ 窗口期预计</span>`;
     else if(isLive) statusBadge = `<span class="pl-status live">● LIVE · 已上线</span>`;
     else statusBadge = `<span class="pl-status up">◌ 即将上线</span>`;
     const srcLine = p.src
       ? `<div class="pl-src">来源：${p.src}</div>` : '';
     return `
-      <div class="pl-row ${isLive?'is-live':''} ${p.tba?'is-tba':''}">
+      <div class="pl-row ${isLive?'is-live':''} ${p.tba?'is-tba':''} ${p.windowLabel?'is-window':''}">
         <div class="pl-date">
           <span class="y">${y}</span>
           <span class="md">${md}</span>
