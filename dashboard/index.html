@@ -3467,62 +3467,65 @@ function initBDPanel(){
 /*  数据源（示例 mock）：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap */
 /*  生产环境：scheduler/beat.py 每日 06:30 调度爬虫拉取 RSS / 公众号    */
 /* ================================================================== */
+// ⚠️ demo 数据：每条 url 指向「搜狗微信 / 百度」的站内限定搜索，
+//    关键词 = 来源公众号名 + 标题核心词，点击可直接跳转到该来源对应文章的检索结果页。
+//    生产环境会被爬虫返回的真实 article_url 替换（见 collector/weixin_crawler.py）。
 const NEWS_ARTICLES = [
   {
     id:'n1', src:'游戏葡萄', tag:'深度',
     date:'2026-04-22',
     title:'《王者荣耀：世界》首测后记：开放世界 MOBA 的第一道坎',
     summary:'4 月 18 日首测结束，腾讯天美工作室给出了一份成绩单——同时在线峰值破 80 万、7 日留存 42%。本文从战斗手感、剧情演出、地图密度三个维度复盘，并对比网易《燕云十六声》的开放世界思路，分析重度 MMO 的下一步走向。',
-    url:'https://www.youxiputao.com/'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏葡萄 王者荣耀世界 首测')
   },
   {
     id:'n2', src:'游戏陀螺', tag:'行业',
     date:'2026-04-22',
     title:'2026 Q1 版号发布：国产 134 款 / 进口 28 款，二次元品类下滑 18%',
     summary:'国家新闻出版署公布 Q1 共 162 款版号，同比回升 6%。二次元品类出现明显降温，策略与模拟经营成为新热点。报道梳理了头部厂商过审数量与题材分布，并给出近 3 年版号节奏对比。',
-    url:'https://www.youxituoluo.com/'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏陀螺 2026 Q1 版号 二次元')
   },
   {
     id:'n3', src:'游戏研究社', tag:'评测',
     date:'2026-04-21',
     title:'《三国志异闻录》测评：网易把三国塞进了 Roguelike 卡牌',
     summary:'网易雷火新作《三国志异闻录》4 月 17 日开启限量测试。玩法上融合了 DBG（构筑卡牌）+ 国战策略，美术风格则走「东方水墨 + 赛博」混搭。文章评估核心循环、商业化节奏以及其作为网易「三国新解」系列的战略意图。',
-    url:'https://www.yystv.cn/'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏研究社 三国志异闻录 网易雷火')
   },
   {
     id:'n4', src:'游戏寿司', tag:'产品',
     date:'2026-04-21',
     title:'TapTap 2026 年度预约榜 TOP20 出炉：腾讯占 7 席，米哈游缺席',
     summary:'TapTap 发布 2026 年度预约榜单，《异环》《瓦尔特计划》《黑神话：钟馗》位列前三。腾讯在榜单中占 7 席，网易 4 席，米哈游未有新品上榜。报道穿透预约数据与玩家评分曲线，并附 Q2 预计上线名单。',
-    url:'https://weixin.sogou.com/weixin?type=1&query=%E6%B8%B8%E6%88%8F%E5%AF%BF%E5%8F%B8'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏寿司 TapTap 2026 年度预约榜')
   },
   {
     id:'n5', src:'TapTap', tag:'新游',
     date:'2026-04-20',
     title:'发现好游戏：本周 5 款独立新品，《迷雾之夏：起源》登顶周榜',
     summary:'TapTap「发现好游戏」栏目本周上架 5 款独立作品，《迷雾之夏：起源》上线 48 小时登顶周榜，好评率 94%。其余作品覆盖 roguelike、解谜、战棋三大赛道。编辑按玩法深度与美术风格做了分类推荐。',
-    url:'https://www.taptap.cn/'
+    url:'https://www.taptap.cn/search?type=app&keyword=' + encodeURIComponent('迷雾之夏 起源')
   },
   {
     id:'n6', src:'游戏葡萄', tag:'趋势',
     date:'2026-04-19',
     title:'买量大盘回暖：3 月国产手游投放素材量环比 +24%，SLG 拉动显著',
     summary:'据 DataEye 3 月月报，国产手游投放素材量环比上涨 24%，其中 SLG 品类贡献最大增量（+41%）。文章拆解头部 5 款 SLG 的素材结构、投放节奏与买量 ROI 趋势，并谈及腾讯、三七的不同打法。',
-    url:'https://www.youxiputao.com/'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏葡萄 DataEye 3月 买量 SLG')
   },
   {
     id:'n7', src:'游戏陀螺', tag:'海外',
     date:'2026-04-18',
     title:'出海新答卷：《无尽冬日》全球流水突破 30 亿美元，超越《原神》',
     summary:'点点互动《无尽冬日》（Whiteout Survival）上线 22 个月全球累计流水突破 30 亿美元，超越《原神》同期表现。文章解析其在欧美、日韩的投放策略与长线运营节奏，兼谈末日生存 SLG 赛道的饱和度。',
-    url:'https://www.youxituoluo.com/'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏陀螺 无尽冬日 30亿美元 点点互动')
   },
   {
     id:'n8', src:'游戏研究社', tag:'主机',
     date:'2026-04-17',
     title:'PS5 Pro 国行解锁后：第三方工作室三款新作敲定 2026 Q3 同步上线',
     summary:'PS5 Pro 国行解锁第三方引擎支持，网易雷火、完美世界、游戏科学分别宣布旗下三款新作将于 2026 Q3 全球同步上线。报道整理主机平台近两年的中国厂商布局，并展望下半年发行节奏。',
-    url:'https://www.yystv.cn/'
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('游戏研究社 PS5 Pro 国行 2026 Q3')
   }
 ];
 
