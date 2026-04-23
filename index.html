@@ -574,9 +574,160 @@
     .lg-detail{padding-left:20px;}
     .lg-item{grid-template-columns:90px 1fr auto;}
   }
+
+  /* ====================================================== */
+  /*  登录面板 & 角色权限（admin / bd / boss）                */
+  /* ====================================================== */
+  #login-mask{position:fixed;inset:0;z-index:9999;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;padding:24px;}
+  #login-mask.hidden{display:none;}
+  #login-mask .login-box{width:420px;max-width:100%;background:var(--panel);
+    border:1px solid var(--border-strong);padding:34px 32px;position:relative;}
+  #login-mask .login-box::before{content:"";position:absolute;left:0;top:0;bottom:0;
+    width:3px;background:linear-gradient(180deg,var(--accent-tab1),var(--accent-tab2),var(--accent-tab3));}
+  #login-mask .lg-eyebrow{font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;}
+  #login-mask .lg-title{font-size:22px;font-weight:800;color:var(--text);
+    letter-spacing:-.01em;margin-bottom:4px;line-height:1.25;}
+  #login-mask .lg-sub{font-size:12.5px;color:var(--text-dim);margin-bottom:22px;line-height:1.6;}
+  #login-mask .lg-field{margin-bottom:14px;}
+  #login-mask .lg-field label{display:block;font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.14em;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;}
+  #login-mask .lg-field input{width:100%;background:var(--panel-2);border:1px solid var(--border-strong);
+    color:var(--text);font-size:14px;padding:11px 13px;font-family:var(--font-sans);
+    outline:none;transition:border-color .15s;}
+  #login-mask .lg-field input:focus{border-color:var(--accent-tab2);}
+  #login-mask .lg-err{font-size:12px;color:var(--down);min-height:18px;margin:4px 0 8px;
+    font-family:var(--font-mono);letter-spacing:.04em;}
+  #login-mask .lg-submit{width:100%;background:var(--text);color:var(--bg);
+    border:none;padding:13px 0;font-size:13px;font-weight:700;letter-spacing:.14em;
+    cursor:pointer;font-family:var(--font-mono);transition:opacity .15s;}
+  #login-mask .lg-submit:hover{opacity:.85;}
+  #login-mask .lg-hint{margin-top:16px;font-family:var(--font-mono);font-size:10.5px;
+    color:var(--text-dim);letter-spacing:.02em;line-height:1.9;border-top:1px dashed var(--border);
+    padding-top:12px;}
+  #login-mask .lg-hint b{color:var(--text);font-weight:700;}
+
+  /* 当前角色显示 & 退出 */
+  .role-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;
+    border:1px solid var(--border-strong);font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.14em;color:var(--text);}
+  .role-chip .rc-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-tab3);}
+  html[data-role="admin"] .role-chip .rc-dot{background:var(--accent-tab1);}
+  html[data-role="bd"]    .role-chip .rc-dot{background:var(--accent-tab2);}
+  html[data-role="boss"]  .role-chip .rc-dot{background:var(--accent-tab3);}
+  .logout-btn{appearance:none;background:transparent;border:1px solid var(--border-strong);
+    color:var(--text-dim);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+    padding:4px 10px;cursor:pointer;line-height:1;transition:all .15s;}
+  .logout-btn:hover{color:var(--down);border-color:var(--down);}
+
+  /* ---------- Boss 视图：只呈现 3 个 summary 卡片 ---------- */
+  html[data-role="boss"] .demo-banner,
+  html[data-role="boss"] .nr-hero .toolbar,
+  html[data-role="boss"] .nr-hero .badges,
+  html[data-role="boss"] .kpi-row,
+  html[data-role="boss"] #pane-slots .row,
+  html[data-role="boss"] #pane-slots .panel:not(.boss-keep),
+  html[data-role="boss"] #pane-install > .panel:not(.boss-keep),
+  html[data-role="boss"] #pane-install > .row,
+  html[data-role="boss"] #pane-install > .kpi-row,
+  html[data-role="boss"] #pane-install > .nr-cta,
+  html[data-role="boss"] #pane-install > .vendor-switcher,
+  html[data-role="boss"] #pane-install > .launch-grid,
+  html[data-role="boss"] #pane-install > .stat-strip,
+  html[data-role="boss"] #pane-launch .stat-strip,
+  html[data-role="boss"] #pane-launch .launch-grid,
+  html[data-role="boss"] #pane-launch .nr-cta,
+  html[data-role="boss"] #pane-launch .vendor-switcher,
+  html[data-role="boss"] #pane-launch .empty-state,
+  html[data-role="boss"] #pane-launch .hero,
+  html[data-role="boss"] footer,
+  html[data-role="boss"] #bd-entry-panel{display:none !important;}
+  /* Boss 保留顶栏 Tab + summary + 洞察三卡（只读） */
+  html[data-role="boss"] #pane-slots > .panel:first-of-type,
+  html[data-role="boss"] #pane-install > .panel:first-of-type{display:block !important;}
+  html[data-role="boss"] #pane-launch .insight-grid{pointer-events:none;}
+  html[data-role="boss"] .nr-hero{padding-bottom:14px !important;}
+  html[data-role="boss"] .nr-hero h1{font-size:22px !important;margin-bottom:6px !important;}
+  html[data-role="boss"] .nr-hero .meta{font-size:12px !important;}
+  /* Boss 模式提示条 */
+  .boss-notice{display:none;margin:0 0 14px;padding:10px 14px;border:1px solid var(--border-strong);
+    border-left:3px solid var(--accent-tab3);background:var(--panel);
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--text-dim);}
+  .boss-notice b{color:var(--text);font-weight:700;}
+  html[data-role="boss"] .boss-notice{display:block;}
+
+  /* ---------- BD 录入面板 ---------- */
+  #bd-entry-panel{display:none;margin:18px 0;border:1px solid var(--border-strong);
+    background:var(--panel);}
+  html[data-role="bd"] #bd-entry-panel,
+  html[data-role="admin"] #bd-entry-panel{display:block;}
+  .bd-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .bd-head .bd-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .bd-head .bd-title .tag{display:inline-block;font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.14em;padding:2px 8px;background:var(--accent-tab2);color:#0c0c10;font-weight:700;}
+  .bd-head .bd-title .t{font-size:15px;font-weight:800;color:var(--text);}
+  .bd-head .bd-title .s{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+    color:var(--text-dim);text-transform:uppercase;}
+  .bd-form{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:16px 20px;align-items:end;}
+  .bd-form .f{display:flex;flex-direction:column;gap:4px;}
+  .bd-form .f.f-wide{grid-column:span 2;}
+  .bd-form .f label{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+    color:var(--text-dim);text-transform:uppercase;}
+  .bd-form .f input,.bd-form .f select,.bd-form .f textarea{background:var(--panel-2);
+    border:1px solid var(--border-strong);color:var(--text);font-size:13px;padding:8px 10px;
+    font-family:var(--font-sans);outline:none;}
+  .bd-form .f input:focus,.bd-form .f select:focus,.bd-form .f textarea:focus{border-color:var(--accent-tab2);}
+  .bd-form .bd-actions{grid-column:1 / -1;display:flex;gap:10px;justify-content:flex-end;margin-top:4px;}
+  .bd-btn{appearance:none;border:1px solid var(--border-strong);background:transparent;
+    color:var(--text);font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;
+    padding:8px 16px;cursor:pointer;text-transform:uppercase;transition:all .15s;}
+  .bd-btn:hover{border-color:var(--text);}
+  .bd-btn.primary{background:var(--accent-tab2);color:#0c0c10;border-color:var(--accent-tab2);font-weight:700;}
+  .bd-btn.primary:hover{opacity:.85;}
+  .bd-list{padding:0 20px 16px;}
+  .bd-list table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .bd-list th,.bd-list td{padding:9px 10px;border-bottom:1px solid var(--border);text-align:left;}
+  .bd-list th{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+    color:var(--text-dim);text-transform:uppercase;font-weight:500;}
+  .bd-list .bd-empty{padding:18px 0;text-align:center;color:var(--text-dim);
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;}
+  .bd-list .del-btn{color:var(--down);cursor:pointer;font-family:var(--font-mono);font-size:11px;}
+  .bd-list .del-btn:hover{text-decoration:underline;}
+
+  @media (max-width: 900px){
+    .bd-form{grid-template-columns:repeat(2,1fr);}
+    .bd-form .f.f-wide{grid-column:span 2;}
+  }
 </style>
 </head>
 <body>
+
+<!-- ============ 登录遮罩 ============ -->
+<div id="login-mask">
+  <form class="login-box" id="login-form" autocomplete="off">
+    <div class="lg-eyebrow">Xiao-A · Doppelgänger · Access Control</div>
+    <div class="lg-title">小A的影分身 · 登录</div>
+    <div class="lg-sub">请输入账号与密码，系统将根据角色加载对应的数据视图与权限。</div>
+    <div class="lg-field">
+      <label for="lg-user">账号 / Username</label>
+      <input type="text" id="lg-user" placeholder="admin / bd / boss" autocomplete="username" required />
+    </div>
+    <div class="lg-field">
+      <label for="lg-pass">密码 / Password</label>
+      <input type="password" id="lg-pass" placeholder="••••••••" autocomplete="current-password" required />
+    </div>
+    <div class="lg-err" id="lg-err"></div>
+    <button type="submit" class="lg-submit">ENTER DOPPELGÄNGER</button>
+    <div class="lg-hint">
+      <div><b>ADMIN</b> · 最高权限，拥有全部 Tab 与录入面板</div>
+      <div><b>BD</b> · 可在 Tab 3 录入各厂商首发资源</div>
+      <div><b>BOSS</b> · 只读摘要视图，仅呈现 3 个 Tab 的洞察卡片</div>
+    </div>
+  </form>
+</div>
+
 <div class="wrap">
 
 <!-- ============ 站点 Header · 小A的影分身 ============ -->
@@ -605,6 +756,9 @@
       <span class="tt-ic tt-dark">● DARK</span>
       <span class="tt-ic tt-light">○ LIGHT</span>
     </button>
+    <span class="sep">/</span>
+    <span class="role-chip" id="role-chip"><span class="rc-dot"></span><span id="role-chip-name">—</span></span>
+    <button id="logout-btn" class="logout-btn" type="button">退出</button>
   </div>
 </div>
 
@@ -656,7 +810,8 @@
 </header>
 
 <!-- 顶部概要（原风格） -->
-<div class="panel" style="margin-bottom:14px;">
+<div class="boss-notice">BOSS · READ-ONLY · 仅呈现本 Tab 的洞察摘要</div>
+<div class="panel boss-keep" style="margin-bottom:14px;">
   <div class="summary-title">
     <span class="st-tag">TL;DR</span>
     <span class="st-main">资源位洞察</span>
@@ -835,7 +990,8 @@
 </header>
 
 <!-- 顶部案例洞察（原风格） -->
-<div class="panel" style="margin-bottom:14px;">
+<div class="boss-notice">BOSS · READ-ONLY · 仅呈现本 Tab 的洞察摘要</div>
+<div class="panel boss-keep" style="margin-bottom:14px;">
   <div class="summary-title">
     <span class="st-tag">TL;DR</span>
     <span class="st-main">安装链路洞察</span>
@@ -957,6 +1113,8 @@
 <!-- ============ Tab 3 · 游戏首发资源分析（nara.build 风格） ============ -->
 <div class="tab-pane" id="pane-launch">
 
+  <div class="boss-notice">BOSS · READ-ONLY · 仅呈现本 Tab 的洞察摘要</div>
+
   <!-- Hero -->
   <section class="hero">
     <div class="eyebrow"><span class="dot"></span>Launch Resource Intelligence &nbsp;·&nbsp; v0.3 · tab_03</div>
@@ -971,7 +1129,7 @@
   </section>
 
   <!-- Insight 三卡（原风格，置顶） -->
-  <div class="panel" style="margin-bottom:14px;background:transparent;border:none;padding:0;">
+  <div class="panel boss-keep" style="margin-bottom:14px;background:transparent;border:none;padding:0;">
     <div class="summary-title">
       <span class="st-tag">TL;DR</span>
       <span class="st-main">首发资源洞察</span>
@@ -990,6 +1148,77 @@
     <div class="v" data-v="vivo"><span class="sym">◉</span>VIVO<span class="count">0</span></div>
     <div class="v" data-v="honor"><span class="sym">⬡</span>荣耀<span class="count">0</span></div>
   </div>
+
+  <!-- ========= BD 录入面板：仅 BD / Admin 可见 ========= -->
+  <section id="bd-entry-panel">
+    <div class="bd-head">
+      <div class="bd-title">
+        <span class="tag">BD ENTRY</span>
+        <span class="t">厂商首发资源录入</span>
+        <span class="s">当前厂商 · <span id="bd-cur-vendor">XIAOMI</span> · 数据保存在本地（localStorage）</span>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);letter-spacing:.14em;">
+        已录入 <b id="bd-cnt" style="color:var(--text);">0</b> 条
+      </div>
+    </div>
+    <form class="bd-form" id="bd-form" autocomplete="off">
+      <div class="f">
+        <label>厂商</label>
+        <select id="bd-vendor" required>
+          <option value="xiaomi">小米</option>
+          <option value="huawei">华为</option>
+          <option value="oppo">OPPO</option>
+          <option value="vivo">VIVO</option>
+          <option value="honor">荣耀</option>
+        </select>
+      </div>
+      <div class="f f-wide">
+        <label>游戏名称</label>
+        <input type="text" id="bd-game" placeholder="例如：王者荣耀：世界" required />
+      </div>
+      <div class="f">
+        <label>首发日期</label>
+        <input type="date" id="bd-date" required />
+      </div>
+      <div class="f">
+        <label>资源位数</label>
+        <input type="number" id="bd-slots" min="0" max="99" placeholder="0" required />
+      </div>
+      <div class="f">
+        <label>主渠道</label>
+        <select id="bd-channel">
+          <option value="app_store">应用商店</option>
+          <option value="game_center">游戏中心</option>
+          <option value="both">双渠道</option>
+        </select>
+      </div>
+      <div class="f f-wide" style="grid-column:span 4;">
+        <label>备注 / 资源位详情</label>
+        <textarea id="bd-note" rows="2" placeholder="可填写资源位名称、权重、投放时段等"></textarea>
+      </div>
+      <div class="bd-actions">
+        <button type="button" class="bd-btn" id="bd-reset">重置</button>
+        <button type="submit" class="bd-btn primary">+ 新增录入</button>
+      </div>
+    </form>
+    <div class="bd-list">
+      <table id="bd-table">
+        <thead>
+          <tr>
+            <th style="width:80px;">厂商</th>
+            <th>游戏</th>
+            <th style="width:110px;">日期</th>
+            <th style="width:70px;text-align:right;">资源位</th>
+            <th style="width:90px;">渠道</th>
+            <th>备注</th>
+            <th style="width:60px;"></th>
+          </tr>
+        </thead>
+        <tbody id="bd-tbody"></tbody>
+      </table>
+      <div class="bd-empty" id="bd-empty">暂无录入记录，使用上方表单添加厂商首发资源</div>
+    </div>
+  </section>
 
   <!-- 统计条 -->
   <div class="stat-strip" id="launch-stat-strip">
@@ -2541,6 +2770,211 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
     },50);
   };
 });
+
+/* ================================================================== */
+/*  账号权限系统：admin / bd / boss                                    */
+/* ================================================================== */
+(function(){
+  const USERS = {
+    admin: { pass: 'admin@2026', role: 'admin', name: 'ADMIN · 最高权限' },
+    bd:    { pass: 'bd@2026',    role: 'bd',    name: 'BD · 资源录入' },
+    boss:  { pass: 'boss@2026',  role: 'boss',  name: 'BOSS · 只读摘要' }
+  };
+  const SKEY = 'doppel-auth';
+
+  function applyRole(user){
+    const u = USERS[user];
+    if(!u) return;
+    document.documentElement.setAttribute('data-role', u.role);
+    const chipEl = document.getElementById('role-chip-name');
+    if(chipEl) chipEl.textContent = u.name;
+    // Boss 锁定：隐藏非 summary 内容；禁用交互控件
+    if(u.role === 'boss'){
+      // 隐藏 top-tabs 下方 hero meta toolbar（Tab1/2）
+      document.querySelectorAll('.nr-hero .toolbar, .nr-hero .badges').forEach(el=>el.style.display='none');
+      // 禁用所有顶栏 tab 的过滤按钮交互（保留顶栏 3 个 Tab 切换）
+      document.querySelectorAll('#tab-channel .tab, #tab-grade .tab, #vendor-switcher .v').forEach(el=>{
+        el.style.pointerEvents = 'none';
+        el.style.opacity = '.55';
+      });
+    } else {
+      document.querySelectorAll('#tab-channel .tab, #tab-grade .tab, #vendor-switcher .v').forEach(el=>{
+        el.style.pointerEvents = '';
+        el.style.opacity = '';
+      });
+    }
+    // BD 初始化录入面板
+    if(u.role === 'bd' || u.role === 'admin'){
+      initBDPanel();
+    }
+  }
+
+  function login(user, pass){
+    const u = USERS[user];
+    if(!u) return { ok:false, msg:'账号不存在（admin / bd / boss）' };
+    if(u.pass !== pass) return { ok:false, msg:'密码错误' };
+    sessionStorage.setItem(SKEY, user);
+    return { ok:true };
+  }
+
+  function logout(){
+    sessionStorage.removeItem(SKEY);
+    document.documentElement.removeAttribute('data-role');
+    document.getElementById('login-mask').classList.remove('hidden');
+    document.getElementById('lg-user').value = '';
+    document.getElementById('lg-pass').value = '';
+    document.getElementById('lg-err').textContent = '';
+  }
+
+  // 表单提交
+  const form = document.getElementById('login-form');
+  if(form){
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const u = document.getElementById('lg-user').value.trim().toLowerCase();
+      const p = document.getElementById('lg-pass').value;
+      const errEl = document.getElementById('lg-err');
+      const r = login(u, p);
+      if(!r.ok){
+        errEl.textContent = r.msg;
+        return;
+      }
+      errEl.textContent = '';
+      applyRole(u);
+      document.getElementById('login-mask').classList.add('hidden');
+      // 触发图表 resize（在隐藏遮罩后画布尺寸已就位）
+      setTimeout(()=>{
+        document.querySelectorAll('[id^=ch-]').forEach(el=>{
+          const inst = echarts.getInstanceByDom(el);
+          if(inst){ try{ inst.resize(); }catch(e){} }
+        });
+      }, 100);
+    });
+  }
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn) logoutBtn.addEventListener('click', logout);
+
+  // 自动登录（会话内）
+  const saved = sessionStorage.getItem(SKEY);
+  if(saved && USERS[saved]){
+    applyRole(saved);
+    document.getElementById('login-mask').classList.add('hidden');
+  }
+})();
+
+/* ================================================================== */
+/*  BD 录入面板：新增 / 展示 / 删除（本地 localStorage）               */
+/* ================================================================== */
+const BD_KEY = 'doppel-bd-entries';
+const BD_VENDOR_LABEL = {xiaomi:'小米', huawei:'华为', oppo:'OPPO', vivo:'VIVO', honor:'荣耀'};
+const BD_CHANNEL_LABEL = {app_store:'应用商店', game_center:'游戏中心', both:'双渠道'};
+
+function bdLoad(){
+  try{ return JSON.parse(localStorage.getItem(BD_KEY) || '[]'); }
+  catch(e){ return []; }
+}
+function bdSave(arr){ localStorage.setItem(BD_KEY, JSON.stringify(arr)); }
+
+function bdRender(){
+  const tbody = document.getElementById('bd-tbody');
+  const emptyEl = document.getElementById('bd-empty');
+  const cntEl = document.getElementById('bd-cnt');
+  if(!tbody) return;
+  const list = bdLoad().sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+  tbody.innerHTML = '';
+  if(cntEl) cntEl.textContent = list.length;
+  if(list.length === 0){
+    if(emptyEl) emptyEl.style.display = '';
+    return;
+  }
+  if(emptyEl) emptyEl.style.display = 'none';
+  list.forEach(item=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${BD_VENDOR_LABEL[item.vendor] || item.vendor}</td>
+      <td><b>${escapeHtml(item.game)}</b></td>
+      <td style="font-family:var(--font-mono);font-size:11.5px;">${item.date || '—'}</td>
+      <td style="text-align:right;font-family:var(--font-mono);font-weight:700;">${item.slots ?? 0}</td>
+      <td>${BD_CHANNEL_LABEL[item.channel] || item.channel || '—'}</td>
+      <td style="color:var(--text-dim);">${escapeHtml(item.note || '—')}</td>
+      <td><span class="del-btn" data-id="${item.id}">删除</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // 绑定删除
+  tbody.querySelectorAll('.del-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-id');
+      const next = bdLoad().filter(x=>String(x.id) !== String(id));
+      bdSave(next);
+      bdRender();
+    });
+  });
+}
+
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function initBDPanel(){
+  if(window.__bdInited) { bdRender(); return; }
+  window.__bdInited = true;
+  const form = document.getElementById('bd-form');
+  const resetBtn = document.getElementById('bd-reset');
+  const vSel = document.getElementById('bd-vendor');
+  const bdCurEl = document.getElementById('bd-cur-vendor');
+  // 初始表单预填当前厂商
+  if(typeof CUR_VENDOR !== 'undefined' && vSel) vSel.value = CUR_VENDOR;
+  if(bdCurEl) bdCurEl.textContent = (BD_VENDOR_LABEL[CUR_VENDOR] || 'XIAOMI').toUpperCase();
+  // 日期默认今天
+  const dEl = document.getElementById('bd-date');
+  if(dEl && !dEl.value) dEl.value = new Date().toISOString().slice(0,10);
+
+  if(form){
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const entry = {
+        id: Date.now() + '-' + Math.random().toString(36).slice(2,7),
+        vendor: document.getElementById('bd-vendor').value,
+        game: document.getElementById('bd-game').value.trim(),
+        date: document.getElementById('bd-date').value,
+        slots: Number(document.getElementById('bd-slots').value) || 0,
+        channel: document.getElementById('bd-channel').value,
+        note: document.getElementById('bd-note').value.trim(),
+        createdBy: sessionStorage.getItem('doppel-auth') || 'unknown',
+        createdAt: new Date().toISOString()
+      };
+      if(!entry.game){ return; }
+      const list = bdLoad();
+      list.push(entry);
+      bdSave(list);
+      // 重置部分字段，保留厂商/渠道
+      document.getElementById('bd-game').value = '';
+      document.getElementById('bd-slots').value = '';
+      document.getElementById('bd-note').value = '';
+      bdRender();
+    });
+  }
+  if(resetBtn){
+    resetBtn.addEventListener('click', ()=>{
+      document.getElementById('bd-game').value = '';
+      document.getElementById('bd-slots').value = '';
+      document.getElementById('bd-note').value = '';
+      document.getElementById('bd-note').value = '';
+    });
+  }
+  // 厂商切换同步到录入表单
+  document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
+    v.addEventListener('click', ()=>{
+      const key = v.dataset.v;
+      if(vSel) vSel.value = key;
+      if(bdCurEl) bdCurEl.textContent = (BD_VENDOR_LABEL[key] || key).toUpperCase();
+    });
+  });
+  bdRender();
+}
 </script>
 </body>
 </html>
