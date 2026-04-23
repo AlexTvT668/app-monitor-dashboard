@@ -1,0 +1,329 @@
+- generic [ref=e15]:
+  - generic [ref=e16]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: A A
+      - heading "小A的影分身 Xiao-A · Doppelgänger Intelligence" [level=1] [ref=e21]:
+        - text: 小A的影分身
+        - generic [ref=e22]: Xiao-A · Doppelgänger Intelligence
+    - generic [ref=e23]:
+      - generic [ref=e24]: LIVE · DAILY 02:00
+      - generic [ref=e25]: /
+      - generic [ref=e26]: 3 INTELLIGENCE MODULES
+      - generic [ref=e27]: /
+      - generic [ref=e28]: 5 VENDORS · 72 SLOTS · 3 CHANNELS
+      - generic [ref=e29]: /
+      - generic [ref=e30]: 2026-04-23 · THU
+      - generic [ref=e31]: /
+      - button "切换明暗主题" [ref=e32] [cursor=pointer]:
+        - generic [ref=e33]: ● DARK
+      - generic [ref=e34]: /
+      - generic [ref=e37]: ADMIN · 最高权限
+      - button "退出" [ref=e38] [cursor=pointer]
+  - generic [ref=e39]:
+    - generic [ref=e40]: DEMO
+    - generic [ref=e41]: 当前页面为演示数据（mock_data.json），用于展示监控体系的结构与指标口径；真机采集链路待 6 台真机 + 账号 + 固定 IP 到位后切换为实时数据。
+  - generic [ref=e42]:
+    - generic [ref=e43] [cursor=pointer]: Tab 1 · 行业早知道
+    - generic [ref=e45] [cursor=pointer]: Tab 2 · 厂商资源位监控
+    - generic [ref=e47] [cursor=pointer]: Tab 3 · 厂商安装链路监控
+    - generic [ref=e49] [cursor=pointer]: Tab 4 · 游戏首发资源分析
+  - generic [ref=e51]:
+    - banner [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]: Industry Early Brief · v1 · tab_01
+        - heading "行业早知道 EARLY BRIEF" [level=1] [ref=e56]
+        - paragraph [ref=e57]: 每日 06:30 自动爬取 游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap 发现好游戏 等公众号与站点，聚合「行业最新资讯」与「新游 Pipeline」两大视图，辅助 BD 与产品团队在早会前快速掌握行业动态与待发行游戏阵容。
+        - generic [ref=e58]:
+          - generic [ref=e59]: 5 SOURCES
+          - generic [ref=e60]: 8 ARTICLES
+          - generic [ref=e61]: AUTO · 06:30 DAILY
+    - generic [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]: ARTICLES
+        - generic [ref=e65]: "8"
+        - generic [ref=e66]: 今日聚合资讯条数
+      - generic [ref=e67]:
+        - generic [ref=e68]: PIPELINE
+        - generic [ref=e69]: "9"
+        - generic [ref=e70]: 跟踪待发行 / 新游数
+      - generic [ref=e71]:
+        - generic [ref=e72]: THIS MONTH
+        - generic [ref=e73]: "1"
+        - generic [ref=e74]: 本月首发/上线
+      - generic [ref=e75]:
+        - generic [ref=e76]: LAST SYNC
+        - generic [ref=e77]: 2026-04-23 06:30
+        - generic [ref=e78]: 最后同步时间
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]: SOURCES
+        - generic [ref=e82]:
+          - generic [ref=e83] [cursor=pointer]: 全部
+          - generic [ref=e84] [cursor=pointer]: 游戏葡萄
+          - generic [ref=e85] [cursor=pointer]: 游戏寿司
+          - generic [ref=e86] [cursor=pointer]: 游戏研究社
+          - generic [ref=e87] [cursor=pointer]: 游戏陀螺
+          - generic [ref=e88] [cursor=pointer]: TapTap
+      - button "↻ 手动刷新" [ref=e90] [cursor=pointer]:
+        - generic [ref=e91]: ↻
+        - text: 手动刷新
+    - generic [ref=e92]:
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - generic [ref=e95]: 01行业最新资讯 —— Latest
+          - generic [ref=e96]: 标题 + 摘要 + 原文链接 · 点击卡片展开
+        - generic [ref=e97]:
+          - article [ref=e98] [cursor=pointer]:
+            - generic [ref=e99]:
+              - generic [ref=e100]:
+                - generic [ref=e101]: 游戏葡萄
+                - generic [ref=e102]: 2026-04-22
+                - generic [ref=e103]: 深度
+              - heading "《王者荣耀：世界》首测后记：开放世界 MOBA 的第一道坎" [level=4] [ref=e104]
+              - generic [ref=e105]: 4 月 18 日首测结束，腾讯天美工作室给出了一份成绩单——同时在线峰值破 80 万、7 日留存 42%。本文从战斗手感、剧情演出、地图密度三个维度复盘，并对比网易《燕云十六声》的开放世界思路，分析重度 MMO 的下一步走向。
+              - link "原文链接 →" [ref=e106]:
+                - /url: https://www.youxiputao.com/article/list/1
+                - text: 原文链接
+                - generic [ref=e107]: →
+          - article [ref=e108] [cursor=pointer]:
+            - generic [ref=e109]:
+              - generic [ref=e110]:
+                - generic [ref=e111]: 游戏陀螺
+                - generic [ref=e112]: 2026-04-22
+                - generic [ref=e113]: 行业
+              - heading "2026 Q1 版号发布：国产 134 款 / 进口 28 款，二次元品类下滑 18%" [level=4] [ref=e114]
+              - generic [ref=e115]: 国家新闻出版署公布 Q1 共 162 款版号，同比回升 6%。二次元品类出现明显降温，策略与模拟经营成为新热点。报道梳理了头部厂商过审数量与题材分布，并给出近 3 年版号节奏对比。
+              - link "原文链接 →" [ref=e116]:
+                - /url: https://www.youxituoluo.com/
+                - text: 原文链接
+                - generic [ref=e117]: →
+          - article [ref=e118] [cursor=pointer]:
+            - generic [ref=e119]:
+              - generic [ref=e120]:
+                - generic [ref=e121]: 游戏研究社
+                - generic [ref=e122]: 2026-04-21
+                - generic [ref=e123]: 评测
+              - heading "《三国志异闻录》测评：网易把三国塞进了 Roguelike 卡牌" [level=4] [ref=e124]
+              - generic [ref=e125]: 网易雷火新作《三国志异闻录》4 月 17 日开启限量测试。玩法上融合了 DBG（构筑卡牌）+ 国战策略，美术风格则走「东方水墨 + 赛博」混搭。文章评估核心循环、商业化节奏以及其作为网易「三国新解」系列的战略意图。
+              - link "原文链接 →" [ref=e126]:
+                - /url: https://www.yystv.cn/
+                - text: 原文链接
+                - generic [ref=e127]: →
+          - article [ref=e128] [cursor=pointer]:
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - generic [ref=e131]: 游戏寿司
+                - generic [ref=e132]: 2026-04-21
+                - generic [ref=e133]: 产品
+              - heading "TapTap 2026 年度预约榜 TOP20 出炉：腾讯占 7 席，米哈游缺席" [level=4] [ref=e134]
+              - generic [ref=e135]: TapTap 发布 2026 年度预约榜单，《异环》《瓦尔特计划》《黑神话：钟馗》位列前三。腾讯在榜单中占 7 席，网易 4 席，米哈游未有新品上榜。报道穿透预约数据与玩家评分曲线，并附 Q2 预计上线名单。
+              - link "原文链接 →" [ref=e136]:
+                - /url: https://mp.weixin.qq.com/s/youxishousi
+                - text: 原文链接
+                - generic [ref=e137]: →
+          - article [ref=e138] [cursor=pointer]:
+            - generic [ref=e139]:
+              - generic [ref=e140]:
+                - generic [ref=e141]: TapTap
+                - generic [ref=e142]: 2026-04-20
+                - generic [ref=e143]: 新游
+              - heading "发现好游戏：本周 5 款独立新品，《迷雾之夏：起源》登顶周榜" [level=4] [ref=e144]
+              - generic [ref=e145]: TapTap「发现好游戏」栏目本周上架 5 款独立作品，《迷雾之夏：起源》上线 48 小时登顶周榜，好评率 94%。其余作品覆盖 roguelike、解谜、战棋三大赛道。编辑按玩法深度与美术风格做了分类推荐。
+              - link "原文链接 →" [ref=e146]:
+                - /url: https://www.taptap.cn/top/discovery
+                - text: 原文链接
+                - generic [ref=e147]: →
+          - article [ref=e148] [cursor=pointer]:
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - generic [ref=e151]: 游戏葡萄
+                - generic [ref=e152]: 2026-04-19
+                - generic [ref=e153]: 趋势
+              - heading "买量大盘回暖：3 月国产手游投放素材量环比 +24%，SLG 拉动显著" [level=4] [ref=e154]
+              - generic [ref=e155]: 据 DataEye 3 月月报，国产手游投放素材量环比上涨 24%，其中 SLG 品类贡献最大增量（+41%）。文章拆解头部 5 款 SLG 的素材结构、投放节奏与买量 ROI 趋势，并谈及腾讯、三七的不同打法。
+              - link "原文链接 →" [ref=e156]:
+                - /url: https://www.youxiputao.com/article/list/3
+                - text: 原文链接
+                - generic [ref=e157]: →
+          - article [ref=e158] [cursor=pointer]:
+            - generic [ref=e159]:
+              - generic [ref=e160]:
+                - generic [ref=e161]: 游戏陀螺
+                - generic [ref=e162]: 2026-04-18
+                - generic [ref=e163]: 海外
+              - heading "出海新答卷：《无尽冬日》全球流水突破 30 亿美元，超越《原神》" [level=4] [ref=e164]
+              - generic [ref=e165]: 点点互动《无尽冬日》（Whiteout Survival）上线 22 个月全球累计流水突破 30 亿美元，超越《原神》同期表现。文章解析其在欧美、日韩的投放策略与长线运营节奏，兼谈末日生存 SLG 赛道的饱和度。
+              - link "原文链接 →" [ref=e166]:
+                - /url: https://www.youxituoluo.com/category/overseas
+                - text: 原文链接
+                - generic [ref=e167]: →
+          - article [ref=e168] [cursor=pointer]:
+            - generic [ref=e169]:
+              - generic [ref=e170]:
+                - generic [ref=e171]: 游戏研究社
+                - generic [ref=e172]: 2026-04-17
+                - generic [ref=e173]: 主机
+              - heading "PS5 Pro 国行解锁后：第三方工作室三款新作敲定 2026 Q3 同步上线" [level=4] [ref=e174]
+              - generic [ref=e175]: PS5 Pro 国行解锁第三方引擎支持，网易雷火、完美世界、游戏科学分别宣布旗下三款新作将于 2026 Q3 全球同步上线。报道整理主机平台近两年的中国厂商布局，并展望下半年发行节奏。
+              - link "原文链接 →" [ref=e176]:
+                - /url: https://www.yystv.cn/p/console
+                - text: 原文链接
+                - generic [ref=e177]: →
+      - generic [ref=e178]:
+        - generic [ref=e179]:
+          - generic [ref=e180]: 02新游 Pipeline —— Upcoming
+          - generic [ref=e181]: 按首发时间排序
+        - generic [ref=e182]:
+          - generic [ref=e183]:
+            - generic [ref=e184]:
+              - generic [ref=e185]: "2026"
+              - text: 04/29
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic [ref=e188]: 异环
+                - generic [ref=e189]: 开放世界·二次元
+              - generic [ref=e190]:
+                - generic [ref=e191]: 研发 完美世界·霓裳工作室
+                - generic [ref=e192]: ·
+                - generic [ref=e193]: 发行 完美世界
+              - generic [ref=e194]:
+                - generic [ref=e195]: 手游
+                - generic [ref=e196]: PC
+                - generic [ref=e197]: PS5
+              - generic [ref=e198]: 关注点：近未来都市 + 超能力战斗，首批 PV 播放破 4000 万，关注战斗反馈与商业化轻度化
+          - generic [ref=e199]:
+            - generic [ref=e200]:
+              - generic [ref=e201]: "2026"
+              - text: 05/22
+            - generic [ref=e202]:
+              - generic [ref=e203]:
+                - generic [ref=e204]: 瓦尔特计划
+                - generic [ref=e205]: 赛博·ARPG
+              - generic [ref=e206]:
+                - generic [ref=e207]: 研发 英雄游戏·星智
+                - generic [ref=e208]: ·
+                - generic [ref=e209]: 发行 腾讯·英雄互娱
+              - generic [ref=e210]:
+                - generic [ref=e211]: 手游
+                - generic [ref=e212]: PC
+                - generic [ref=e213]: PS5
+                - generic [ref=e214]: Xbox
+              - generic [ref=e215]: 关注点：工作室首款大世界 ARPG；关注装备 build 深度、动作手感是否对标《绝区零》
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - generic [ref=e218]: "2026"
+              - text: 06/20
+            - generic [ref=e219]:
+              - generic [ref=e220]:
+                - generic [ref=e221]: 影之刃零
+                - generic [ref=e222]: 动作·武侠
+              - generic [ref=e223]:
+                - generic [ref=e224]: 研发 灵游坊
+                - generic [ref=e225]: ·
+                - generic [ref=e226]: 发行 腾讯
+              - generic [ref=e227]:
+                - generic [ref=e228]: PC
+                - generic [ref=e229]: PS5
+                - generic [ref=e230]: Xbox
+              - generic [ref=e231]: 关注点：UE5 打造的武侠 ARPG；延期三年后首次定档，关注战斗深度与单机口碑能否延续系列
+          - generic [ref=e232]:
+            - generic [ref=e233]:
+              - generic [ref=e234]: "2026"
+              - text: 07/10
+            - generic [ref=e235]:
+              - generic [ref=e236]:
+                - generic [ref=e237]: 迷雾之夏：起源
+                - generic [ref=e238]: AVG·悬疑
+              - generic [ref=e239]:
+                - generic [ref=e240]: 研发 橘子班
+                - generic [ref=e241]: ·
+                - generic [ref=e242]: 发行 WhisperGames / Aniplex
+              - generic [ref=e243]:
+                - generic [ref=e244]: Switch
+                - generic [ref=e245]: PC
+                - generic [ref=e246]: 手游
+              - generic [ref=e247]: 关注点：IP 系列前传，全程 Live2D 演出；关注 AVG 赛道能否突破百万首周销量
+          - generic [ref=e248]:
+            - generic [ref=e249]:
+              - generic [ref=e250]: "2026"
+              - text: 08/14
+            - generic [ref=e251]:
+              - generic [ref=e252]:
+                - generic [ref=e253]: 黑神话：钟馗
+                - generic [ref=e254]: 动作·单机
+              - generic [ref=e255]:
+                - generic [ref=e256]: 研发 游戏科学
+                - generic [ref=e257]: ·
+                - generic [ref=e258]: 发行 游戏科学 / Sony
+              - generic [ref=e259]:
+                - generic [ref=e260]: PC
+                - generic [ref=e261]: PS5
+                - generic [ref=e262]: Xbox
+              - generic [ref=e263]: 关注点：《悟空》之后的全新 IP，采用 UE5.6；关注剧情节奏与单人战斗深度
+          - generic [ref=e264]:
+            - generic [ref=e265]:
+              - generic [ref=e266]: "2026"
+              - text: 09/12
+            - generic [ref=e267]:
+              - generic [ref=e268]:
+                - generic [ref=e269]: 明末：渊虚之羽
+                - generic [ref=e270]: 动作·魂系
+              - generic [ref=e271]:
+                - generic [ref=e272]: 研发 灵泽科技
+                - generic [ref=e273]: ·
+                - generic [ref=e274]: 发行 505 Games
+              - generic [ref=e275]:
+                - generic [ref=e276]: PC
+                - generic [ref=e277]: PS5
+                - generic [ref=e278]: Xbox
+              - generic [ref=e279]: 关注点：国产明末题材魂类单机；Steam 愿望单超 120 万，关注打磨品质与剧情完整度
+          - generic [ref=e280]:
+            - generic [ref=e281]:
+              - generic [ref=e282]: "2026"
+              - text: 10/18
+            - generic [ref=e283]:
+              - generic [ref=e284]:
+                - generic [ref=e285]: 塞外江湖录
+                - generic [ref=e286]: 武侠·开放世界
+              - generic [ref=e287]:
+                - generic [ref=e288]: 研发 完美世界郢都
+                - generic [ref=e289]: ·
+                - generic [ref=e290]: 发行 完美世界
+              - generic [ref=e291]:
+                - generic [ref=e292]: 手游
+                - generic [ref=e293]: PC
+              - generic [ref=e294]: 关注点：武侠开放世界 + 轻社交，引入方言配音与真实地貌扫描；前测口碑两极
+          - generic [ref=e295]:
+            - generic [ref=e296]:
+              - generic [ref=e297]: "2026"
+              - text: 11/05
+            - generic [ref=e298]:
+              - generic [ref=e299]:
+                - generic [ref=e300]: 昭和米国物语
+                - generic [ref=e301]: 动作·开放世界
+              - generic [ref=e302]:
+                - generic [ref=e303]: 研发 铃空游戏
+                - generic [ref=e304]: ·
+                - generic [ref=e305]: 发行 bilibili / 铃空游戏
+              - generic [ref=e306]:
+                - generic [ref=e307]: PC
+                - generic [ref=e308]: PS5
+              - generic [ref=e309]: 关注点：魔幻昭和题材 ACT，B 站独代；跳票 2 年后终定档，关注首发完整度与本地化
+          - generic [ref=e310]:
+            - generic [ref=e311]:
+              - generic [ref=e312]: "2026"
+              - text: 11/11
+            - generic [ref=e313]:
+              - generic [ref=e314]:
+                - generic [ref=e315]: 王者荣耀：世界
+                - generic [ref=e316]: 开放世界·MOBA
+              - generic [ref=e317]:
+                - generic [ref=e318]: 研发 腾讯天美 J3
+                - generic [ref=e319]: ·
+                - generic [ref=e320]: 发行 腾讯
+              - generic [ref=e321]:
+                - generic [ref=e322]: 手游
+                - generic [ref=e323]: PC
+                - generic [ref=e324]: PS5
+              - generic [ref=e325]: 关注点：全新 IP 衍生旗舰，开放世界玩法 + MOBA 核心的首次融合；重点看首发资源位覆盖
+    - contentinfo [ref=e326]: 小A助手 · 行业早知道 · 数据源：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap · 每日 06:30 爬虫聚合 · 本页 demo 数据为示例

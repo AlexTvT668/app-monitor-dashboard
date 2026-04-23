@@ -833,12 +833,12 @@
 <!-- ============ 登录遮罩 ============ -->
 <div id="login-mask">
   <form class="login-box" id="login-form" autocomplete="off">
-    <div class="lg-eyebrow">Xiao-A · Doppelgänger · Access Control</div>
+    <div class="lg-eyebrow">ACCESS · CONTROL</div>
     <div class="lg-title">小A的影分身 · 登录</div>
     <div class="lg-sub">请输入账号与密码，系统将根据角色加载对应的数据视图与权限。</div>
     <div class="lg-field">
       <label for="lg-user">账号 / Username</label>
-      <input type="text" id="lg-user" placeholder="admin / bd" autocomplete="username" required />
+      <input type="text" id="lg-user" placeholder="请输入账号" autocomplete="username" required />
     </div>
     <div class="lg-field">
       <label for="lg-pass">密码 / Password</label>
@@ -855,11 +855,9 @@
 <div class="site-header">
   <div class="brand">
     <div class="mark">
-      <div class="logo" aria-hidden="true"></div>
       <div class="title">
         <h1 class="site-title">
           <span class="zh">小A的影分身</span>
-          <span class="en">Xiao-A · Doppelgänger Intelligence</span>
         </h1>
       </div>
     </div>
@@ -2984,6 +2982,33 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
     bd:    { pass: 'bd@2026',    role: 'bd',    name: 'BD · 资源录入' }
   };
   const SKEY = 'doppel-auth';
+  const TKEY = 'doppel-auth-exp';
+  const TTL_MS = 30 * 60 * 1000; // 30 分钟有效期
+
+  function saveSession(user){
+    try{
+      localStorage.setItem(SKEY, user);
+      localStorage.setItem(TKEY, String(Date.now() + TTL_MS));
+    }catch(e){}
+  }
+  function readSession(){
+    try{
+      const user = localStorage.getItem(SKEY);
+      const exp  = parseInt(localStorage.getItem(TKEY) || '0', 10);
+      if(!user || !exp) return null;
+      if(Date.now() > exp){
+        localStorage.removeItem(SKEY);
+        localStorage.removeItem(TKEY);
+        return null;
+      }
+      // 有效访问时续期（滑动过期：每次访问延长 30min）
+      localStorage.setItem(TKEY, String(Date.now() + TTL_MS));
+      return user;
+    }catch(e){ return null; }
+  }
+  function clearSession(){
+    try{ localStorage.removeItem(SKEY); localStorage.removeItem(TKEY); }catch(e){}
+  }
 
   function applyRole(user){
     const u = USERS[user];
@@ -2999,14 +3024,14 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
 
   function login(user, pass){
     const u = USERS[user];
-    if(!u) return { ok:false, msg:'账号不存在（admin / bd）' };
+    if(!u) return { ok:false, msg:'账号不存在' };
     if(u.pass !== pass) return { ok:false, msg:'密码错误' };
-    sessionStorage.setItem(SKEY, user);
+    saveSession(user);
     return { ok:true };
   }
 
   function logout(){
-    sessionStorage.removeItem(SKEY);
+    clearSession();
     document.documentElement.removeAttribute('data-role');
     document.getElementById('login-mask').classList.remove('hidden');
     document.getElementById('lg-user').value = '';
@@ -3042,12 +3067,23 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
   const logoutBtn = document.getElementById('logout-btn');
   if(logoutBtn) logoutBtn.addEventListener('click', logout);
 
-  // 自动登录（会话内）
-  const saved = sessionStorage.getItem(SKEY);
+  // 自动登录：localStorage 中有未过期的会话就直接跳过登录页
+  const saved = readSession();
   if(saved && USERS[saved]){
     applyRole(saved);
     document.getElementById('login-mask').classList.add('hidden');
   }
+
+  // 每分钟检查一次是否过期；过期则自动退出到登录页
+  setInterval(()=>{
+    const s = readSession();
+    if(!s){
+      // 仅在当前处于已登录状态时才触发 logout UI
+      if(document.documentElement.getAttribute('data-role')){
+        logout();
+      }
+    }
+  }, 60 * 1000);
 })();
 
 /* ================================================================== */
@@ -3657,15 +3693,22 @@ if(document.readyState === 'loading'){
 }else{
   __bootNewsTab();
 }
-// 二次兜底：部分极端情况下 (如 echarts 并发) 首轮 DOM 查询失败，100ms 后再试一次
-setTimeout(function(){
+// 二次兜底：部分极端情况下 (如 echarts 并发) 首轮 DOM 查询失败，多次兜底
+function __retryNewsIfEmpty(){
   var feed = document.getElementById('news-feed');
   var list = document.getElementById('pipeline-list');
-  if(feed && list && (!feed.children.length || !list.children.length)){
+  if(!feed || !list) return;
+  // 骨架占位也视为"空"，需要真正的 nf-card / pl-row 出现才算渲染完成
+  var feedOk = feed.querySelector('.nf-card');
+  var listOk = list.querySelector('.pl-row');
+  if(!feedOk || !listOk){
     try{ renderNewsTab(); window.__newsInited = true; }
     catch(e){ console.warn('[news] retry error', e); }
   }
-}, 150);
+}
+setTimeout(__retryNewsIfEmpty, 150);
+setTimeout(__retryNewsIfEmpty, 600);
+setTimeout(__retryNewsIfEmpty, 1500);
 </script>
 </body>
 </html>
