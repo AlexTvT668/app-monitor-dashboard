@@ -240,6 +240,14 @@
   .sn-group{border-bottom:1px solid var(--border);padding:10px 0 12px;}
   .sn-group:last-child{border-bottom:none;}
   .sn-group-head{display:flex;align-items:baseline;gap:8px;padding:8px 18px 10px;}
+  /* 无子项的组：标题本身即入口，可点击、可高亮 */
+  .sn-group--clickable .sn-group-head{cursor:pointer;border-left:2px solid transparent;transition:all .12s;padding-top:14px;padding-bottom:14px;}
+  .sn-group--clickable .sn-group-head:hover{background:rgba(255,255,255,.025);}
+  html[data-theme="light"] .sn-group--clickable .sn-group-head:hover{background:#ececdf;}
+  .sn-group--clickable .sn-group-head.active{background:rgba(255,255,255,.04);}
+  html[data-theme="light"] .sn-group--clickable .sn-group-head.active{background:#ffffff;}
+  .sn-group--clickable .sn-group-head.active[data-group="pipe"]{border-left-color:var(--accent-tab4);}
+  .sn-group--clickable .sn-group-head.active[data-group="pipe"] .sn-gh-t{color:var(--accent-tab4);}
   .sn-gh-idx{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:.14em;}
   .sn-gh-t{font-size:14px;font-weight:700;color:var(--text);letter-spacing:.01em;}
   .sn-gh-sub{font-family:var(--font-mono);font-size:9.5px;color:var(--text-dim);letter-spacing:.18em;margin-left:auto;padding-right:2px;}
@@ -986,17 +994,12 @@
       </div>
     </div>
   </div>
-  <!-- 模块二：新游 Pipeline（从行业早知道中提升为一级目录） -->
-  <div class="sn-group" data-group="pipe">
-    <div class="sn-group-head">
+  <!-- 模块二：新游 Pipeline（从行业早知道中提升为一级目录；标题直接可点击，无子项） -->
+  <div class="sn-group sn-group--clickable" data-group="pipe">
+    <div class="sn-group-head sn-item" data-pane="pane-pipeline" data-group="pipe">
       <span class="sn-gh-idx">02</span>
       <span class="sn-gh-t">新游 Pipeline</span>
       <span class="sn-gh-sub">UPCOMING</span>
-    </div>
-    <div class="sn-items">
-      <div class="sn-item" data-pane="pane-pipeline" data-group="pipe">
-        <span class="sn-dot"></span><span class="sn-t">新游概览</span>
-      </div>
     </div>
   </div>
   <!-- 模块三：经营分析 -->
