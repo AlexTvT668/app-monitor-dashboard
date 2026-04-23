@@ -3068,10 +3068,20 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
   if(logoutBtn) logoutBtn.addEventListener('click', logout);
 
   // 自动登录：localStorage 中有未过期的会话就直接跳过登录页
-  const saved = readSession();
-  if(saved && USERS[saved]){
-    applyRole(saved);
-    document.getElementById('login-mask').classList.add('hidden');
+  // 注意：延迟到下一个任务（微任务/宏任务）执行，避免在其它模块 const 尚未初始化
+  // 时触发 TDZ ReferenceError（例如 BD_VENDOR_LABEL 声明在下方），从而中断整段 JS。
+  function __doAutoLogin(){
+    const saved = readSession();
+    if(saved && USERS[saved]){
+      try{ applyRole(saved); }catch(e){ console.warn('[auth] applyRole err', e); }
+      const mask = document.getElementById('login-mask');
+      if(mask) mask.classList.add('hidden');
+    }
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', ()=> setTimeout(__doAutoLogin, 0));
+  }else{
+    setTimeout(__doAutoLogin, 0);
   }
 
   // 每分钟检查一次是否过期；过期则自动退出到登录页
