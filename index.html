@@ -230,6 +230,71 @@
   .tab-pane{display:none;}
   .tab-pane.active{display:block;}
 
+  /* ========== 左侧三大模块导航（Sidebar） ========== */
+  .app-shell{display:flex;gap:24px;align-items:flex-start;}
+  .side-nav{flex:0 0 232px;position:sticky;top:14px;
+    border:1px solid var(--border-strong);background:var(--panel);
+    padding:8px 0;max-height:calc(100vh - 28px);overflow-y:auto;
+    font-family:var(--font-sans);}
+  .app-main{flex:1 1 auto;min-width:0;}
+  .sn-group{border-bottom:1px solid var(--border);padding:10px 0 12px;}
+  .sn-group:last-child{border-bottom:none;}
+  .sn-group-head{display:flex;align-items:baseline;gap:8px;padding:8px 18px 10px;}
+  .sn-gh-idx{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:.14em;}
+  .sn-gh-t{font-size:14px;font-weight:700;color:var(--text);letter-spacing:.01em;}
+  .sn-gh-sub{font-family:var(--font-mono);font-size:9.5px;color:var(--text-dim);letter-spacing:.18em;margin-left:auto;padding-right:2px;}
+  .sn-items{display:flex;flex-direction:column;}
+  .sn-sub-head{padding:8px 18px 4px;font-family:var(--font-mono);font-size:10px;
+    color:var(--text-dim);letter-spacing:.2em;text-transform:uppercase;}
+  .sn-item{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13px;
+    color:var(--text-dim);cursor:pointer;border-left:2px solid transparent;transition:all .12s;}
+  .sn-item--sub{padding-left:30px;font-size:12.5px;}
+  .sn-item:hover{color:var(--text);background:rgba(255,255,255,.025);}
+  html[data-theme="light"] .sn-item:hover{background:#ececdf;}
+  .sn-item .sn-dot{width:5px;height:5px;border-radius:50%;background:var(--text-dim);flex:0 0 5px;}
+  .sn-item .sn-t{flex:1 1 auto;}
+  .sn-item .sn-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;
+    padding:1px 5px;border:1px solid var(--border-strong);color:var(--text-dim);}
+  .sn-item.active{color:var(--text);background:rgba(255,255,255,.04);font-weight:600;}
+  html[data-theme="light"] .sn-item.active{background:#ffffff;}
+  /* 按分组/pane 染 accent */
+  .sn-item[data-group="intel"].active{border-left-color:var(--accent-tab4);}
+  .sn-item[data-group="intel"].active .sn-dot{background:var(--accent-tab4);box-shadow:0 0 8px var(--accent-tab4);}
+  .sn-item[data-group="ops"].active{border-left-color:var(--accent-tab2);}
+  .sn-item[data-group="ops"].active .sn-dot{background:var(--accent-tab2);box-shadow:0 0 8px var(--accent-tab2);}
+  .sn-item[data-pane="pane-slots"].active{border-left-color:var(--accent-tab1);}
+  .sn-item[data-pane="pane-slots"].active .sn-dot{background:var(--accent-tab1);box-shadow:0 0 8px var(--accent-tab1);}
+  .sn-item[data-pane="pane-launch"].active{border-left-color:var(--accent-tab3);}
+  .sn-item[data-pane="pane-launch"].active .sn-dot{background:var(--accent-tab3);box-shadow:0 0 8px var(--accent-tab3);}
+  .sn-item[data-group="proj"].active{border-left-color:var(--accent-tab3);}
+  .sn-item[data-group="proj"].active .sn-dot{background:var(--accent-tab3);box-shadow:0 0 8px var(--accent-tab3);}
+  .sn-item[data-pane="pane-install"].active{border-left-color:var(--accent-tab2);}
+  .sn-item[data-pane="pane-install"].active .sn-dot{background:var(--accent-tab2);box-shadow:0 0 8px var(--accent-tab2);}
+
+  /* 占位 pane（WIP） */
+  .stub-pane{padding:60px 20px 80px;max-width:960px;}
+  .stub-pane .stub-kicker{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);
+    font-size:11px;color:var(--text-dim);letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px;}
+  .stub-pane .stub-kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--text-dim);}
+  .stub-pane[data-accent="tab1"] .stub-kicker .dot{background:var(--accent-tab1);box-shadow:0 0 10px var(--accent-tab1);}
+  .stub-pane[data-accent="tab2"] .stub-kicker .dot{background:var(--accent-tab2);box-shadow:0 0 10px var(--accent-tab2);}
+  .stub-pane[data-accent="tab3"] .stub-kicker .dot{background:var(--accent-tab3);box-shadow:0 0 10px var(--accent-tab3);}
+  .stub-pane[data-accent="tab4"] .stub-kicker .dot{background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);}
+  .stub-pane h1{font-size:40px;line-height:1.1;margin:0 0 16px;letter-spacing:-.01em;
+    font-weight:800;color:var(--text);}
+  .stub-pane h1 .stub-status{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);
+    letter-spacing:.16em;padding:4px 10px;border:1px solid var(--border-strong);
+    margin-left:12px;vertical-align:middle;font-weight:500;}
+  .stub-pane .stub-lead{font-size:15px;line-height:1.85;color:var(--text-dim);max-width:820px;margin:0 0 26px;}
+  .stub-pane .stub-lead b{color:var(--text);font-weight:600;}
+  .stub-pane .stub-meta{padding:18px 22px;border:1px dashed var(--border-strong);
+    font-family:var(--font-mono);font-size:12px;color:var(--text-dim);letter-spacing:.04em;}
+
+  @media (max-width: 1100px){
+    .app-shell{flex-direction:column;}
+    .side-nav{position:static;flex:0 0 auto;width:100%;max-height:none;}
+  }
+
   /* 为每个 Tab 区域注入 --tab-accent（供 panel h3 圆点、alert 左边、tab.active 背景等复用） */
   #pane-slots{--tab-accent:var(--accent-tab1);}
   #pane-install{--tab-accent:var(--accent-tab2);}
@@ -897,12 +962,81 @@
   <span>当前页面为<b>演示数据</b>（mock_data.json），用于展示监控体系的结构与指标口径；真机采集链路待 6 台真机 + 账号 + 固定 IP 到位后切换为实时数据。</span>
 </div>
 
-<!-- ============ 顶级 Tab：1.0 资源位监控 / 2.0 安装链路监控 ============ -->
-<div class="top-tabs" id="top-tabs">
-  <div class="top-tab active" data-pane="pane-news"><span class="dot"></span>Tab 1 · 行业早知道</div>
-  <div class="top-tab" data-pane="pane-slots"><span class="dot"></span>Tab 2 · 厂商资源位监控</div>
-  <div class="top-tab" data-pane="pane-install"><span class="dot"></span>Tab 3 · 厂商安装链路监控</div>
-  <div class="top-tab" data-pane="pane-launch"><span class="dot"></span>Tab 4 · 游戏首发资源分析</div>
+<!-- ============ 左侧边栏：三大模块导航 ============ -->
+<div class="app-shell">
+<aside class="side-nav" id="side-nav">
+  <!-- 模块一：行业早知道 -->
+  <div class="sn-group" data-group="intel">
+    <div class="sn-group-head">
+      <span class="sn-gh-idx">01</span>
+      <span class="sn-gh-t">行业早知道</span>
+      <span class="sn-gh-sub">INDUSTRY&nbsp;INTEL</span>
+    </div>
+    <div class="sn-items">
+      <div class="sn-item active" data-pane="pane-news" data-group="intel">
+        <span class="sn-dot"></span><span class="sn-t">行业新闻</span>
+      </div>
+      <div class="sn-item" data-pane="pane-pipeline" data-group="intel">
+        <span class="sn-dot"></span><span class="sn-t">新游 Pipeline</span>
+      </div>
+      <div class="sn-item" data-pane="pane-rival" data-group="intel">
+        <span class="sn-dot"></span><span class="sn-t">友商首发数据</span><span class="sn-tag">WIP</span>
+      </div>
+    </div>
+  </div>
+  <!-- 模块二：经营分析 -->
+  <div class="sn-group" data-group="ops">
+    <div class="sn-group-head">
+      <span class="sn-gh-idx">02</span>
+      <span class="sn-gh-t">经营分析</span>
+      <span class="sn-gh-sub">OPERATIONS</span>
+    </div>
+    <div class="sn-items">
+      <div class="sn-item" data-pane="pane-biz" data-group="ops">
+        <span class="sn-dot"></span><span class="sn-t">业务数据分析</span><span class="sn-tag">WIP</span>
+      </div>
+      <div class="sn-sub-head">资源情况分析</div>
+      <div class="sn-item sn-item--sub" data-pane="pane-slots" data-group="ops">
+        <span class="sn-dot"></span><span class="sn-t">线上资源</span>
+      </div>
+      <div class="sn-item sn-item--sub" data-pane="pane-launch" data-group="ops">
+        <span class="sn-dot"></span><span class="sn-t">新游首发资源分析</span>
+      </div>
+      <div class="sn-item sn-item--sub" data-pane="pane-offline" data-group="ops">
+        <span class="sn-dot"></span><span class="sn-t">线下资源</span><span class="sn-tag">WIP</span>
+      </div>
+    </div>
+  </div>
+  <!-- 模块三：专项进展 -->
+  <div class="sn-group" data-group="proj">
+    <div class="sn-group-head">
+      <span class="sn-gh-idx">03</span>
+      <span class="sn-gh-t">专项进展</span>
+      <span class="sn-gh-sub">PROJECTS</span>
+    </div>
+    <div class="sn-items">
+      <div class="sn-item" data-pane="pane-anti" data-group="proj">
+        <span class="sn-dot"></span><span class="sn-t">反拦截进展</span><span class="sn-tag">WIP</span>
+      </div>
+      <div class="sn-item" data-pane="pane-install" data-group="proj">
+        <span class="sn-dot"></span><span class="sn-t">新游首发拦截监控</span>
+      </div>
+    </div>
+  </div>
+</aside>
+<main class="app-main" id="app-main">
+
+<!-- 兼容层：保留原 top-tabs 容器（供 JS 查询使用，不显示） -->
+<div class="top-tabs" id="top-tabs" style="display:none">
+  <div class="top-tab active" data-pane="pane-news"></div>
+  <div class="top-tab" data-pane="pane-pipeline"></div>
+  <div class="top-tab" data-pane="pane-rival"></div>
+  <div class="top-tab" data-pane="pane-biz"></div>
+  <div class="top-tab" data-pane="pane-slots"></div>
+  <div class="top-tab" data-pane="pane-launch"></div>
+  <div class="top-tab" data-pane="pane-offline"></div>
+  <div class="top-tab" data-pane="pane-anti"></div>
+  <div class="top-tab" data-pane="pane-install"></div>
 </div>
 
 <!-- ============ Tab 1 内容 · 行业新游监控（News Radar） ============ -->
@@ -1473,6 +1607,69 @@
   <footer>小A的影分身 · 游戏首发资源分析 · 数据来源：厂商返图（.xlsx） · 小米数据截至 2026-03-23 · 其他厂商待接入</footer>
 
 </div><!-- /#pane-launch -->
+
+<!-- ============ 占位 pane：新游 Pipeline（独立子模块，后续从 Tab1 中拆出） ============ -->
+<div class="tab-pane" id="pane-pipeline">
+  <div class="stub-pane" data-accent="tab4">
+    <div class="stub-kicker"><span class="dot"></span>01 · 行业早知道 / 新游 Pipeline</div>
+    <h1>新游 Pipeline <span class="stub-status">独立视图 · 待细化</span></h1>
+    <p class="stub-lead">从「行业新闻」中拆出，聚焦 <b>待发行 / 测试中 / 已定档</b> 游戏阵容。后续将补充：厂商归属、玩法品类、版号状态、测试里程碑、发行档期冲突分析。</p>
+    <div class="stub-meta">
+      <span>TO&nbsp;DO &nbsp;·&nbsp; 品类筛选、测试节点时间线、版号状态标签、厂商阵营对比</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 占位 pane：友商首发数据 ============ -->
+<div class="tab-pane" id="pane-rival">
+  <div class="stub-pane" data-accent="tab4">
+    <div class="stub-kicker"><span class="dot"></span>01 · 行业早知道 / 友商首发数据</div>
+    <h1>友商首发数据 <span class="stub-status">WIP · 待完善</span></h1>
+    <p class="stub-lead">汇总友商（腾讯 / 网易 / 米哈游 / 莉莉丝 / 叠纸 / 鹰角 等）近 30 / 90 / 180 天<b>重点新游首发</b>的核心数据：预热节奏、首日排名、iOS / Android 双端留存、开服到 DAU 峰值的时间曲线。</p>
+    <div class="stub-meta">
+      <span>数据源 &nbsp;·&nbsp; 七麦 / 点点 / App Annie / 公开财报摘录 / 内部观察</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 占位 pane：业务数据分析 ============ -->
+<div class="tab-pane" id="pane-biz">
+  <div class="stub-pane" data-accent="tab2">
+    <div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 业务数据分析</div>
+    <h1>业务数据分析 <span class="stub-status">WIP · 待完善</span></h1>
+    <p class="stub-lead">覆盖<b>收入 / DAU / 新增 / 付费 / ARPPU / LTV</b> 等核心经营指标的多维分析视图。支持按游戏、渠道、区域、时间粒度（日 / 周 / 月 / 季）下钻，输出经营周报和异常波动归因。</p>
+    <div class="stub-meta">
+      <span>TO&nbsp;DO &nbsp;·&nbsp; 指标面板、异常检测、归因卡、对比同比环比、导出周报</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 占位 pane：线下资源 ============ -->
+<div class="tab-pane" id="pane-offline">
+  <div class="stub-pane" data-accent="tab1">
+    <div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 资源情况分析 / 线下资源</div>
+    <h1>线下资源 <span class="stub-status">WIP · 待完善</span></h1>
+    <p class="stub-lead">覆盖<b>线下零售门店 / 展会活动 / 主机端售卖 / 周边联名</b>等非线上渠道的资源投放与效果归因。支持门店清单、铺货节奏、KA 达成率、线下到线上转化追踪。</p>
+    <div class="stub-meta">
+      <span>TO&nbsp;DO &nbsp;·&nbsp; 门店台账、活动排期、KA 目标跟踪、线下转化归因</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 占位 pane：反拦截进展 ============ -->
+<div class="tab-pane" id="pane-anti">
+  <div class="stub-pane" data-accent="tab3">
+    <div class="stub-kicker"><span class="dot"></span>03 · 专项进展 / 反拦截进展</div>
+    <h1>反拦截进展 <span class="stub-status">WIP · 待完善</span></h1>
+    <p class="stub-lead">厂商侧<b>拦截策略</b>与我方<b>反拦截方案</b>的对抗进展跟踪。包含：各渠道拦截规则梳理、绕过方案（代理 / 签名池 / 包名混淆 / hook）落地状态、成功率与稳定性监测、灰度发布时间线。</p>
+    <div class="stub-meta">
+      <span>TO&nbsp;DO &nbsp;·&nbsp; 对抗时间线、方案矩阵、灰度监测、成功率曲线</span>
+    </div>
+  </div>
+</div>
+
+</main><!-- /.app-main -->
+</div><!-- /.app-shell -->
 
 </div><!-- /.wrap -->
 
@@ -2574,39 +2771,54 @@ document.querySelectorAll('#tab-channel2 .tab').forEach(t=>{
 });
 
 /* ---------- 顶级 Tab 切换 ---------- */
+function switchPane(paneId){
+  // 兼容层：同步更新隐藏的 top-tabs（保留外部依赖）
+  document.querySelectorAll('#top-tabs .top-tab').forEach(x=>{
+    x.classList.toggle('active', x.dataset.pane===paneId);
+  });
+  // 侧栏高亮
+  document.querySelectorAll('#side-nav .sn-item').forEach(x=>{
+    x.classList.toggle('active', x.dataset.pane===paneId);
+  });
+  // pane 切换
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  const target = document.getElementById(paneId);
+  if(target) target.classList.add('active');
+
+  // 切到安装链路监控时首次渲染 + resize（避免 echarts 宽度为 0）
+  if(paneId==='pane-install'){
+    if(typeof refreshTab2==='function') refreshTab2();
+    setTimeout(()=>{
+      ['ch-intercept-stack','ch-steps','ch-authed','ch-unauthed'].forEach(id=>{
+        const el = document.getElementById(id); if(!el) return;
+        const inst = echarts.getInstanceByDom(el); if(inst) inst.resize();
+      });
+    }, 50);
+  }
+  // 切到新游首发资源分析时懒渲染
+  if(paneId==='pane-launch'){
+    if(!window.__launchInited){ renderLaunchTab('xiaomi'); window.__launchInited=true; }
+    setTimeout(()=>{
+      ['ch-cadence','ch-channel'].forEach(id=>{
+        const el = document.getElementById(id); if(!el) return;
+        const inst = echarts.getInstanceByDom(el); if(inst) inst.resize();
+      });
+    }, 50);
+  }
+  // 切到行业新闻 / 新游 Pipeline（均复用 Tab1 的 News Radar 渲染）
+  if(paneId==='pane-news' || paneId==='pane-pipeline'){
+    if(typeof renderNewsTab === 'function' && !window.__newsInited){
+      renderNewsTab(); window.__newsInited=true;
+    }
+  }
+}
+// 兼容原 top-tab 点击（目前已隐藏，不会触发，但保留以防外部脚本）
 document.querySelectorAll('#top-tabs .top-tab').forEach(t=>{
-  t.onclick = ()=>{
-    document.querySelectorAll('#top-tabs .top-tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.pane).classList.add('active');
-    // 切到 Tab2 时首次渲染 + resize（避免 echarts 宽度为 0）
-    if(t.dataset.pane==='pane-install'){
-      refreshTab2();
-      setTimeout(()=>{
-        ['ch-intercept-stack','ch-steps','ch-authed','ch-unauthed'].forEach(id=>{
-          const inst = echarts.getInstanceByDom(document.getElementById(id));
-          if(inst) inst.resize();
-        });
-      }, 50);
-    }
-    // 切到 Tab3 时懒渲染
-    if(t.dataset.pane==='pane-launch'){
-      if(!window.__launchInited){ renderLaunchTab('xiaomi'); window.__launchInited=true; }
-      setTimeout(()=>{
-        ['ch-cadence','ch-channel'].forEach(id=>{
-          const inst = echarts.getInstanceByDom(document.getElementById(id));
-          if(inst) inst.resize();
-        });
-      }, 50);
-    }
-    // 切到行业新游监控（News Radar）时懒渲染
-    if(t.dataset.pane==='pane-news'){
-      if(typeof renderNewsTab === 'function' && !window.__newsInited){
-        renderNewsTab(); window.__newsInited=true;
-      }
-    }
-  };
+  t.onclick = ()=>switchPane(t.dataset.pane);
+});
+// 侧栏点击
+document.querySelectorAll('#side-nav .sn-item').forEach(t=>{
+  t.onclick = ()=>switchPane(t.dataset.pane);
 });
 
 /* ============================================================
