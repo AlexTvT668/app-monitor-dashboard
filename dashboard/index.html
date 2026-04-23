@@ -615,47 +615,11 @@
   .role-chip .rc-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-tab3);}
   html[data-role="admin"] .role-chip .rc-dot{background:var(--accent-tab1);}
   html[data-role="bd"]    .role-chip .rc-dot{background:var(--accent-tab2);}
-  html[data-role="boss"]  .role-chip .rc-dot{background:var(--accent-tab3);}
   .logout-btn{appearance:none;background:transparent;border:1px solid var(--border-strong);
     color:var(--text-dim);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
     padding:4px 10px;cursor:pointer;line-height:1;transition:all .15s;}
   .logout-btn:hover{color:var(--down);border-color:var(--down);}
 
-  /* ---------- Boss 视图：只呈现 3 个 summary 卡片 ---------- */
-  html[data-role="boss"] .demo-banner,
-  html[data-role="boss"] .nr-hero .toolbar,
-  html[data-role="boss"] .nr-hero .badges,
-  html[data-role="boss"] .kpi-row,
-  html[data-role="boss"] #pane-slots .row,
-  html[data-role="boss"] #pane-slots .panel:not(.boss-keep),
-  html[data-role="boss"] #pane-install > .panel:not(.boss-keep),
-  html[data-role="boss"] #pane-install > .row,
-  html[data-role="boss"] #pane-install > .kpi-row,
-  html[data-role="boss"] #pane-install > .nr-cta,
-  html[data-role="boss"] #pane-install > .vendor-switcher,
-  html[data-role="boss"] #pane-install > .launch-grid,
-  html[data-role="boss"] #pane-install > .stat-strip,
-  html[data-role="boss"] #pane-launch .stat-strip,
-  html[data-role="boss"] #pane-launch .launch-grid,
-  html[data-role="boss"] #pane-launch .nr-cta,
-  html[data-role="boss"] #pane-launch .vendor-switcher,
-  html[data-role="boss"] #pane-launch .empty-state,
-  html[data-role="boss"] #pane-launch .hero,
-  html[data-role="boss"] footer,
-  html[data-role="boss"] #bd-entry-panel{display:none !important;}
-  /* Boss 保留顶栏 Tab + summary + 洞察三卡（只读） */
-  html[data-role="boss"] #pane-slots > .panel:first-of-type,
-  html[data-role="boss"] #pane-install > .panel:first-of-type{display:block !important;}
-  html[data-role="boss"] #pane-launch .insight-grid{pointer-events:none;}
-  html[data-role="boss"] .nr-hero{padding-bottom:14px !important;}
-  html[data-role="boss"] .nr-hero h1{font-size:22px !important;margin-bottom:6px !important;}
-  html[data-role="boss"] .nr-hero .meta{font-size:12px !important;}
-  /* Boss 模式提示条 */
-  .boss-notice{display:none;margin:0 0 14px;padding:10px 14px;border:1px solid var(--border-strong);
-    border-left:3px solid var(--accent-tab3);background:var(--panel);
-    font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--text-dim);}
-  .boss-notice b{color:var(--text);font-weight:700;}
-  html[data-role="boss"] .boss-notice{display:block;}
 
   /* ---------- BD 录入面板 ---------- */
   #bd-entry-panel{display:none;margin:18px 0;border:1px solid var(--border-strong);
@@ -700,6 +664,54 @@
     .bd-form{grid-template-columns:repeat(2,1fr);}
     .bd-form .f.f-wide{grid-column:span 2;}
   }
+
+  /* ---------- Tab3 文档上传 / 分析 ---------- */
+  #pane-launch .summary-title{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  #pane-launch .summary-title .st-actions{margin-left:auto;display:flex;gap:8px;align-items:center;}
+  .upload-btn{appearance:none;background:var(--accent-tab3);color:#0c0c10;border:1px solid var(--accent-tab3);
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;font-weight:700;
+    padding:7px 14px;cursor:pointer;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;transition:opacity .15s;}
+  .upload-btn:hover{opacity:.85;}
+  .upload-btn.ghost{background:transparent;color:var(--text-dim);border-color:var(--border-strong);font-weight:500;}
+  .upload-btn.ghost:hover{color:var(--text);border-color:var(--text);}
+  .upload-btn .ic{font-size:13px;line-height:1;}
+  .src-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border:1px solid var(--border-strong);
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--text-dim);}
+  .src-chip.is-uploaded{color:var(--accent-tab3);border-color:var(--accent-tab3);}
+  .src-chip .d{width:6px;height:6px;border-radius:50%;background:var(--text-dim);}
+  .src-chip.is-uploaded .d{background:var(--accent-tab3);}
+
+  #upload-report{display:none;margin:12px 0 14px;border:1px solid var(--border-strong);background:var(--panel);}
+  #upload-report.show{display:block;}
+  #upload-report .ur-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  #upload-report .ur-head .ur-t{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  #upload-report .ur-head .ur-t .tag{display:inline-block;font-family:var(--font-mono);font-size:10px;
+    letter-spacing:.14em;padding:2px 8px;background:var(--accent-tab3);color:#0c0c10;font-weight:700;}
+  #upload-report .ur-head .ur-t b{font-size:14px;color:var(--text);}
+  #upload-report .ur-head .ur-t s{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);
+    letter-spacing:.12em;text-decoration:none;text-transform:uppercase;}
+  #upload-report .ur-body{padding:14px 18px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-bottom:1px solid var(--border);}
+  #upload-report .ur-body .cell{padding:6px 14px;border-right:1px solid var(--border);}
+  #upload-report .ur-body .cell:last-child{border-right:none;}
+  #upload-report .ur-body .cell .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+    color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;}
+  #upload-report .ur-body .cell .v{font-size:20px;font-weight:700;color:var(--text);}
+  #upload-report .ur-body .cell .s{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);margin-top:3px;}
+  #upload-report .ur-rank{padding:12px 18px 14px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  #upload-report .ur-rank .rk h5{margin:0 0 8px;font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.14em;color:var(--text-dim);text-transform:uppercase;font-weight:500;}
+  #upload-report .ur-rank .rk .row{display:flex;justify-content:space-between;font-size:12.5px;
+    padding:5px 0;border-bottom:1px dashed var(--border);}
+  #upload-report .ur-rank .rk .row:last-child{border-bottom:none;}
+  #upload-report .ur-rank .rk .row b{font-weight:600;color:var(--text);}
+  #upload-report .ur-rank .rk .row span{font-family:var(--font-mono);color:var(--text-dim);}
+  @media (max-width: 900px){
+    #upload-report .ur-body{grid-template-columns:repeat(2,1fr);}
+    #upload-report .ur-body .cell{border-right:none;border-bottom:1px solid var(--border);}
+    #upload-report .ur-rank{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
@@ -712,7 +724,7 @@
     <div class="lg-sub">请输入账号与密码，系统将根据角色加载对应的数据视图与权限。</div>
     <div class="lg-field">
       <label for="lg-user">账号 / Username</label>
-      <input type="text" id="lg-user" placeholder="admin / bd / boss" autocomplete="username" required />
+      <input type="text" id="lg-user" placeholder="admin / bd" autocomplete="username" required />
     </div>
     <div class="lg-field">
       <label for="lg-pass">密码 / Password</label>
@@ -720,11 +732,6 @@
     </div>
     <div class="lg-err" id="lg-err"></div>
     <button type="submit" class="lg-submit">ENTER DOPPELGÄNGER</button>
-    <div class="lg-hint">
-      <div><b>ADMIN</b> · 最高权限，拥有全部 Tab 与录入面板</div>
-      <div><b>BD</b> · 可在 Tab 3 录入各厂商首发资源</div>
-      <div><b>BOSS</b> · 只读摘要视图，仅呈现 3 个 Tab 的洞察卡片</div>
-    </div>
   </form>
 </div>
 
@@ -810,7 +817,6 @@
 </header>
 
 <!-- 顶部概要（原风格） -->
-<div class="boss-notice">BOSS · READ-ONLY · 仅呈现本 Tab 的洞察摘要</div>
 <div class="panel boss-keep" style="margin-bottom:14px;">
   <div class="summary-title">
     <span class="st-tag">TL;DR</span>
@@ -990,7 +996,6 @@
 </header>
 
 <!-- 顶部案例洞察（原风格） -->
-<div class="boss-notice">BOSS · READ-ONLY · 仅呈现本 Tab 的洞察摘要</div>
 <div class="panel boss-keep" style="margin-bottom:14px;">
   <div class="summary-title">
     <span class="st-tag">TL;DR</span>
@@ -1113,8 +1118,6 @@
 <!-- ============ Tab 3 · 游戏首发资源分析（nara.build 风格） ============ -->
 <div class="tab-pane" id="pane-launch">
 
-  <div class="boss-notice">BOSS · READ-ONLY · 仅呈现本 Tab 的洞察摘要</div>
-
   <!-- Hero -->
   <section class="hero">
     <div class="eyebrow"><span class="dot"></span>Launch Resource Intelligence &nbsp;·&nbsp; v0.3 · tab_03</div>
@@ -1133,11 +1136,18 @@
     <div class="summary-title">
       <span class="st-tag">TL;DR</span>
       <span class="st-main">首发资源洞察</span>
-      <span class="st-sub">Vendor · <span id="st-launch-vendor">XIAOMI</span> · Auto</span>
+      <span class="st-sub">Vendor · <span id="st-launch-vendor">XIAOMI</span> · <span id="st-launch-src">Auto</span></span>
+      <span class="st-actions">
+        <span class="src-chip" id="src-chip"><span class="d"></span><span id="src-chip-text">默认数据</span></span>
+        <button type="button" class="upload-btn ghost" id="reset-upload-btn" style="display:none;">重置</button>
+        <button type="button" class="upload-btn" id="upload-btn"><span class="ic">↥</span>上传文档分析</button>
+        <input type="file" id="upload-input" accept=".csv,.json,.tsv,.txt" style="display:none;" />
+      </span>
     </div>
     <div class="insight-grid" id="insight-grid">
       <!-- 由 JS 注入 -->
     </div>
+    <div id="upload-report"></div>
   </div>
 
   <!-- 厂商切换 -->
@@ -2777,8 +2787,7 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
 (function(){
   const USERS = {
     admin: { pass: 'admin@2026', role: 'admin', name: 'ADMIN · 最高权限' },
-    bd:    { pass: 'bd@2026',    role: 'bd',    name: 'BD · 资源录入' },
-    boss:  { pass: 'boss@2026',  role: 'boss',  name: 'BOSS · 只读摘要' }
+    bd:    { pass: 'bd@2026',    role: 'bd',    name: 'BD · 资源录入' }
   };
   const SKEY = 'doppel-auth';
 
@@ -2788,21 +2797,6 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
     document.documentElement.setAttribute('data-role', u.role);
     const chipEl = document.getElementById('role-chip-name');
     if(chipEl) chipEl.textContent = u.name;
-    // Boss 锁定：隐藏非 summary 内容；禁用交互控件
-    if(u.role === 'boss'){
-      // 隐藏 top-tabs 下方 hero meta toolbar（Tab1/2）
-      document.querySelectorAll('.nr-hero .toolbar, .nr-hero .badges').forEach(el=>el.style.display='none');
-      // 禁用所有顶栏 tab 的过滤按钮交互（保留顶栏 3 个 Tab 切换）
-      document.querySelectorAll('#tab-channel .tab, #tab-grade .tab, #vendor-switcher .v').forEach(el=>{
-        el.style.pointerEvents = 'none';
-        el.style.opacity = '.55';
-      });
-    } else {
-      document.querySelectorAll('#tab-channel .tab, #tab-grade .tab, #vendor-switcher .v').forEach(el=>{
-        el.style.pointerEvents = '';
-        el.style.opacity = '';
-      });
-    }
     // BD 初始化录入面板
     if(u.role === 'bd' || u.role === 'admin'){
       initBDPanel();
@@ -2811,7 +2805,7 @@ document.querySelectorAll('#vendor-switcher .v').forEach(v=>{
 
   function login(user, pass){
     const u = USERS[user];
-    if(!u) return { ok:false, msg:'账号不存在（admin / bd / boss）' };
+    if(!u) return { ok:false, msg:'账号不存在（admin / bd）' };
     if(u.pass !== pass) return { ok:false, msg:'密码错误' };
     sessionStorage.setItem(SKEY, user);
     return { ok:true };
@@ -2975,6 +2969,262 @@ function initBDPanel(){
   });
   bdRender();
 }
+
+/* ================================================================== */
+/*  Tab3 · 文档上传 & 分析（CSV / JSON / TSV）                         */
+/* ================================================================== */
+(function(){
+  const btn = document.getElementById('upload-btn');
+  const resetBtn = document.getElementById('reset-upload-btn');
+  const input = document.getElementById('upload-input');
+  const reportEl = document.getElementById('upload-report');
+  const chip = document.getElementById('src-chip');
+  const chipText = document.getElementById('src-chip-text');
+  const srcLabel = document.getElementById('st-launch-src');
+  if(!btn || !input) return;
+
+  btn.addEventListener('click', ()=> input.click());
+  input.addEventListener('change', e=>{
+    const f = e.target.files && e.target.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      try{
+        const text = ev.target.result;
+        const rows = parseFile(f.name, text);
+        if(!rows || rows.length === 0){
+          alert('解析失败或文件为空，请检查文件格式（支持 CSV / TSV / JSON）');
+          return;
+        }
+        const analysis = analyzeRows(rows, f.name);
+        renderAnalysisToSummary(analysis);
+        renderUploadReport(analysis, f);
+        chip.classList.add('is-uploaded');
+        chipText.textContent = '已上传 · ' + f.name;
+        if(srcLabel) srcLabel.textContent = 'Uploaded';
+        resetBtn.style.display = '';
+      }catch(err){
+        console.error(err);
+        alert('解析异常：' + err.message);
+      }
+    };
+    reader.readAsText(f, 'utf-8');
+    input.value = '';
+  });
+
+  resetBtn.addEventListener('click', ()=>{
+    reportEl.classList.remove('show');
+    reportEl.innerHTML = '';
+    chip.classList.remove('is-uploaded');
+    chipText.textContent = '默认数据';
+    if(srcLabel) srcLabel.textContent = 'Auto';
+    resetBtn.style.display = 'none';
+    // 恢复默认 insight
+    if(typeof renderInsights === 'function') renderInsights();
+  });
+
+  /* ---------- 解析 ---------- */
+  function parseFile(name, text){
+    const ext = (name.split('.').pop() || '').toLowerCase();
+    if(ext === 'json'){
+      const o = JSON.parse(text);
+      if(Array.isArray(o)) return o;
+      if(o && Array.isArray(o.data)) return o.data;
+      if(o && Array.isArray(o.rows)) return o.rows;
+      // 单一对象也包装成数组
+      return [o];
+    }
+    // CSV / TSV / TXT：自动识别分隔符
+    const firstLine = (text.split(/\r?\n/).find(l=>l.trim()) || '');
+    const sep = ext === 'tsv' ? '\t' :
+      (firstLine.split('\t').length > firstLine.split(',').length ? '\t' : ',');
+    return parseCSV(text, sep);
+  }
+  function parseCSV(text, sep){
+    const lines = text.split(/\r?\n/).filter(l => l.length > 0);
+    if(lines.length < 1) return [];
+    const parseLine = (line)=>{
+      const out = []; let cur = ''; let q = false;
+      for(let i=0;i<line.length;i++){
+        const c = line[i];
+        if(c === '"'){
+          if(q && line[i+1] === '"'){ cur += '"'; i++; }
+          else q = !q;
+        } else if(c === sep && !q){
+          out.push(cur); cur = '';
+        } else cur += c;
+      }
+      out.push(cur); return out;
+    };
+    const headers = parseLine(lines[0]).map(h=>h.trim());
+    const rows = [];
+    for(let i=1;i<lines.length;i++){
+      const vals = parseLine(lines[i]);
+      const obj = {};
+      headers.forEach((h,idx)=>{ obj[h] = (vals[idx] !== undefined ? vals[idx].trim() : ''); });
+      rows.push(obj);
+    }
+    return rows;
+  }
+
+  /* ---------- 字段识别 ---------- */
+  const FIELD_ALIASES = {
+    vendor: ['vendor','厂商','channel_vendor','渠道厂商','platform'],
+    game:   ['game','游戏','title','name','游戏名称','作品','产品'],
+    date:   ['date','日期','首发日期','launch_date','首发时间','上线时间','release'],
+    slots:  ['slots','资源位','资源位数','slot_count','资源数','slot'],
+    channel:['channel','渠道','主渠道','来源'],
+    genre:  ['genre','品类','类型','category'],
+    pub:    ['publisher','发行','发行方','pub','厂商发行']
+  };
+  function pick(row, key){
+    const keys = Object.keys(row);
+    const lower = keys.map(k=>k.toLowerCase());
+    for(const alias of FIELD_ALIASES[key]){
+      const a = alias.toLowerCase();
+      let idx = lower.indexOf(a);
+      if(idx >= 0) return row[keys[idx]];
+      idx = lower.findIndex(k=>k.includes(a));
+      if(idx >= 0) return row[keys[idx]];
+    }
+    return '';
+  }
+
+  /* ---------- 分析 ---------- */
+  function analyzeRows(rows, filename){
+    const total = rows.length;
+    const vendorCount = {};
+    const channelCount = {};
+    const genreCount = {};
+    const pubCount = {};
+    const gameSet = new Set();
+    let slotsSum = 0, slotsN = 0;
+    let dateMin = null, dateMax = null;
+    rows.forEach(r=>{
+      const v = String(pick(r,'vendor') || '').trim();
+      if(v) vendorCount[v] = (vendorCount[v]||0) + 1;
+      const c = String(pick(r,'channel') || '').trim();
+      if(c) channelCount[c] = (channelCount[c]||0) + 1;
+      const g = String(pick(r,'genre') || '').trim();
+      if(g) genreCount[g] = (genreCount[g]||0) + 1;
+      const p = String(pick(r,'pub') || '').trim();
+      if(p) pubCount[p] = (pubCount[p]||0) + 1;
+      const gm = String(pick(r,'game') || '').trim();
+      if(gm) gameSet.add(gm);
+      const s = Number(pick(r,'slots'));
+      if(!isNaN(s) && s > 0){ slotsSum += s; slotsN++; }
+      const d = String(pick(r,'date') || '').trim();
+      if(/^\d{4}/.test(d)){
+        if(!dateMin || d < dateMin) dateMin = d;
+        if(!dateMax || d > dateMax) dateMax = d;
+      }
+    });
+    const topN = (obj, n=5)=> Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);
+    const avgSlots = slotsN > 0 ? (slotsSum / slotsN) : 0;
+    const topVendor = topN(vendorCount, 1)[0];
+    const topChannel = topN(channelCount, 1)[0];
+    const topGenre = topN(genreCount, 1)[0];
+    const topPub = topN(pubCount, 1)[0];
+    return {
+      filename, total,
+      games: gameSet.size,
+      vendors: Object.keys(vendorCount).length,
+      channels: Object.keys(channelCount).length,
+      avgSlots, slotsSum,
+      dateRange: (dateMin && dateMax) ? (dateMin + ' ~ ' + dateMax) : '',
+      topVendors: topN(vendorCount, 5),
+      topChannels: topN(channelCount, 5),
+      topGenres: topN(genreCount, 5),
+      topPubs: topN(pubCount, 5),
+      topVendor, topChannel, topGenre, topPub
+    };
+  }
+
+  /* ---------- 把分析结果注入顶部 3 个 summary 卡片 ---------- */
+  function renderAnalysisToSummary(a){
+    const grid = document.getElementById('insight-grid');
+    if(!grid) return;
+    const pct = (pair)=> pair && a.total ? ((pair[1]/a.total)*100).toFixed(0)+'%' : '—';
+
+    const c1Title = a.topPub
+      ? `${escapeHtml(a.topPub[0])} 主导 · ${pct(a.topPub)}（${a.topPub[1]}/${a.total}）`
+      : (a.topGenre ? `${escapeHtml(a.topGenre[0])} 占 ${pct(a.topGenre)}` : `共 ${a.games} 款游戏`);
+    const c1Desc = `上传文件共 <b>${a.total}</b> 条记录 / <b>${a.games}</b> 款游戏，覆盖 <b>${a.vendors || '—'}</b> 家厂商。`
+      + (a.topGenre ? ` 头部品类为 <b>${escapeHtml(a.topGenre[0])}</b>（${a.topGenre[1]} 款）。` : '')
+      + (a.dateRange ? ` 数据区间：<b>${a.dateRange}</b>。` : '');
+
+    const c2Title = a.topChannel
+      ? `${escapeHtml(a.topChannel[0])} 承载 ${pct(a.topChannel)}`
+      : (a.topVendor ? `${escapeHtml(a.topVendor[0])} 最高 · ${a.topVendor[1]} 条` : `${a.channels} 条渠道通路`);
+    const topChStr = a.topChannels.slice(0,3).map(x=>`${escapeHtml(x[0])}(${x[1]})`).join(' / ');
+    const c2Desc = a.topChannels.length
+      ? `渠道分布 TOP3：<b>${topChStr}</b>。主渠道覆盖 <b>${pct(a.topChannel)}</b>，次级渠道形成补位。`
+      : `未在文件中识别到标准"渠道/channel"字段，建议补充以便做分层分析。`;
+
+    const c3Title = a.avgSlots > 0
+      ? `平均资源位 ${a.avgSlots.toFixed(1)} 个 · 合计 ${a.slotsSum}`
+      : (a.topVendor ? `${escapeHtml(a.topVendor[0])} 首发密度最高` : `共 ${a.total} 条首发记录`);
+    const topVStr = a.topVendors.slice(0,3).map(x=>`${escapeHtml(x[0])}(${x[1]})`).join(' / ');
+    const c3Desc = a.topVendors.length
+      ? `厂商分布 TOP3：<b>${topVStr}</b>。` + (a.avgSlots>0 ? ` 平均每款分配 <b>${a.avgSlots.toFixed(1)}</b> 个资源位，总量 <b>${a.slotsSum}</b>。` : '')
+      : `未识别到厂商字段，建议在文件中包含 vendor / 厂商 列。`;
+
+    grid.innerHTML = `
+      <div class="ic">
+        <div class="head"><span class="sym">◆</span>COMPOSITION</div>
+        <div class="title">${c1Title}</div>
+        <div class="desc">${c1Desc}</div>
+      </div>
+      <div class="ic">
+        <div class="head"><span class="sym">⬡</span>CHANNEL MIX</div>
+        <div class="title">${c2Title}</div>
+        <div class="desc">${c2Desc}</div>
+      </div>
+      <div class="ic">
+        <div class="head"><span class="sym">⚡</span>DENSITY</div>
+        <div class="title">${c3Title}</div>
+        <div class="desc">${c3Desc}</div>
+      </div>`;
+  }
+
+  /* ---------- 上传报告（insight-grid 下方详情） ---------- */
+  function renderUploadReport(a, file){
+    const sizeKB = (file.size/1024).toFixed(1);
+    const rankHtml = (title, arr)=>{
+      if(!arr || !arr.length) return '';
+      const rows = arr.map(x=>`<div class="row"><b>${escapeHtml(x[0])}</b><span>${x[1]}</span></div>`).join('');
+      return `<div class="rk"><h5>${title}</h5>${rows}</div>`;
+    };
+    reportEl.innerHTML = `
+      <div class="ur-head">
+        <div class="ur-t">
+          <span class="tag">UPLOAD</span>
+          <b>${escapeHtml(file.name)}</b>
+          <s>${sizeKB} KB · ${a.total} ROWS</s>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);letter-spacing:.12em;">
+          已替换上方 TL;DR 卡片
+        </div>
+      </div>
+      <div class="ur-body">
+        <div class="cell"><div class="k">Records</div><div class="v">${a.total}</div><div class="s">总记录数</div></div>
+        <div class="cell"><div class="k">Games</div><div class="v">${a.games}</div><div class="s">去重游戏数</div></div>
+        <div class="cell"><div class="k">Vendors</div><div class="v">${a.vendors || '—'}</div><div class="s">覆盖厂商</div></div>
+        <div class="cell"><div class="k">Avg Slots</div><div class="v">${a.avgSlots>0 ? a.avgSlots.toFixed(1) : '—'}</div><div class="s">${a.slotsSum>0 ? '合计 '+a.slotsSum+' 位' : '未识别资源位字段'}</div></div>
+      </div>
+      <div class="ur-rank">
+        ${rankHtml('Top 厂商', a.topVendors)}
+        ${rankHtml('Top 渠道', a.topChannels) || rankHtml('Top 品类', a.topGenres) || rankHtml('Top 发行', a.topPubs)}
+      </div>`;
+    reportEl.classList.add('show');
+  }
+
+  function escapeHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c=>({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+})();
 </script>
 </body>
 </html>
