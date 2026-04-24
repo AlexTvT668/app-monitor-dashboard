@@ -280,6 +280,70 @@
   .sn-item[data-group="proj"].active .sn-dot{background:var(--accent-tab3);box-shadow:0 0 8px var(--accent-tab3);}
   .sn-item[data-pane="pane-install"].active{border-left-color:var(--accent-tab2);}
   .sn-item[data-pane="pane-install"].active .sn-dot{background:var(--accent-tab2);box-shadow:0 0 8px var(--accent-tab2);}
+  .sn-item[data-pane="pane-report"].active{border-left-color:var(--accent-tab2);}
+  .sn-item[data-pane="pane-report"].active .sn-dot{background:var(--accent-tab2);box-shadow:0 0 8px var(--accent-tab2);}
+
+  /* 渠道月报 · Channel Monthly Report */
+  .rp-month-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:0;
+    background:var(--panel);width:fit-content;margin:0 0 18px;}
+  .rp-mt{padding:10px 22px;font-size:12.5px;color:var(--text-dim);cursor:pointer;
+    border-right:1px solid var(--border);letter-spacing:.04em;transition:all .15s;
+    font-family:var(--font-sans);display:inline-flex;align-items:center;gap:8px;}
+  .rp-mt:last-child{border-right:none;}
+  .rp-mt:hover{color:var(--text);background:rgba(122,168,255,.06);}
+  .rp-mt.active{background:var(--accent-tab2);color:var(--bg);font-weight:700;}
+  .rp-mt .mono{font-family:var(--font-mono);font-size:10px;opacity:.7;letter-spacing:.12em;}
+  .rp-month-pane{display:none;}
+  .rp-month-pane.active{display:block;}
+
+  .rp-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px;}
+  .rp-sum-card{background:var(--panel);border:1px solid var(--border);padding:14px 16px;}
+  .rp-sum-card .lb{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;}
+  .rp-sum-card .val{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.01em;}
+  .rp-sum-card .val .unit{font-size:12px;color:var(--text-dim);margin-left:4px;font-weight:500;}
+
+  .rp-cat-section{margin:0 0 22px;}
+  .rp-cat-head{display:flex;align-items:center;gap:10px;padding:10px 0 8px;
+    border-bottom:1px solid var(--border);margin:0 0 10px;}
+  .rp-cat-num{font-family:var(--font-mono);font-size:11px;color:var(--accent-tab2);
+    letter-spacing:.16em;border:1px solid var(--accent-tab2);padding:2px 8px;}
+  .rp-cat-name{font-size:16px;font-weight:700;color:var(--text);letter-spacing:.01em;}
+  .rp-cat-count{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);
+    letter-spacing:.1em;margin-left:auto;}
+
+  .rp-card{background:var(--panel);border:1px solid var(--border);border-left:2px solid var(--accent-tab2);
+    padding:14px 18px;margin:0 0 10px;display:grid;
+    grid-template-columns:200px 1fr 1fr;gap:20px;align-items:flex-start;}
+  .rp-card .rp-item{font-size:14px;font-weight:700;color:var(--text);padding-top:2px;line-height:1.4;}
+  .rp-card .rp-cell{font-size:12.5px;color:var(--text);line-height:1.65;white-space:pre-wrap;word-break:break-word;}
+  .rp-card .rp-cell-empty{color:var(--text-dim);font-style:italic;font-family:var(--font-mono);font-size:11px;}
+  .rp-card .rp-cell-lb{display:block;font-family:var(--font-mono);font-size:10px;
+    color:var(--text-dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;}
+  .rp-card .rp-cell-lb.progress{color:#7aa8ff;}
+  .rp-card .rp-cell-lb.plan{color:#f4d06f;}
+
+  .rp-vendor-tabs{display:flex;gap:0;border:1px solid var(--border);
+    background:var(--panel);border-radius:0;overflow:hidden;width:fit-content;margin-bottom:18px;}
+  .rp-vt{padding:10px 18px;font-size:12.5px;color:var(--text-dim);cursor:pointer;
+    border-right:1px solid var(--border);letter-spacing:.04em;transition:all .15s;
+    font-family:var(--font-sans);display:inline-flex;align-items:center;gap:6px;}
+  .rp-vt:last-child{border-right:none;}
+  .rp-vt:hover{color:var(--text);background:rgba(122,168,255,.06);}
+  .rp-vt.active{background:var(--accent-tab2);color:var(--bg);font-weight:700;}
+  .rp-vt-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;
+    padding:1px 5px;border:1px solid currentColor;opacity:.7;}
+  .rp-vendor-pane{display:none;}
+  .rp-vendor-pane.active{display:block;}
+
+  .rp-meta{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:var(--text-dim);
+    font-family:var(--font-mono);margin:0 0 10px;letter-spacing:.06em;}
+  .rp-meta b{color:var(--text);font-family:var(--font-sans);font-weight:700;letter-spacing:0;}
+
+  @media (max-width: 1100px){
+    .rp-card{grid-template-columns:1fr;gap:10px;}
+    .rp-summary{grid-template-columns:repeat(2,1fr);}
+  }
 
   /* 占位 pane（WIP） */
   .stub-pane{padding:60px 20px 80px;max-width:960px;}
@@ -1056,6 +1120,9 @@
       <div class="sn-item role-hide-bd" data-pane="pane-biz" data-group="ops">
         <span class="sn-dot"></span><span class="sn-t">业务数据分析</span><span class="sn-tag">WIP</span>
       </div>
+      <div class="sn-item role-hide-bd" data-pane="pane-report" data-group="ops">
+        <span class="sn-dot"></span><span class="sn-t">渠道月报</span>
+      </div>
       <div class="sn-sub-head">资源情况分析</div>
       <div class="sn-item sn-item--sub" data-pane="pane-slots" data-group="ops">
         <span class="sn-dot"></span><span class="sn-t">线上资源</span>
@@ -1093,6 +1160,7 @@
   <div class="top-tab" data-pane="pane-pipeline"></div>
   <div class="top-tab" data-pane="pane-rival"></div>
   <div class="top-tab" data-pane="pane-biz"></div>
+  <div class="top-tab" data-pane="pane-report"></div>
   <div class="top-tab" data-pane="pane-slots"></div>
   <div class="top-tab" data-pane="pane-launch"></div>
   <div class="top-tab" data-pane="pane-offline"></div>
@@ -1826,6 +1894,47 @@
   <div class="biz-vendor-pane" id="biz-pane-vivo"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 业务数据分析 / vivo</div><h1>vivo 游戏中心 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待 vivo 游戏中心运营数据导出接入后，按同口径展开分析。</p></div></div>
   <div class="biz-vendor-pane" id="biz-pane-oppo"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 业务数据分析 / OPPO</div><h1>OPPO 软件商店 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待 OPPO 软件商店运营数据导出接入后，按同口径展开分析。</p></div></div>
   <div class="biz-vendor-pane" id="biz-pane-honor"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 业务数据分析 / 荣耀</div><h1>荣耀游戏中心 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待荣耀游戏中心运营数据导出接入后，按同口径展开分析。</p></div></div>
+
+</div>
+
+<!-- ============ pane：渠道月报 ============ -->
+<div class="tab-pane" id="pane-report" style="--tab-accent:var(--accent-tab2);">
+  <div class="pane-head">
+    <div class="kicker"><span class="dot"></span>02 · 经营分析 / 渠道月报</div>
+    <h1 class="pane-title">渠道月报 <span class="pane-sub">CHANNEL · MONTHLY REPORT</span></h1>
+    <p class="pane-lead">按 <b>手机厂商 × 月份</b> 双维度汇总渠道合作规划与进展。当前已接入 <b>小米</b> 的 <b>4 月 / 5 月</b> 规划（来源：<code>小米渠道规划.xlsx</code>），含合同、资源获取、专项合作 3 大类共 16 条事项。</p>
+  </div>
+
+  <!-- 厂商 tab -->
+  <div class="rp-vendor-tabs" role="tablist">
+    <div class="rp-vt active" data-vendor="xiaomi">小米 <span class="rp-vt-tag">16</span></div>
+    <div class="rp-vt" data-vendor="huawei">华为 <span class="rp-vt-tag">WIP</span></div>
+    <div class="rp-vt" data-vendor="vivo">vivo <span class="rp-vt-tag">WIP</span></div>
+    <div class="rp-vt" data-vendor="oppo">OPPO <span class="rp-vt-tag">WIP</span></div>
+    <div class="rp-vt" data-vendor="honor">荣耀 <span class="rp-vt-tag">WIP</span></div>
+  </div>
+
+  <!-- 小米 -->
+  <div class="rp-vendor-pane active" id="rp-pane-xiaomi">
+    <div class="rp-meta">
+      <span>数据源 · <b>小米渠道规划.xlsx</b></span>
+      <span>厂商 · <b>小米</b></span>
+      <span>已收录月份 · <b id="rp-meta-months">-</b></span>
+      <span>事项总数 · <b id="rp-meta-total">-</b></span>
+    </div>
+
+    <!-- 月份 tab -->
+    <div class="rp-month-tabs" id="rp-month-tabs" role="tablist"></div>
+
+    <!-- 月份内容 -->
+    <div id="rp-month-panes"></div>
+  </div>
+
+  <!-- 其他厂商占位 -->
+  <div class="rp-vendor-pane" id="rp-pane-huawei"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 渠道月报 / 华为</div><h1>华为渠道月报 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待华为侧月度规划文档接入。</p></div></div>
+  <div class="rp-vendor-pane" id="rp-pane-vivo"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 渠道月报 / vivo</div><h1>vivo 渠道月报 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待 vivo 侧月度规划文档接入。</p></div></div>
+  <div class="rp-vendor-pane" id="rp-pane-oppo"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 渠道月报 / OPPO</div><h1>OPPO 渠道月报 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待 OPPO 侧月度规划文档接入。</p></div></div>
+  <div class="rp-vendor-pane" id="rp-pane-honor"><div class="stub-pane" data-accent="tab2"><div class="stub-kicker"><span class="dot"></span>02 · 经营分析 / 渠道月报 / 荣耀</div><h1>荣耀渠道月报 <span class="stub-status">WIP · 数据对接中</span></h1><p class="stub-lead">等待荣耀侧月度规划文档接入。</p></div></div>
 
 </div>
 
@@ -3008,6 +3117,12 @@ function switchPane(paneId){
       });
     }, 50);
   }
+  // 切到渠道月报
+  if(paneId==='pane-report'){
+    if(typeof renderReportTab === 'function' && !window.__reportInited){
+      renderReportTab(); window.__reportInited = true;
+    }
+  }
 }
 // 兼容原 top-tab 点击（目前已隐藏，不会触发，但保留以防外部脚本）
 document.querySelectorAll('#top-tabs .top-tab').forEach(t=>{
@@ -3254,6 +3369,141 @@ document.querySelectorAll('#pane-biz .biz-vt').forEach(tab=>{
         });
       }, 50);
     }
+  };
+});
+
+/* ============================================================
+   Tab · 渠道月报（小米 4月 / 5月 规划）
+   数据来源：analytics/xiaomi_plan.json
+============================================================ */
+let __reportData = null;
+
+const RP_CAT_ORDER = ['合同','资源获取','专项合作'];
+const RP_CAT_NUM = {'合同':'A','资源获取':'B','专项合作':'C'};
+
+function rpEscape(s){
+  if(s==null) return '';
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function renderReportTab(){
+  fetch('analytics/xiaomi_plan.json?_=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      __reportData = data;
+      rpRenderXiaomi(data);
+    })
+    .catch(err => {
+      console.error('[report] load fail', err);
+      const mt = document.getElementById('rp-month-tabs');
+      if(mt) mt.innerHTML = '<div style="padding:12px;color:#ff6b6b;font-family:var(--font-mono);font-size:12px;">数据加载失败：' + rpEscape(err.message) + '</div>';
+    });
+}
+
+function rpRenderXiaomi(data){
+  // meta
+  const monthsLbl = data.months.map(m => m.month).join(' · ');
+  const total = data.months.reduce((s,m)=>s + m.row_count, 0);
+  const metaMonths = document.getElementById('rp-meta-months');
+  const metaTotal = document.getElementById('rp-meta-total');
+  if(metaMonths) metaMonths.textContent = monthsLbl;
+  if(metaTotal) metaTotal.textContent = total + ' 条';
+
+  // 月份 tab
+  const tabs = document.getElementById('rp-month-tabs');
+  const panes = document.getElementById('rp-month-panes');
+  if(!tabs || !panes) return;
+  tabs.innerHTML = '';
+  panes.innerHTML = '';
+
+  data.months.forEach((m, idx)=>{
+    const tab = document.createElement('div');
+    tab.className = 'rp-mt' + (idx===0 ? ' active' : '');
+    tab.dataset.month = m.month;
+    tab.innerHTML = rpEscape(m.month) + '规划 <span class="mono">' + m.row_count + '</span>';
+    tabs.appendChild(tab);
+
+    const pane = document.createElement('div');
+    pane.className = 'rp-month-pane' + (idx===0 ? ' active' : '');
+    pane.dataset.month = m.month;
+    pane.innerHTML = rpBuildMonthContent(m);
+    panes.appendChild(pane);
+  });
+
+  // 月份切换
+  tabs.querySelectorAll('.rp-mt').forEach(t=>{
+    t.onclick = ()=>{
+      const mo = t.dataset.month;
+      tabs.querySelectorAll('.rp-mt').forEach(x => x.classList.toggle('active', x===t));
+      panes.querySelectorAll('.rp-month-pane').forEach(p => p.classList.toggle('active', p.dataset.month===mo));
+    };
+  });
+}
+
+function rpBuildMonthContent(m){
+  // 按类别聚合
+  const byCat = {};
+  m.rows.forEach(row=>{
+    const k = row.category || '其他';
+    if(!byCat[k]) byCat[k] = [];
+    byCat[k].push(row);
+  });
+
+  // 概览
+  const countEmpty = m.rows.filter(r => !r.progress && !r.plan).length;
+  const countProgress = m.rows.filter(r => r.progress).length;
+  const countPlan = m.rows.filter(r => r.plan).length;
+
+  let html = '';
+  html += '<div class="rp-summary">';
+  html += '  <div class="rp-sum-card"><div class="lb">TOTAL ITEMS</div><div class="val">' + m.row_count + '<span class="unit">条</span></div></div>';
+  html += '  <div class="rp-sum-card"><div class="lb">有进展</div><div class="val">' + countProgress + '<span class="unit">/ ' + m.row_count + '</span></div></div>';
+  html += '  <div class="rp-sum-card"><div class="lb">有规划</div><div class="val">' + countPlan + '<span class="unit">/ ' + m.row_count + '</span></div></div>';
+  html += '  <div class="rp-sum-card"><div class="lb">待启动</div><div class="val">' + countEmpty + '<span class="unit">条</span></div></div>';
+  html += '</div>';
+
+  RP_CAT_ORDER.forEach(cat=>{
+    const rows = byCat[cat];
+    if(!rows || !rows.length) return;
+    html += '<section class="rp-cat-section">';
+    html += '  <div class="rp-cat-head">';
+    html += '    <span class="rp-cat-num">' + RP_CAT_NUM[cat] + '</span>';
+    html += '    <span class="rp-cat-name">' + rpEscape(cat) + '</span>';
+    html += '    <span class="rp-cat-count">' + rows.length + ' 项</span>';
+    html += '  </div>';
+    rows.forEach(r=>{
+      html += '  <div class="rp-card">';
+      html += '    <div class="rp-item">' + rpEscape(r.item) + '</div>';
+      html += '    <div class="rp-cell">';
+      html += '      <span class="rp-cell-lb progress">PROGRESS · 进展</span>';
+      html += (r.progress
+        ? rpEscape(r.progress)
+        : '<span class="rp-cell-empty">— 待填充 —</span>');
+      html += '    </div>';
+      html += '    <div class="rp-cell">';
+      html += '      <span class="rp-cell-lb plan">PLAN · 规划</span>';
+      html += (r.plan
+        ? rpEscape(r.plan)
+        : '<span class="rp-cell-empty">— 待填充 —</span>');
+      html += '    </div>';
+      html += '  </div>';
+    });
+    html += '</section>';
+  });
+
+  return html;
+}
+
+// 厂商 tab 切换（小米 / 华为 / vivo / OPPO / 荣耀）
+document.querySelectorAll('#pane-report .rp-vt').forEach(tab=>{
+  tab.onclick = ()=>{
+    const v = tab.dataset.vendor;
+    document.querySelectorAll('#pane-report .rp-vt').forEach(x=>x.classList.toggle('active', x===tab));
+    document.querySelectorAll('#pane-report .rp-vendor-pane').forEach(p=>{
+      p.classList.toggle('active', p.id === 'rp-pane-'+v);
+    });
   };
 });
 
