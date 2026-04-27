@@ -951,6 +951,8 @@
   .nt-btn .ic{font-size:13px;}
 
   .news-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-bottom:20px;}
+  .news-grid.news-grid--single{grid-template-columns:1fr;}
+  .news-grid.news-grid--single #news-feed{max-height:none;}
   .news-col{border:1px solid var(--border-strong);background:var(--panel);}
   .news-col .section-h{display:flex;align-items:center;justify-content:space-between;
     padding:12px 16px;border-bottom:1px solid var(--border);background:var(--panel-2, var(--panel));}
@@ -1175,7 +1177,7 @@
     <div>
       <div class="eyebrow"><span class="dot" style="background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);"></span>Industry Early Brief &nbsp;·&nbsp; v1 · tab_01</div>
       <h1>行业早知道 <span class="mono" style="color:var(--accent-tab4);">EARLY BRIEF</span></h1>
-      <p class="lead">每日 06:30 自动爬取 <b>游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap 发现好游戏</b> 等公众号与站点，聚合「行业最新资讯」与「新游 Pipeline」两大视图。</p>
+      <p class="lead">每日 06:30 自动爬取 <b>游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap 发现好游戏</b> 等公众号与站点。「新游 Pipeline」已拆为 <b>左侧独立子模块</b>。</p>
       <div class="badges">
         <span class="nr-badge" id="news-src-badge">5 SOURCES</span>
         <span class="nr-badge" id="news-cnt-badge">— ARTICLES</span>
@@ -1200,9 +1202,8 @@
     </div>
   </div>
 
-  <!-- 两栏：左 最新资讯 / 右 新游 Pipeline -->
-  <div class="news-grid">
-    <!-- ① 行业最新资讯 -->
+  <!-- 单栏：行业最新资讯（新游 Pipeline 已拆为独立 pane-pipeline） -->
+  <div class="news-grid news-grid--single">
     <section class="news-col">
       <div class="section-h">
         <div class="title"><span class="num">01</span>行业最新资讯 <span style="opacity:.5">—— Latest</span></div>
@@ -1211,19 +1212,6 @@
       <div id="news-feed">
         <div class="nf-skeleton" style="padding:24px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;">
           LOADING NEWS FEED...
-        </div>
-      </div>
-    </section>
-
-    <!-- ② 新游 Pipeline -->
-    <section class="news-col">
-      <div class="section-h">
-        <div class="title"><span class="num">02</span>新游 Pipeline <span style="opacity:.5">—— Upcoming</span></div>
-        <div class="hint">已上线仅展示本周内·非腾讯</div>
-      </div>
-      <div id="pipeline-list">
-        <div class="pl-skeleton" style="padding:24px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;">
-          LOADING PIPELINE...
         </div>
       </div>
     </section>
@@ -1737,16 +1725,35 @@
 
 </div><!-- /#pane-launch -->
 
-<!-- ============ 占位 pane：新游 Pipeline（独立子模块，后续从 Tab1 中拆出） ============ -->
-<div class="tab-pane" id="pane-pipeline">
-  <div class="stub-pane" data-accent="tab4">
-    <div class="stub-kicker"><span class="dot"></span>01 · 行业早知道 / 新游 Pipeline</div>
-    <h1>新游 Pipeline <span class="stub-status">独立视图 · 待细化</span></h1>
-    <p class="stub-lead">从「行业新闻」中拆出，聚焦 <b>待发行 / 测试中 / 已定档</b> 游戏阵容。后续将补充：厂商归属、玩法品类、版号状态、测试里程碑、发行档期冲突分析。</p>
-    <div class="stub-meta">
-      <span>TO&nbsp;DO &nbsp;·&nbsp; 品类筛选、测试节点时间线、版号状态标签、厂商阵营对比</span>
+<!-- ============ pane：新游 Pipeline（独立子模块，从 pane-news 拆出） ============ -->
+<div class="tab-pane" id="pane-pipeline" style="--tab-accent:var(--accent-tab4);">
+  <header class="nr-hero" style="border-bottom:1px solid var(--border);padding-bottom:18px;margin-bottom:18px;">
+    <div>
+      <div class="eyebrow"><span class="dot" style="background:var(--accent-tab4);box-shadow:0 0 10px var(--accent-tab4);"></span>Upcoming Games Pipeline &nbsp;·&nbsp; v1 · tab_01_pipeline</div>
+      <h1>新游 Pipeline <span class="mono" style="color:var(--accent-tab4);">UPCOMING</span></h1>
+      <p class="lead">聚焦 <b>待发行 / 测试中 / 已定档</b> 游戏阵容（已上线仅展示本周内 · 非腾讯）。数据源同「行业早知道」每日 06:30 爬虫聚合。</p>
+      <div class="badges">
+        <span class="nr-badge" id="pipe-count-badge">— GAMES</span>
+        <span class="nr-badge" id="pipe-update-badge">— UPDATED</span>
+      </div>
     </div>
+  </header>
+
+  <div class="news-grid news-grid--single">
+    <section class="news-col">
+      <div class="section-h">
+        <div class="title"><span class="num">02</span>新游 Pipeline <span style="opacity:.5">—— Upcoming</span></div>
+        <div class="hint">已上线仅展示本周内·非腾讯</div>
+      </div>
+      <div id="pipeline-list">
+        <div class="pl-skeleton" style="padding:24px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;">
+          LOADING PIPELINE...
+        </div>
+      </div>
+    </section>
   </div>
+
+  <footer style="margin-top:18px;padding:12px 0;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:.08em;">小A的影分身 · 新游 Pipeline · 数据源：游戏葡萄 / 游戏寿司 / 游戏研究社 / 游戏陀螺 / TapTap · 每日 06:30 爬虫聚合 · 本页 demo 数据为示例</footer>
 </div>
 
 <!-- ============ 占位 pane：友商首发数据 ============ -->
@@ -4672,6 +4679,12 @@ function renderPipelineList(){
       </div>`;
   }).join('');
   document.getElementById('pipeline-list').innerHTML = html;
+
+  // pane-pipeline header badges
+  const pcb = document.getElementById('pipe-count-badge');
+  const pub = document.getElementById('pipe-update-badge');
+  if(pcb) pcb.textContent = NEW_GAME_PIPELINE.length + ' GAMES';
+  if(pub) pub.textContent = syncStr + ' UPDATED';
 }
 
 // 默认 Tab1 就是 News Radar，直接渲染一次（避免首次进入时空白）
