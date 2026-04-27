@@ -948,7 +948,12 @@
     font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;padding:6px 14px;cursor:pointer;
     display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
   .nt-btn:hover{border-color:var(--accent-tab4);color:var(--accent-tab4);}
-  .nt-btn .ic{font-size:13px;}
+  .nt-btn[disabled]{opacity:.55;cursor:wait;}
+  .nt-btn .ic{font-size:13px;display:inline-block;}
+  .nt-btn .ic.spin{animation:nt-spin .8s linear infinite;}
+  @keyframes nt-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .news-toolbar .nt-time{font-size:13px;color:var(--text);letter-spacing:.04em;
+    padding:2px 8px;border:1px dashed var(--border);background:var(--panel-2);}
 
   .news-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-bottom:20px;}
   .news-grid.news-grid--single{grid-template-columns:1fr;}
@@ -1196,7 +1201,10 @@
 
   <!-- 工具条：手动刷新 -->
   <div class="news-toolbar">
-    <div class="nt-left"></div>
+    <div class="nt-left">
+      <span class="nt-label">LAST SYNC</span>
+      <span class="nt-time mono" id="news-sync-time">—</span>
+    </div>
     <div class="nt-right">
       <button type="button" class="nt-btn" id="news-refresh-btn"><span class="ic">↻</span>手动刷新</button>
     </div>
@@ -1738,6 +1746,17 @@
       </div>
     </div>
   </header>
+
+  <!-- 工具条：手动刷新 + 刷新时间 -->
+  <div class="news-toolbar">
+    <div class="nt-left">
+      <span class="nt-label">LAST SYNC</span>
+      <span class="nt-time mono" id="pipe-sync-time">—</span>
+    </div>
+    <div class="nt-right">
+      <button type="button" class="nt-btn" id="pipe-refresh-btn"><span class="ic">↻</span>刷新 Pipeline</button>
+    </div>
+  </div>
 
   <div class="news-grid news-grid--single">
     <section class="news-col">
@@ -4524,6 +4543,28 @@ const NEW_GAME_PIPELINE = [
   }
 ];
 
+// 格式化时间：YYYY-MM-DD HH:mm:ss
+function __fmtSync(d){
+  const pad = n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+// 当前/最近一次刷新时间，全局共享给两个 pane
+window.__newsLastSync = window.__newsLastSync || null;
+
+function __applySyncStr(syncStr, opts){
+  opts = opts || {};
+  const elNs    = document.getElementById('ns-sync');
+  const elNsT   = document.getElementById('news-sync-time');
+  const elBadge = document.getElementById('news-refresh-badge');
+  const elPipe  = document.getElementById('pipe-update-badge');
+  const elPipeT = document.getElementById('pipe-sync-time');
+  if(elNs)    elNs.textContent = syncStr;
+  if(elNsT)   elNsT.textContent = syncStr;
+  if(elBadge) elBadge.textContent = (opts.auto ? 'AUTO · ' : 'MANUAL · ') + syncStr.slice(11);
+  if(elPipe)  elPipe.textContent = syncStr.slice(11) + ' UPDATED';
+  if(elPipeT) elPipeT.textContent = syncStr;
+}
+
 function renderNewsTab(){
   // 统计
   const now = new Date();
@@ -4535,8 +4576,10 @@ function renderNewsTab(){
     if(p.tba || p.windowLabel) return false;
     const d = new Date(p.date); return d.getFullYear()===now.getFullYear() && d.getMonth()>=now.getMonth()-1;
   }).length;
-  const syncStr = now.toISOString().slice(0,10) + ' 06:30';
-  document.getElementById('ns-sync').textContent = syncStr;
+  // 首次进入：用今天 06:30 作为「自动同步」时间；后续手动刷新会被覆盖
+  const initSync = window.__newsLastSync || (now.toISOString().slice(0,10) + ' 06:30:00');
+  window.__newsLastSync = initSync;
+  __applySyncStr(initSync, { auto: !window.__newsManualRefreshed });
   document.getElementById('news-cnt-badge').textContent = NEWS_ARTICLES.length + ' ARTICLES';
 
   renderNewsFeed('all');
@@ -4550,22 +4593,57 @@ function renderNewsTab(){
       renderNewsFeed(el.dataset.s);
     };
   });
-  // 手动刷新（demo：打点动画 + 更新同步时间）
+
+  // 手动刷新 · 行业新闻
   const refBtn = document.getElementById('news-refresh-btn');
-  if(refBtn){
-    refBtn.onclick = ()=>{
-      refBtn.disabled = true;
-      refBtn.innerHTML = '<span class="ic">↻</span>正在同步…';
-      setTimeout(()=>{
-        const d = new Date();
-        const pad = n=>String(n).padStart(2,'0');
-        document.getElementById('ns-sync').textContent =
-          `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-        refBtn.disabled = false;
-        refBtn.innerHTML = '<span class="ic">↻</span>手动刷新';
-      }, 800);
-    };
+  if(refBtn && !refBtn.__bound){
+    refBtn.__bound = true;
+    refBtn.onclick = ()=> doManualRefresh('news');
   }
+  // 手动刷新 · 新游 Pipeline
+  const pipeBtn = document.getElementById('pipe-refresh-btn');
+  if(pipeBtn && !pipeBtn.__bound){
+    pipeBtn.__bound = true;
+    pipeBtn.onclick = ()=> doManualRefresh('pipeline');
+  }
+}
+
+// 手动刷新：scope = 'news' | 'pipeline'
+function doManualRefresh(scope){
+  const isNews = scope === 'news';
+  const btn = document.getElementById(isNews ? 'news-refresh-btn' : 'pipe-refresh-btn');
+  if(btn){
+    btn.disabled = true;
+    btn.classList.add('is-loading');
+    btn.innerHTML = '<span class="ic spin">↻</span>正在同步…';
+  }
+  // 同步过程中给目标列表打一层 loading 蒙版
+  const targetEl = document.getElementById(isNews ? 'news-feed' : 'pipeline-list');
+  if(targetEl){
+    targetEl.style.opacity = '.35';
+    targetEl.style.transition = 'opacity .2s';
+  }
+  setTimeout(()=>{
+    const syncStr = __fmtSync(new Date());
+    window.__newsLastSync = syncStr;
+    window.__newsManualRefreshed = true;
+    __applySyncStr(syncStr, { auto: false });
+
+    // 真正重渲染（demo 数据集本身不变，但走完整渲染流程，DOM 重建）
+    if(isNews){
+      const active = document.querySelector('#src-filter .sf.active');
+      renderNewsFeed(active ? active.dataset.s : 'all');
+    } else {
+      renderPipelineList();
+    }
+
+    if(targetEl) targetEl.style.opacity = '1';
+    if(btn){
+      btn.disabled = false;
+      btn.classList.remove('is-loading');
+      btn.innerHTML = '<span class="ic">↻</span>' + (isNews ? '手动刷新' : '刷新 Pipeline');
+    }
+  }, 700);
 }
 
 function renderNewsFeed(srcFilter){
@@ -4680,11 +4758,12 @@ function renderPipelineList(){
   }).join('');
   document.getElementById('pipeline-list').innerHTML = html;
 
-  // pane-pipeline header badges
+  // pane-pipeline header badges（GAMES 数 + 同步时间统一由 __applySyncStr 管理）
   const pcb = document.getElementById('pipe-count-badge');
-  const pub = document.getElementById('pipe-update-badge');
   if(pcb) pcb.textContent = NEW_GAME_PIPELINE.length + ' GAMES';
-  if(pub) pub.textContent = syncStr + ' UPDATED';
+  if(window.__newsLastSync){
+    __applySyncStr(window.__newsLastSync, { auto: !window.__newsManualRefreshed });
+  }
 }
 
 // 默认 Tab1 就是 News Radar，直接渲染一次（避免首次进入时空白）
