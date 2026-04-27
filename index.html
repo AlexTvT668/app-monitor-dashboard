@@ -970,6 +970,8 @@
   #news-feed{padding:10px;display:flex;flex-direction:column;gap:10px;max-height:1100px;overflow-y:auto;}
   .nf-card{display:block;padding:14px 16px;border:1px solid var(--border);border-left:3px solid var(--accent-tab4);
     background:var(--bg);cursor:pointer;transition:all .15s;}
+  .nf-card.is-new{border-left-width:5px;background:linear-gradient(90deg, color-mix(in srgb, var(--accent-tab4) 8%, transparent), transparent 60%);}
+  .nf-card.is-new::before{content:"";}
   .nf-card:hover{border-color:var(--accent-tab4);border-left-color:var(--accent-tab4);transform:translateY(-1px);
     box-shadow:0 4px 16px -6px rgba(255,92,147,.25);}
   .nf-card .meta{display:flex;flex-direction:column;gap:6px;}
@@ -4629,10 +4631,32 @@ function doManualRefresh(scope){
     window.__newsManualRefreshed = true;
     __applySyncStr(syncStr, { auto: false });
 
-    // 真正重渲染（demo 数据集本身不变，但走完整渲染流程，DOM 重建）
+    // 真正重渲染：news 分支额外注入 1-2 条「最新热点」；pipeline 走完整重建
     if(isNews){
+      // 从池里随机抽 1-2 条尚未注入过的新闻，date = 今天
+      const todayStr = syncStr.slice(0,10);
+      const usedTitles = new Set(window.__newsExtras.map(x=>x.title));
+      const candidates = NEWS_HOT_POOL.filter(x => !usedTitles.has(x.title));
+      const pickN = Math.min(candidates.length, 1 + Math.floor(Math.random()*2)); // 1~2 条
+      // Fisher-Yates 抽样
+      const pool = [...candidates];
+      for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
+      const picked = pool.slice(0, pickN).map((x, idx) => ({
+        ...x,
+        id: 'nx-' + Date.now() + '-' + idx,
+        date: todayStr,
+        isNew: true,
+      }));
+      // 新条目放最前；之前注入的去掉 isNew 标记，避免一直亮
+      window.__newsExtras = [
+        ...picked,
+        ...window.__newsExtras.map(x => ({ ...x, isNew: false })),
+      ];
       const active = document.querySelector('#src-filter .sf.active');
       renderNewsFeed(active ? active.dataset.s : 'all');
+      // 顶部 ARTICLES 计数同步
+      const cb = document.getElementById('news-cnt-badge');
+      if(cb) cb.textContent = (NEWS_ARTICLES.length + window.__newsExtras.length) + ' ARTICLES';
     } else {
       renderPipelineList();
     }
@@ -4646,22 +4670,77 @@ function doManualRefresh(scope){
   }, 700);
 }
 
+// ===== 新闻视图：把 mock 的"相对日期"映射到今天，并叠加手动刷新注入的新条目 =====
+// 候选「新热点」池（每次手动刷新随机抽 1-2 条，日期 = 今天）
+const NEWS_HOT_POOL = [
+  { src:'游戏葡萄', tag:'快讯', title:'网易《燕云十六声》海外服首日 DAU 破 80 万，东南亚区登顶',
+    summary:'《燕云十六声》海外版（Where Winds Meet）今日 11:00 全球同步开服，首日 DAU 突破 80 万，东南亚六国畅销榜登顶。文章拆解其国际化本地化策略与首日付费曲线。',
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('燕云十六声 海外 首日 DAU') },
+  { src:'游戏陀螺', tag:'融资', title:'独立工作室「拾贝映画」完成 5000 万 A 轮，腾讯领投',
+    summary:'独立游戏工作室拾贝映画宣布完成 5000 万元 A 轮融资，由腾讯独家领投，资金将用于其首款 UE5 国风 ARPG 的研发与全球发行筹备。',
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('拾贝映画 A轮 腾讯 国风 ARPG') },
+  { src:'游戏研究社', tag:'实测', title:'Switch 2 国行版上手实测：性能提升 2.4×，独占阵容仍是悬念',
+    summary:'Switch 2 国行版今日开放线下体验，实测 GPU 性能较初代提升约 2.4 倍，掌机模式续航 4-5 小时。文章对比 Steam Deck OLED，并讨论第一方独占阵容的本地化进度。',
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('Switch 2 国行 实测 性能') },
+  { src:'游戏寿司', tag:'榜单', title:'4 月畅销榜：《王者荣耀：世界》空降第 3，《和平精英》掉出前 5',
+    summary:'iOS 中国区 4 月畅销榜出炉，《王者荣耀：世界》以上线首月之姿空降第 3，《和平精英》近三年来首次掉出前 5。文章梳理头部产品 LTV 与新游冲击下的格局变化。',
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('iOS 4月 畅销榜 王者荣耀世界') },
+  { src:'TapTap', tag:'新游', title:'本周 TapTap 新品：《雾境序列》开测预约破 120 万',
+    summary:'紫龙游戏二次元 SLG《雾境序列》本周开启首次付费删档测试，TapTap 预约人数突破 120 万，评分 8.6。报道还覆盖另外 3 款本周开测的小型新游。',
+    url:'https://www.taptap.cn/search?type=app&keyword=' + encodeURIComponent('雾境序列') },
+  { src:'游戏陀螺', tag:'海外', title:'米哈游《原神》6.0「至冬」前瞻：全新地区图集与冰系角色阵容曝光',
+    summary:'米哈游放出《原神》6.0 版本「至冬」前瞻直播，揭示全新地图、剧情主线与 4 名冰系新角色。海外社媒讨论度 24h 内冲上 X 全球趋势第 7。',
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('原神 6.0 至冬 前瞻') },
+  { src:'游戏葡萄', tag:'政策', title:'广电总局：试点「未成年人游戏时长跨平台统一管控」方案',
+    summary:'国家广电总局公开征求意见稿，拟推动各厂商接入未成年人游戏时长跨平台统一管控平台，2026 Q4 试点。文章解读对头部厂商合规成本的影响。',
+    url:'https://weixin.sogou.com/weixin?type=2&query=' + encodeURIComponent('广电总局 未成年人 游戏时长 跨平台') },
+];
+// 手动刷新累积注入的新条目
+window.__newsExtras = window.__newsExtras || [];
+
+// 把日期 'YYYY-MM-DD' 加 N 天
+function __shiftDate(dateStr, days){
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  dt.setDate(dt.getDate() + days);
+  const pad = n=>String(n).padStart(2,'0');
+  return `${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
+}
+// 计算"基线日期" → "今天"的天数偏移；首次以原始 mock 最新一条 (2026-04-22) 为基线
+function __getNewsOffsetDays(){
+  const baseline = '2026-04-22';
+  const today = new Date();
+  const [by,bm,bd] = baseline.split('-').map(Number);
+  const dt = new Date(by, bm-1, bd);
+  const diff = Math.round((today - dt) / 86400000);
+  return diff > 0 ? diff : 0;
+}
+// 取新闻视图：原文章日期整体前移 + 注入的新条目排在最前
+function __getNewsView(){
+  const off = __getNewsOffsetDays();
+  const shifted = NEWS_ARTICLES.map(n => ({ ...n, date: __shiftDate(n.date, off) }));
+  // 注入的新条目（手动刷新产生的）已经带 date，直接合并在前
+  return [...window.__newsExtras, ...shifted];
+}
+
 function renderNewsFeed(srcFilter){
+  const view = __getNewsView();
   const list = srcFilter === 'all'
-    ? NEWS_ARTICLES
-    : NEWS_ARTICLES.filter(n => n.src === srcFilter || (srcFilter==='TapTap' && /TapTap/i.test(n.src)));
+    ? view
+    : view.filter(n => n.src === srcFilter || (srcFilter==='TapTap' && /TapTap/i.test(n.src)));
   const feed = document.getElementById('news-feed');
   if(!list.length){
     feed.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);">该来源暂无资讯</div>`;
     return;
   }
   feed.innerHTML = list.map(n=>`
-    <article class="nf-card" data-id="${n.id}">
+    <article class="nf-card${n.isNew ? ' is-new' : ''}" data-id="${n.id}">
       <div class="meta">
         <div class="tl">
           <span class="src-tag">${n.src}</span>
           <span class="dt">${n.date}</span>
           <span class="tag">${n.tag}</span>
+          ${n.isNew ? '<span class="tag" style="background:var(--accent-tab4);color:#fff;border-color:var(--accent-tab4);">NEW</span>' : ''}
         </div>
         <h4>${n.title}</h4>
         <div class="summary">${n.summary}</div>
