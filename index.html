@@ -5,64 +5,84 @@
 <title>小A的影分身</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
-  :root {
-    /* ====== nara.build 基础色盘 ====== */
-    --bg:#070709; --panel:#0d0d11; --panel-2:#12121a; --border:#1e1e24;
-    --border-strong:#2a2a32;
-    --text:#f5f5f0; --text-dim:#888892;
-    /* 语义色（保留 Tab 区分） */
-    --up:#25c26b; --down:#ff5568;
-    --emui:#66d9e8; --harmony:#c4a1ff;
-    --s:#ff6b6b; --ap:#ff9f4a; --a:#ffc857; --bp:#66d9e8; --c:#9aa4bf;
-    /* 每个 Tab 的 accent（保留颜色区分） */
-    --accent-tab1:#ff9f4a;      /* 橙 · 资源位监控 */
-    --accent-tab2:#7aa8ff;      /* 蓝 · 安装链路监控 */
-    --accent-tab3:#c8ff4d;      /* 柠檬绿 · 首发资源分析 */
-    --accent-tab4:#ff5c93;      /* 品红 · 行业新游监控 */
-    /* 字体 */
-    --font-mono:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
-    --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  /* ===== 腾讯体字体 ===== */
+  @font-face{
+    font-family:"Tencent Sans";
+    src:url("./assets/fonts/TencentSans-W3.ttf") format("truetype");
+    font-weight:300 500;
+    font-style:normal;
+    font-display:swap;
   }
-  /* ====== Light 主题覆写（更舒适的明亮配色） ====== */
-  html[data-theme="light"]{
-    --bg:#f6f6f1;           /* 米白底 */
-    --panel:#ffffff;         /* 纯白面板 */
-    --panel-2:#f1f1ec;
-    --border:#e2e2d8;
-    --border-strong:#cfcfc2;
-    --text:#16161a;          /* 主文字：近黑，柔和 */
-    --text-dim:#5a5a66;      /* 次文字：中灰，对比舒适（>4.5:1） */
+  @font-face{
+    font-family:"Tencent Sans";
+    src:url("./assets/fonts/TencentSans-W7.ttf") format("truetype");
+    font-weight:600 900;
+    font-style:normal;
+    font-display:swap;
+  }
+
+  :root {
+    /* ====== Light（默认）配色：白底极简 ====== */
+    --bg:#ffffff;            /* 纯白底 */
+    --panel:#ffffff;         /* 面板=白 */
+    --panel-2:#f7f7f5;       /* 次级面板：极淡米灰 */
+    --border:#ececec;        /* 主分割线：浅灰 */
+    --border-strong:#d8d8d4; /* 强分割线 */
+    --text:#1a1a1f;          /* 主文字：近黑（>13:1） */
+    --text-dim:#6b6b75;      /* 次文字：中灰（>4.7:1） */
+    /* 语义色 */
     --up:#1f9c57; --down:#d93a4b;
     --emui:#2b8ba0; --harmony:#8a5fd6;
     --s:#d93a4b; --ap:#d97a28; --a:#b3881a; --bp:#2b8ba0; --c:#6b7283;
-    --accent-tab1:#d97a28;
-    --accent-tab2:#3c6fd1;
-    --accent-tab3:#5a9a14;
-    --accent-tab4:#c83a6f;
+    /* Tab accent（Light 下：明度更适中、对比度更高） */
+    --accent-tab1:#d97a28;   /* 橙 · 资源位监控 */
+    --accent-tab2:#3c6fd1;   /* 蓝 · 安装链路监控 */
+    --accent-tab3:#5a9a14;   /* 绿 · 首发资源分析 */
+    --accent-tab4:#c83a6f;   /* 品红 · 行业新游监控 */
+    /* 字体：腾讯体 + 系统兜底 */
+    --font-mono:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
+    --font-sans:"Tencent Sans",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
   }
-  /* dark 下顶栏 hover 的深色色值在 light 里要变淡 */
-  html[data-theme="light"] .tab:hover,
-  html[data-theme="light"] .top-tab:hover{background:#ececdf !important;}
-  html[data-theme="light"] .top-tab.active{background:#ffffff !important;}
-  /* light 主题下：所有硬编码的深色 hover / 底纹一律替换为浅色 */
-  html[data-theme="light"] table.mini tr:hover td,
-  html[data-theme="light"] .lg-detail table tr:hover td{background:#f1f1ea !important;}
-  html[data-theme="light"] .im-cell:hover,
-  html[data-theme="light"] .lg-item:hover,
-  html[data-theme="light"] .ts-row:hover,
-  html[data-theme="light"] #pane-launch .vendor-switcher .v:hover{background:#ececdf !important;}
-  html[data-theme="light"] .lg-item.open{background:#eef1f7 !important;}
-  html[data-theme="light"] .method-step code{background:#ececdf !important;color:var(--text) !important;}
-  html[data-theme="light"] .im-cell .video-thumb{background:#e8e8df !important;color:#444 !important;}
-  html[data-theme="light"] .modal-body .video-area{background:#1a1a1a !important;color:#ddd !important;}
-  html[data-theme="light"] .ts-row .bar{background:#e0e0d4 !important;}
-  /* 轻量徽章/告警在 light 下加白底更清爽 */
-  html[data-theme="light"] .alert{background:#ffffff;}
-  html[data-theme="light"] .nr-badge.danger{border-color:#d9b2b8;}
-  html[data-theme="light"] .nr-badge.warn{border-color:#d9c58a;}
-  html[data-theme="light"] .nr-badge.accent2{color:#3c6fd1;border-color:#b4c6e8;}
-  html[data-theme="light"] .demo-banner{background:#fff8e5;}
-  html[data-theme="light"] footer{color:var(--text-dim);}
+  /* ====== Dark 主题（可选） ====== */
+  html[data-theme="dark"]{
+    --bg:#070709; --panel:#0d0d11; --panel-2:#12121a; --border:#1e1e24;
+    --border-strong:#2a2a32;
+    --text:#f5f5f0; --text-dim:#888892;
+    --up:#25c26b; --down:#ff5568;
+    --emui:#66d9e8; --harmony:#c4a1ff;
+    --s:#ff6b6b; --ap:#ff9f4a; --a:#ffc857; --bp:#66d9e8; --c:#9aa4bf;
+    --accent-tab1:#ff9f4a;
+    --accent-tab2:#7aa8ff;
+    --accent-tab3:#c8ff4d;
+    --accent-tab4:#ff5c93;
+  }
+  /* 兼容旧的 data-theme="light" 写法（保留 CSS 规则正常工作） */
+  html[data-theme="light"]{}
+  /* ===== Dark 主题硬编码深色 hover 修复 ===== */
+  html[data-theme="dark"] .tab:hover,
+  html[data-theme="dark"] .top-tab:hover{background:#15151b !important;}
+  html[data-theme="dark"] .top-tab.active{background:var(--tab-accent,#c8ff4d) !important;color:var(--bg) !important;}
+  /* ===== Light（默认）硬编码 hover / 底纹 → 浅色（保留兼容 [data-theme="light"]） ===== */
+  html:not([data-theme="dark"]) .tab:hover,
+  html:not([data-theme="dark"]) .top-tab:hover{background:#f1f1ec !important;}
+  html:not([data-theme="dark"]) .top-tab.active{background:#ffffff !important;}
+  html:not([data-theme="dark"]) table.mini tr:hover td,
+  html:not([data-theme="dark"]) .lg-detail table tr:hover td{background:#f7f7f4 !important;}
+  html:not([data-theme="dark"]) .im-cell:hover,
+  html:not([data-theme="dark"]) .lg-item:hover,
+  html:not([data-theme="dark"]) .ts-row:hover,
+  html:not([data-theme="dark"]) #pane-launch .vendor-switcher .v:hover{background:#f1f1ec !important;}
+  html:not([data-theme="dark"]) .lg-item.open{background:#f0f4fb !important;}
+  html:not([data-theme="dark"]) .method-step code{background:#f1f1ec !important;color:var(--text) !important;}
+  html:not([data-theme="dark"]) .im-cell .video-thumb{background:#eeeeea !important;color:#444 !important;}
+  html:not([data-theme="dark"]) .modal-body .video-area{background:#1a1a1a !important;color:#ddd !important;}
+  html:not([data-theme="dark"]) .ts-row .bar{background:#ebebe4 !important;}
+  html:not([data-theme="dark"]) .alert{background:#ffffff;}
+  html:not([data-theme="dark"]) .nr-badge.danger{border-color:#e8c0c6;}
+  html:not([data-theme="dark"]) .nr-badge.warn{border-color:#e3d2a0;}
+  html:not([data-theme="dark"]) .nr-badge.accent2{color:#3c6fd1;border-color:#c4d2ed;}
+  html:not([data-theme="dark"]) .demo-banner{background:#fffaec;}
+  html:not([data-theme="dark"]) footer{color:var(--text-dim);}
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:var(--font-sans);
@@ -80,8 +100,13 @@
   header{padding:26px 0 22px;margin:0 0 22px;border-bottom:1px solid var(--border);
     display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
   header > div:first-child{flex:1;min-width:320px;}
-  h1{font-size:34px;line-height:1.1;margin:10px 0 10px;letter-spacing:-.02em;font-weight:700;}
+  h1{font-size:34px;line-height:1.1;margin:10px 0 10px;letter-spacing:-.02em;font-weight:800;}
   h1 .accent{color:var(--tab-accent,#c8ff4d);}
+  /* 标题字重统一调高，让腾讯体 W7 字形发挥效果 */
+  h2,h3,h4{font-weight:700;letter-spacing:-.005em;}
+  b,strong{font-weight:700;}
+  /* 抗锯齿：搭配中文字体在浅色背景下更细腻 */
+  html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;}
   .meta{color:var(--text-dim);font-size:13px;line-height:1.7;max-width:820px;}
   .meta b{color:var(--text);font-weight:600;}
 
@@ -171,8 +196,8 @@
     letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:500;}
   .summary-title .st-tag{display:inline-block;font-family:var(--font-mono);
     font-size:10.5px;letter-spacing:.14em;padding:2px 8px;
-    background:var(--tab-accent,#c8ff4d);color:#0c0c10;font-weight:700;}
-  html[data-theme="light"] .summary-title .st-tag{color:#ffffff;}
+    background:var(--tab-accent,#c8ff4d);color:#ffffff;font-weight:700;}
+  html[data-theme="dark"] .summary-title .st-tag{color:#0c0c10;}
 
   /* === 主题切换按钮 === */
   .theme-toggle{appearance:none;background:transparent;border:1px solid var(--border-strong);
@@ -181,10 +206,11 @@
     display:inline-flex;align-items:center;gap:6px;transition:all .15s ease;}
   .theme-toggle:hover{color:var(--text);border-color:var(--text-dim);}
   .theme-toggle .tt-ic{display:none;}
-  html:not([data-theme="light"]) .theme-toggle .tt-dark{display:inline;color:var(--accent-tab3);}
-  html:not([data-theme="light"]) .theme-toggle .tt-light{display:none;}
-  html[data-theme="light"] .theme-toggle .tt-dark{display:none;}
-  html[data-theme="light"] .theme-toggle .tt-light{display:inline;color:var(--accent-tab2);}
+  /* 默认（light）显示 ○ LIGHT；dark 主题显示 ● DARK */
+  html[data-theme="dark"] .theme-toggle .tt-dark{display:inline;color:var(--accent-tab3);}
+  html[data-theme="dark"] .theme-toggle .tt-light{display:none;}
+  html:not([data-theme="dark"]) .theme-toggle .tt-dark{display:none;}
+  html:not([data-theme="dark"]) .theme-toggle .tt-light{display:inline;color:var(--accent-tab2);}
 
   /* === Footer === */
   footer{color:var(--text-dim);font-size:11px;margin-top:22px;text-align:left;padding:18px 0 4px;
@@ -242,10 +268,10 @@
   .sn-group-head{display:flex;align-items:baseline;gap:8px;padding:8px 18px 10px;}
   /* 无子项的组：标题本身即入口，可点击、可高亮 */
   .sn-group--clickable .sn-group-head{cursor:pointer;border-left:2px solid transparent;transition:all .12s;padding-top:14px;padding-bottom:14px;}
-  .sn-group--clickable .sn-group-head:hover{background:rgba(255,255,255,.025);}
-  html[data-theme="light"] .sn-group--clickable .sn-group-head:hover{background:#ececdf;}
-  .sn-group--clickable .sn-group-head.active{background:rgba(255,255,255,.04);}
-  html[data-theme="light"] .sn-group--clickable .sn-group-head.active{background:#ffffff;}
+  .sn-group--clickable .sn-group-head:hover{background:#f1f1ec;}
+  html[data-theme="dark"] .sn-group--clickable .sn-group-head:hover{background:rgba(255,255,255,.025);}
+  .sn-group--clickable .sn-group-head.active{background:#ffffff;}
+  html[data-theme="dark"] .sn-group--clickable .sn-group-head.active{background:rgba(255,255,255,.04);}
   .sn-group--clickable .sn-group-head.active[data-group="pipe"]{border-left-color:var(--accent-tab4);}
   .sn-group--clickable .sn-group-head.active[data-group="pipe"] .sn-gh-t{color:var(--accent-tab4);}
   .sn-gh-idx{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:.14em;}
@@ -257,14 +283,14 @@
   .sn-item{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13px;
     color:var(--text-dim);cursor:pointer;border-left:2px solid transparent;transition:all .12s;}
   .sn-item--sub{padding-left:30px;font-size:12.5px;}
-  .sn-item:hover{color:var(--text);background:rgba(255,255,255,.025);}
-  html[data-theme="light"] .sn-item:hover{background:#ececdf;}
+  .sn-item:hover{color:var(--text);background:#f1f1ec;}
+  html[data-theme="dark"] .sn-item:hover{background:rgba(255,255,255,.025);}
   .sn-item .sn-dot{width:5px;height:5px;border-radius:50%;background:var(--text-dim);flex:0 0 5px;}
   .sn-item .sn-t{flex:1 1 auto;}
   .sn-item .sn-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;
     padding:1px 5px;border:1px solid var(--border-strong);color:var(--text-dim);}
-  .sn-item.active{color:var(--text);background:rgba(255,255,255,.04);font-weight:600;}
-  html[data-theme="light"] .sn-item.active{background:#ffffff;}
+  .sn-item.active{color:var(--text);background:#ffffff;font-weight:600;}
+  html[data-theme="dark"] .sn-item.active{background:rgba(255,255,255,.04);}
   /* 按分组/pane 染 accent */
   .sn-item[data-group="intel"].active{border-left-color:var(--accent-tab4);}
   .sn-item[data-group="intel"].active .sn-dot{background:var(--accent-tab4);box-shadow:0 0 8px var(--accent-tab4);}
@@ -382,11 +408,11 @@
     color:var(--text-dim);line-height:1.7;}
   .biz-note b{color:var(--text);font-weight:600;}
   .biz-yoy{font-family:var(--font-mono);font-weight:700;letter-spacing:.02em;}
-  .biz-yoy.up{color:#5dd39e;}
-  .biz-yoy.down{color:#ff6a8a;}
+  .biz-yoy.up{color:#1f8b5a;}
+  .biz-yoy.down{color:#c43358;}
   .biz-yoy.flat{color:var(--text-dim);}
-  html[data-theme="light"] .biz-yoy.up{color:#1f8b5a;}
-  html[data-theme="light"] .biz-yoy.down{color:#c43358;}
+  html[data-theme="dark"] .biz-yoy.up{color:#5dd39e;}
+  html[data-theme="dark"] .biz-yoy.down{color:#ff6a8a;}
   .biz-window-row{padding:10px 0;border-bottom:1px dashed var(--border);}
   .biz-window-row:last-child{border-bottom:none;}
   .biz-window-row .bw-h{font-family:var(--font-mono);font-size:11px;
@@ -954,6 +980,9 @@
   @keyframes nt-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
   .news-toolbar .nt-time{font-size:13px;color:var(--text);letter-spacing:.04em;
     padding:2px 8px;border:1px dashed var(--border);background:var(--panel-2);}
+  .news-toolbar .nt-src{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    padding:3px 8px;color:var(--accent-tab4);border:1px solid var(--accent-tab4);
+    background:transparent;margin-left:4px;}
 
   .news-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-bottom:20px;}
   .news-grid.news-grid--single{grid-template-columns:1fr;}
@@ -1206,6 +1235,7 @@
     <div class="nt-left">
       <span class="nt-label">LAST SYNC</span>
       <span class="nt-time mono" id="news-sync-time">—</span>
+      <span class="nt-src mono" id="news-src-badge">—</span>
     </div>
     <div class="nt-right">
       <button type="button" class="nt-btn" id="news-refresh-btn"><span class="ic">↻</span>手动刷新</button>
@@ -2632,28 +2662,29 @@ document.getElementById('today').textContent = new Date().toISOString().slice(0,
   if(sdEl) sdEl.textContent = `${iso} · ${wk}`;
 })();
 
-/* ========== 主题切换（dark/light） ========== */
+/* ========== 主题切换（light 默认 / dark 可选） ========== */
 (function(){
   const KEY = 'doppel-theme';
   const saved = localStorage.getItem(KEY);
-  const initial = saved === 'light' ? 'light' : 'dark';
+  const initial = saved === 'dark' ? 'dark' : 'light'; // 默认 light（白底）
   applyTheme(initial);
   const btn = document.getElementById('theme-toggle');
   if(btn){
     btn.addEventListener('click', ()=>{
-      const cur = document.documentElement.getAttribute('data-theme')==='light' ? 'light' : 'dark';
-      const next = cur === 'light' ? 'dark' : 'light';
+      const cur = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+      const next = cur === 'dark' ? 'light' : 'dark';
       applyTheme(next);
       localStorage.setItem(KEY, next);
     });
   }
   function applyTheme(t){
-    if(t === 'light'){
-      document.documentElement.setAttribute('data-theme','light');
+    if(t === 'dark'){
+      document.documentElement.setAttribute('data-theme','dark');
     } else {
+      // light 是默认：移除属性即可（也兼容旧 data-theme="light"）
       document.documentElement.removeAttribute('data-theme');
     }
-    // 重新渲染所有 ECharts 图表以适应新的文字/背景配色
+    // 重新渲染 ECharts，跟随主题色刷新
     setTimeout(()=>{
       document.querySelectorAll('[id^=ch-]').forEach(el=>{
         const inst = echarts.getInstanceByDom(el);
@@ -4583,6 +4614,9 @@ function renderNewsTab(){
   window.__newsLastSync = initSync;
   __applySyncStr(initSync, { auto: !window.__newsManualRefreshed });
   document.getElementById('news-cnt-badge').textContent = NEWS_ARTICLES.length + ' ARTICLES';
+  // 初始来源徽标：尚未手动刷新时标记为 CACHED
+  const sb0 = document.getElementById('news-src-badge');
+  if(sb0 && !window.__newsManualRefreshed) sb0.textContent = 'CACHED';
 
   renderNewsFeed('all');
   renderPipelineList();
@@ -4610,64 +4644,165 @@ function renderNewsTab(){
   }
 }
 
+// ===== 真实拉取新闻（多 RSS 源 + CORS 代理 + 兜底到 NEWS_HOT_POOL） =====
+// 多候选代理，按顺序尝试；返回 text/html（RSS xml）
+const __NEWS_FEEDS = [
+  { src:'GameLook',   tag:'资讯', url:'https://www.gamelook.com.cn/feed' },
+  { src:'游戏陀螺',   tag:'行业', url:'https://www.youxituoluo.com/feed' },
+  { src:'GCORES 机核', tag:'社区', url:'https://www.gcores.com/rss' },
+];
+const __CORS_PROXIES = [
+  u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+  u => `https://r.jina.ai/${u.replace(/^https?:\/\//,'http://')}`, // jina 做 HTML→markdown，仅当上面都挂掉再用
+];
+
+async function __fetchViaProxy(url, timeoutMs){
+  timeoutMs = timeoutMs || 6000;
+  for(const make of __CORS_PROXIES){
+    const proxied = make(url);
+    try{
+      const ctl = new AbortController();
+      const tm = setTimeout(()=>ctl.abort(), timeoutMs);
+      const r = await fetch(proxied, { signal: ctl.signal, cache:'no-store' });
+      clearTimeout(tm);
+      if(r.ok){
+        const txt = await r.text();
+        if(txt && txt.length > 200) return txt;
+      }
+    }catch(e){ /* try next */ }
+  }
+  return null;
+}
+
+// 简易 RSS 解析：抽取前 N 条 item，字段 title/link/pubDate/description
+function __parseRSS(xmlText, limit){
+  const items = [];
+  try{
+    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+    const nodes = Array.from(doc.querySelectorAll('item, entry')).slice(0, limit || 6);
+    for(const n of nodes){
+      const title = (n.querySelector('title')?.textContent || '').trim();
+      const link  = (n.querySelector('link')?.getAttribute('href')
+                     || n.querySelector('link')?.textContent || '').trim();
+      const pub   = (n.querySelector('pubDate, updated, published')?.textContent || '').trim();
+      const descRaw = (n.querySelector('description, summary, content')?.textContent || '').trim();
+      // 去 HTML 标签 & 截断
+      const summary = descRaw.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,200);
+      if(title && link){
+        items.push({ title, link, pub, summary });
+      }
+    }
+  }catch(e){ /* ignore */ }
+  return items;
+}
+
+function __dateISO(d){
+  try{
+    const dt = new Date(d);
+    if(isNaN(+dt)) return new Date().toISOString().slice(0,10);
+    return dt.toISOString().slice(0,10);
+  }catch(e){ return new Date().toISOString().slice(0,10); }
+}
+
+// 拉取新闻：并发请求多源 RSS；每源最多取前 3 条；全部失败则返回 null
+async function __fetchLatestNews(){
+  const results = await Promise.all(__NEWS_FEEDS.map(async feed=>{
+    const xml = await __fetchViaProxy(feed.url, 5500);
+    if(!xml) return [];
+    const items = __parseRSS(xml, 3);
+    return items.map((it,i)=>({
+      id: 'rx-' + Date.now() + '-' + feed.src + '-' + i,
+      src: feed.src,
+      tag: feed.tag,
+      date: __dateISO(it.pub),
+      title: it.title,
+      summary: it.summary || (it.title + ' · ' + feed.src),
+      url: it.link,
+      isNew: true,
+    }));
+  }));
+  const flat = results.flat();
+  return flat.length ? flat : null;
+}
+
 // 手动刷新：scope = 'news' | 'pipeline'
-function doManualRefresh(scope){
+async function doManualRefresh(scope){
   const isNews = scope === 'news';
   const btn = document.getElementById(isNews ? 'news-refresh-btn' : 'pipe-refresh-btn');
   if(btn){
     btn.disabled = true;
     btn.classList.add('is-loading');
-    btn.innerHTML = '<span class="ic spin">↻</span>正在同步…';
+    btn.innerHTML = '<span class="ic spin">↻</span>' + (isNews ? '正在拉取最新…' : '正在同步…');
   }
-  // 同步过程中给目标列表打一层 loading 蒙版
   const targetEl = document.getElementById(isNews ? 'news-feed' : 'pipeline-list');
   if(targetEl){
     targetEl.style.opacity = '.35';
     targetEl.style.transition = 'opacity .2s';
   }
-  setTimeout(()=>{
-    const syncStr = __fmtSync(new Date());
-    window.__newsLastSync = syncStr;
-    window.__newsManualRefreshed = true;
-    __applySyncStr(syncStr, { auto: false });
 
-    // 真正重渲染：news 分支额外注入 1-2 条「最新热点」；pipeline 走完整重建
-    if(isNews){
-      // 从池里随机抽 1-2 条尚未注入过的新闻，date = 今天
-      const todayStr = syncStr.slice(0,10);
+  // news 分支：先尝试真实拉取
+  let fetched = null;
+  let errMsg = '';
+  if(isNews){
+    try{
+      fetched = await __fetchLatestNews();
+    }catch(e){ errMsg = String(e && e.message || e); }
+  } else {
+    // pipeline 只做 UI 模拟延迟
+    await new Promise(r=>setTimeout(r, 600));
+  }
+
+  const syncStr = __fmtSync(new Date());
+  window.__newsLastSync = syncStr;
+  window.__newsManualRefreshed = true;
+  __applySyncStr(syncStr, { auto: false });
+
+  if(isNews){
+    const todayStr = syncStr.slice(0,10);
+    if(fetched && fetched.length){
+      // 去重（按 url 或 title）
+      const seen = new Set(window.__newsExtras.map(x=> x.url || x.title));
+      const fresh = fetched.filter(x => !seen.has(x.url) && !seen.has(x.title));
+      // 把新一批放最前，旧的 isNew 褪掉
+      window.__newsExtras = [
+        ...fresh,
+        ...window.__newsExtras.map(x => ({ ...x, isNew: false })),
+      ];
+      // 提示来源
+      const sbadge = document.getElementById('news-src-badge');
+      if(sbadge) sbadge.textContent = 'LIVE · ' + fetched.length + ' NEW';
+    } else {
+      // 真实拉取失败 → 本地热点池兜底（1~2 条）
       const usedTitles = new Set(window.__newsExtras.map(x=>x.title));
       const candidates = NEWS_HOT_POOL.filter(x => !usedTitles.has(x.title));
-      const pickN = Math.min(candidates.length, 1 + Math.floor(Math.random()*2)); // 1~2 条
-      // Fisher-Yates 抽样
+      const pickN = Math.min(candidates.length, 1 + Math.floor(Math.random()*2));
       const pool = [...candidates];
       for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
       const picked = pool.slice(0, pickN).map((x, idx) => ({
-        ...x,
-        id: 'nx-' + Date.now() + '-' + idx,
-        date: todayStr,
-        isNew: true,
+        ...x, id: 'nx-' + Date.now() + '-' + idx, date: todayStr, isNew: true,
       }));
-      // 新条目放最前；之前注入的去掉 isNew 标记，避免一直亮
       window.__newsExtras = [
         ...picked,
         ...window.__newsExtras.map(x => ({ ...x, isNew: false })),
       ];
-      const active = document.querySelector('#src-filter .sf.active');
-      renderNewsFeed(active ? active.dataset.s : 'all');
-      // 顶部 ARTICLES 计数同步
-      const cb = document.getElementById('news-cnt-badge');
-      if(cb) cb.textContent = (NEWS_ARTICLES.length + window.__newsExtras.length) + ' ARTICLES';
-    } else {
-      renderPipelineList();
+      const sbadge = document.getElementById('news-src-badge');
+      if(sbadge) sbadge.textContent = 'OFFLINE · LOCAL';
     }
+    const active = document.querySelector('#src-filter .sf.active');
+    renderNewsFeed(active ? active.dataset.s : 'all');
+    const cb = document.getElementById('news-cnt-badge');
+    if(cb) cb.textContent = (NEWS_ARTICLES.length + window.__newsExtras.length) + ' ARTICLES';
+  } else {
+    renderPipelineList();
+  }
 
-    if(targetEl) targetEl.style.opacity = '1';
-    if(btn){
-      btn.disabled = false;
-      btn.classList.remove('is-loading');
-      btn.innerHTML = '<span class="ic">↻</span>' + (isNews ? '手动刷新' : '刷新 Pipeline');
-    }
-  }, 700);
+  if(targetEl) targetEl.style.opacity = '1';
+  if(btn){
+    btn.disabled = false;
+    btn.classList.remove('is-loading');
+    btn.innerHTML = '<span class="ic">↻</span>' + (isNews ? '手动刷新' : '刷新 Pipeline');
+  }
 }
 
 // ===== 新闻视图：把 mock 的"相对日期"映射到今天，并叠加手动刷新注入的新条目 =====
