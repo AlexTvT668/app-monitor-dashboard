@@ -39,9 +39,14 @@
     --accent-tab2:#3c6fd1;   /* 蓝 · 安装链路监控 */
     --accent-tab3:#5a9a14;   /* 绿 · 首发资源分析 */
     --accent-tab4:#c83a6f;   /* 品红 · 行业新游监控 */
-    /* 字体：腾讯体 + 系统兜底 */
-    --font-mono:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
+    /* 字体：腾讯体 + 系统兜底
+       说明：原本 --font-mono 是英文等距体，导致所有用 .mono / .eyebrow / .kpi 等
+       「风格化文字」的英文标签（LAST SYNC / CACHED / LIVE / ARTICLES …）和数字
+       都走 JetBrains Mono，吃不到 Tencent Sans。这里把 Tencent Sans 提到首位，
+       后面的 mono 仅作兜底（代码块仍可走 --font-code）。 */
+    --font-mono:"Tencent Sans","JetBrains Mono","SF Mono","Menlo","Consolas",sans-serif;
     --font-sans:"Tencent Sans",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    --font-code:"JetBrains Mono","SF Mono","Menlo","Consolas",monospace;
   }
   /* ====== Dark 主题（可选） ====== */
   html[data-theme="dark"]{
@@ -87,6 +92,10 @@
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:var(--font-sans);
     font-feature-settings:"ss01","cv11";}
+  /* 全局保底：所有元素默认继承 Tencent Sans；pre/code/kbd/samp 仍走等距体 */
+  body, body *{font-family:var(--font-sans);}
+  body pre, body code, body kbd, body samp,
+  body pre *, body code *{font-family:var(--font-code);}
   .wrap{max-width:1480px;margin:0 auto;padding:22px;}
 
   /* === 全局工具：mono 字体、章节徽章 === */
@@ -624,12 +633,12 @@
     font-feature-settings:"ss01","cv11";
   }
   #pane-launch{background:transparent;margin:0;padding:0;}
-  #pane-launch .mono{font-family:"JetBrains Mono","SF Mono","Menlo",monospace;
+  #pane-launch .mono{font-family:"Tencent Sans","JetBrains Mono","SF Mono","Menlo",monospace;
     letter-spacing:-.01em;}
   /* Hero */
   #pane-launch .hero{position:relative;padding:32px 0 28px;
     border-bottom:1px solid var(--nr-border);margin-bottom:22px;}
-  #pane-launch .hero .eyebrow{font-family:"JetBrains Mono","SF Mono",monospace;
+  #pane-launch .hero .eyebrow{font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;
     font-size:11px;letter-spacing:.18em;color:var(--nr-dim);
     text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
   #pane-launch .hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;
@@ -640,7 +649,7 @@
   #pane-launch .hero p.lead{font-size:15px;line-height:1.7;color:var(--nr-dim);
     margin:0 0 18px;max-width:720px;}
   #pane-launch .hero .badges{display:flex;gap:8px;flex-wrap:wrap;}
-  .nr-badge{font-family:"JetBrains Mono","SF Mono",monospace;font-size:10.5px;
+  .nr-badge{font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;font-size:10.5px;
     letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;
     border:1px solid var(--nr-border-strong);border-radius:100px;color:var(--nr-dim);
     display:inline-flex;align-items:center;gap:6px;background:transparent;}
@@ -659,7 +668,7 @@
     color:var(--nr-dim);cursor:pointer;user-select:none;
     border-right:1px solid var(--nr-border);font-weight:500;
     display:flex;align-items:center;gap:8px;transition:color .15s, background .15s;
-    font-family:"JetBrains Mono","SF Mono",monospace;letter-spacing:.02em;}
+    font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;letter-spacing:.02em;}
   #pane-launch .vendor-switcher .v:last-child{border-right:none;}
   #pane-launch .vendor-switcher .v:hover{color:var(--nr-text);background:#15151b;}
   #pane-launch .vendor-switcher .v.active{color:var(--nr-bg);background:var(--nr-accent);}
@@ -672,11 +681,11 @@
     border:1px solid var(--nr-border-strong);margin-bottom:22px;background:var(--nr-panel);}
   #pane-launch .stat-strip .cell{padding:18px 22px;border-right:1px solid var(--nr-border);}
   #pane-launch .stat-strip .cell:last-child{border-right:none;}
-  #pane-launch .stat-strip .k{font-family:"JetBrains Mono","SF Mono",monospace;
+  #pane-launch .stat-strip .k{font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;
     font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--nr-dim);
     margin-bottom:8px;}
   #pane-launch .stat-strip .v{font-size:30px;font-weight:700;color:var(--nr-text);
-    font-family:"JetBrains Mono","SF Mono",monospace;letter-spacing:-.02em;line-height:1;}
+    font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;letter-spacing:-.02em;line-height:1;}
   #pane-launch .stat-strip .v .delta{font-size:13px;color:var(--nr-accent);
     margin-left:8px;font-weight:500;}
   #pane-launch .stat-strip .sub{font-size:11px;color:var(--nr-dim);margin-top:6px;}
@@ -689,11 +698,11 @@
   #pane-launch .section-h{display:flex;align-items:center;justify-content:space-between;
     padding:14px 20px;border-bottom:1px solid var(--nr-border);}
   #pane-launch .section-h .title{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--nr-text);font-family:"JetBrains Mono","SF Mono",monospace;font-weight:600;
+    color:var(--nr-text);font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;font-weight:600;
     display:flex;align-items:center;gap:10px;}
   #pane-launch .section-h .title .num{color:var(--nr-accent);}
   #pane-launch .section-h .hint{font-size:11px;color:var(--nr-dim);
-    font-family:"JetBrains Mono","SF Mono",monospace;}
+    font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;}
 
   /* 游戏时间轴条目 */
   .lg-item{display:grid;grid-template-columns:120px 1fr auto;gap:16px;
@@ -702,15 +711,15 @@
   .lg-item:last-child{border-bottom:none;}
   .lg-item:hover{background:#131319;}
   .lg-item.open{background:#12141c;}
-  .lg-item .date{font-family:"JetBrains Mono","SF Mono",monospace;font-size:13px;
+  .lg-item .date{font-family:"Tencent Sans","JetBrains Mono","SF Mono",monospace;font-size:13px;
     color:var(--nr-dim);letter-spacing:.02em;}
   .lg-item .date .year{display:block;font-size:10px;letter-spacing:.14em;
     text-transform:uppercase;opacity:.6;margin-bottom:2px;}
   .lg-item .gname{font-size:18px;font-weight:600;color:var(--nr-text);letter-spacing:-.01em;}
   .lg-item .gname .sub{font-size:11px;color:var(--nr-dim);font-weight:400;margin-left:8px;
-    font-family:"JetBrains Mono",monospace;}
+    font-family:"Tencent Sans","JetBrains Mono",monospace;}
   .lg-item .tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
-  .lg-item .arrow{font-family:"JetBrains Mono",monospace;color:var(--nr-dim);
+  .lg-item .arrow{font-family:"Tencent Sans","JetBrains Mono",monospace;color:var(--nr-dim);
     font-size:20px;transition:transform .2s, color .2s;}
   .lg-item.open .arrow{transform:rotate(90deg);color:var(--nr-accent);}
   .lg-detail{display:none;padding:0 20px 22px 156px;border-bottom:1px solid var(--nr-border);
@@ -718,11 +727,11 @@
   .lg-item.open + .lg-detail{display:block;}
   .lg-detail .dt-meta{display:flex;gap:24px;padding:14px 0;font-size:12px;
     color:var(--nr-dim);border-bottom:1px solid var(--nr-border);margin-bottom:14px;
-    font-family:"JetBrains Mono",monospace;}
+    font-family:"Tencent Sans","JetBrains Mono",monospace;}
   .lg-detail .dt-meta strong{color:var(--nr-text);font-weight:600;margin-left:4px;}
   .lg-detail table{width:100%;border-collapse:collapse;font-size:12.5px;}
   .lg-detail table th{text-align:left;padding:10px 12px;
-    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+    font-family:"Tencent Sans","JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;
     text-transform:uppercase;color:var(--nr-dim);font-weight:500;
     border-bottom:1px solid var(--nr-border-strong);}
   .lg-detail table td{padding:10px 12px;border-bottom:1px solid var(--nr-border);
@@ -732,7 +741,7 @@
   .lg-detail .live-n{color:var(--nr-dim);}
   .lg-detail .ch-pill{display:inline-block;padding:2px 8px;border:1px solid var(--nr-border-strong);
     border-radius:100px;font-size:10.5px;color:var(--nr-dim);
-    font-family:"JetBrains Mono",monospace;letter-spacing:.04em;}
+    font-family:"Tencent Sans","JetBrains Mono",monospace;letter-spacing:.04em;}
 
   /* 右侧：Top 资源位 */
   #pane-launch .side-col{display:flex;flex-direction:column;gap:22px;}
@@ -741,13 +750,13 @@
   .ts-row{display:grid;grid-template-columns:24px 1fr auto;gap:12px;
     padding:10px 20px;align-items:center;font-size:12.5px;}
   .ts-row:hover{background:#131319;}
-  .ts-row .idx{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--nr-dim);}
+  .ts-row .idx{font-family:"Tencent Sans","JetBrains Mono",monospace;font-size:11px;color:var(--nr-dim);}
   .ts-row .idx.top{color:var(--nr-accent);}
   .ts-row .name{color:var(--nr-text);}
   .ts-row .bar{position:relative;height:4px;background:#1a1a22;border-radius:0;
     grid-column:1 / -1;margin-top:-4px;}
   .ts-row .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--nr-accent);}
-  .ts-row .cnt{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--nr-text);
+  .ts-row .cnt{font-family:"Tencent Sans","JetBrains Mono",monospace;font-size:11.5px;color:var(--nr-text);
     font-weight:600;}
 
   /* ECharts 容器 */
@@ -760,7 +769,7 @@
   #pane-launch .insight-grid .ic{padding:22px 22px 24px;border-right:1px solid var(--nr-border);}
   #pane-launch .insight-grid .ic:last-child{border-right:none;}
   #pane-launch .insight-grid .ic .head{display:flex;align-items:center;gap:10px;
-    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+    font-family:"Tencent Sans","JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;
     text-transform:uppercase;color:var(--nr-dim);margin-bottom:12px;}
   #pane-launch .insight-grid .ic .head .sym{color:var(--nr-accent);font-size:14px;}
   #pane-launch .insight-grid .ic .title{font-size:16px;color:var(--nr-text);
@@ -774,12 +783,12 @@
     gap:20px;flex-wrap:wrap;}
   #pane-launch .nr-cta .txt{font-size:14px;color:var(--nr-dim);line-height:1.7;max-width:680px;}
   #pane-launch .nr-cta .txt b{color:var(--nr-text);font-weight:600;}
-  #pane-launch .nr-cta .arrow{font-family:"JetBrains Mono",monospace;font-size:30px;
+  #pane-launch .nr-cta .arrow{font-family:"Tencent Sans","JetBrains Mono",monospace;font-size:30px;
     color:var(--nr-accent);}
 
   /* 空态 */
   #pane-launch .empty-state{padding:80px 20px;text-align:center;color:var(--nr-dim);
-    font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.04em;
+    font-family:"Tencent Sans","JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.04em;
     border:1px dashed var(--nr-border-strong);background:var(--nr-panel);}
   #pane-launch .empty-state .big{font-size:36px;color:var(--nr-border-strong);
     margin-bottom:12px;letter-spacing:.2em;}
@@ -3855,12 +3864,12 @@ function renderCadence(){
   inst.setOption({
     grid:{left:40, right:12, top:18, bottom:28},
     tooltip:{trigger:'axis', backgroundColor:'#0d0d11', borderColor:'#2a2a32',
-      textStyle:{color:'#f5f5f0', fontFamily:'JetBrains Mono, monospace', fontSize:11}},
+      textStyle:{color:'#f5f5f0', fontFamily:'Tencent Sans, JetBrains Mono, monospace', fontSize:11}},
     xAxis:{type:'category', data:months,
-      axisLabel:{color:'#888892', fontFamily:'JetBrains Mono, monospace', fontSize:9.5, rotate:45, interval:0},
+      axisLabel:{color:'#888892', fontFamily:'Tencent Sans, JetBrains Mono, monospace', fontSize:9.5, rotate:45, interval:0},
       axisLine:{lineStyle:{color:'#1e1e24'}}, axisTick:{show:false}},
     yAxis:{type:'value', minInterval:1,
-      axisLabel:{color:'#888892', fontFamily:'JetBrains Mono, monospace', fontSize:10},
+      axisLabel:{color:'#888892', fontFamily:'Tencent Sans, JetBrains Mono, monospace', fontSize:10},
       splitLine:{lineStyle:{color:'#16161c'}}},
     series:[{type:'bar', data:months.map(k=>m[k]), barMaxWidth:18,
       itemStyle:{color:'#c8ff4d', borderRadius:[2,2,0,0]},
@@ -3884,12 +3893,12 @@ function renderChannelSplit(){
   const palette = {'游戏中心':'#c8ff4d','应用商店':'#7aa8ff','MIUI内':'#ff9d5a'};
   inst.setOption({
     tooltip:{trigger:'item', backgroundColor:'#0d0d11', borderColor:'#2a2a32',
-      textStyle:{color:'#f5f5f0', fontFamily:'JetBrains Mono, monospace', fontSize:11}},
-    legend:{bottom:0, textStyle:{color:'#888892', fontFamily:'JetBrains Mono, monospace', fontSize:10}},
+      textStyle:{color:'#f5f5f0', fontFamily:'Tencent Sans, JetBrains Mono, monospace', fontSize:11}},
+    legend:{bottom:0, textStyle:{color:'#888892', fontFamily:'Tencent Sans, JetBrains Mono, monospace', fontSize:10}},
     series:[{
       type:'pie', radius:['45%','72%'], center:['50%','44%'],
       itemStyle:{borderColor:'#0d0d11', borderWidth:3},
-      label:{color:'#f5f5f0', fontFamily:'JetBrains Mono, monospace', fontSize:10, formatter:'{b}\n{d}%'},
+      label:{color:'#f5f5f0', fontFamily:'Tencent Sans, JetBrains Mono, monospace', fontSize:10, formatter:'{b}\n{d}%'},
       labelLine:{lineStyle:{color:'#2a2a32'}},
       data:Object.entries(chCount).map(([n,v])=>({name:n, value:v, itemStyle:{color:palette[n]||'#888'}}))
     }]
